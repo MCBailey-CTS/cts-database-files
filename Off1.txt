@@ -1,0 +1,21 @@
+
+Off1
+('ENGLISH_GRID', ''),
+0.0625
+('ENGLISH_GRID', ''),
+0.125
+('ENGLISH_GRID', ''),
+0.250
+('ENGLISH_GRID', ''),
+0.500
+('ENGLISH_GRID', ''),
+0.750
+('ENGLISH_GRID', ''),
+1.000
+('ENGLISH_GRID', ''),
+4.000
+('ENGLISH_GRID', ''),
+6.000
+('ENGLISH_GRID', ''),
+10.000
+('ENGLISH_GRID', ''),

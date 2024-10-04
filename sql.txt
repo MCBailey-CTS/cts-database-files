@@ -314,3 +314,1315 @@ values
 --ENGLISH
 --:CTS_ATTRIBUTE_UNITS_END:
 
+
+
+:SimulationControlFile_SIM_SPECIAL_REGEX:
+//Line below is obsolete 2018-10-12
+//^(?<CustomerNumber>[0-9_]{4,})-simulation$
+//Updated to below to allow for file names like "2456-01-simulation"
+^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$
+:END:
+
+:SimulationControlFile_H:
+C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def
+:END:
+
+:SimulationControlFile_IGES_FILE_SETTINGS_PATH:
+C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def
+:END:
+
+:SimulationControlFile_COMBO_OPERATION_ITEMS:
+d1
+d2
+d3
+d4
+d5
+d6
+d7
+d8
+d9
+d10
+d11
+d12
+d13
+d14
+d15
+d16
+t1
+t2
+t3
+t4
+t5
+t6
+t7
+t8
+t9
+t10
+t11
+t12
+t13
+t14
+t15
+t16
+b
+Unfold
+MidSurfCurve
+RefData
+:END:
+
+
+:SimulationControlFile_COMBO_SURFACE_ITEMS:
+lwr
+upr
+Pad Profile
+:END:
+
+:SimulationControlFile_COMBO_TOOL_SIDE_ITEMS:
+lwr
+upr
+post
+pad
+punch
+lifter
+:END:
+
+:SimulationControlFile_COMBO_VERSION_#:
+v01
+v02
+v03
+v04
+v05
+v06
+v07
+v08
+v09
+v10
+v11
+v12
+v13
+v14
+v15
+v16
+v17
+v18
+v19
+v20
+v21
+v22
+v23
+v24
+v25
+v26
+v27
+v28
+v29
+v30
+v31
+v32
+v33
+v34
+v35
+v36
+v37
+v38
+v39
+v40
+v41
+v42
+v43
+v44
+v45
+v46
+v47
+v48
+v49
+v50
+:END:
+
+:SimulationControlFile_COMBO_DATA_R_LEVELS:
+r001
+r002
+r003
+r004
+r005
+r006
+r007
+r008
+r009
+:END:
+
+:SimulationControlFile_COMBO_EC:
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+:END:
+
+:SimulationControlFile_COMBO_PROPOSAL_DATA:
+p1
+p2
+p3
+p4
+p5
+p6
+p7
+p8
+p9
+p10
+:END:
+
+:SimulationControlFile_SIM_DRIVE_PATH:
+S:\\Active
+:END:
+
+
+Holechart.txt
+////////////////////////
+Label	Size	Description
+C11	0.1562	
+C15	0.150001	
+C17	0.178001	
+C19	0.204001	
+C#4	0.136001	DRILL AND C-BORE FOR NO.4 SCREW
+C25	0.281251	DRILL AND C-BORE FOR 1/4 SCREW
+C31	0.343751	DRILL AND C-BORE FOR 5/16 SCREW
+C37	0.406251	DRILL AND C-BORE FOR 3/8 SCREW
+C50	0.5625001	DRILL AND C-BORE FOR 1/2 SCREW
+C62	0.687501	DRILL AND C-BORE FOR 5/8 SCREW
+C75	0.812501	DRILL AND C-BORE FOR 3/4 SCREW
+C87	0.906201	DRILL AND C-BORE FOR 7/8 SCREW
+C100	1.062501	DRILL AND C-BORE FOR 1.0 SCREW
+C125	1.312501	DRILL AND C-BORE FOR 1 1/4 SCREW
+C150	1.562501	DRILL AND C-BORE FOR 1 1/2 SCREW
+C3	0.157480315	DRILL AND C-BORE FOR 3mm SCREW
+C4	0.188976378	DRILL AND C-BORE FOR 4mm SCREW
+C4	0.196850394	DRILL AND C-BORE FOR 4mm SCREW
+C5	0.234375024	DRILL AND C-BORE FOR 5mm SCREW
+C5	0.236220472	DRILL AND C-BORE FOR 5mm SCREW
+C6	0.281250236	DRILL AND C-BORE FOR 6mm SCREW
+C6	0.275590551	DRILL AND C-BORE FOR 6mm SCREW
+C8	0.359375024	DRILL AND C-BORE FOR 8mm SCREW
+C10	0.437500236	DRILL AND C-BORE FOR 10mm SCREW
+C12	0.531250236	DRILL AND C-BORE FOR 12mm SCREW
+C13	0.5781253	DRILL AND C-BORE FOR 13mm SCREW
+C16	0.687500236	DRILL AND C-BORE FOR 16mm SCREW
+C20	0.828125039	DRILL AND C-BORE FOR 20mm SCREW
+C24	1.000000236	DRILL AND C-BORE FOR 24mm SCREW
+C30	1.250000236	DRILL AND C-BORE FOR 30mm SCREW
+C36	1.496065354	DRILL AND C-BORE FOR 36mm SCREW
+T#4-40	0.122	
+T15	0.148	
+T17	0.174	
+T19	0.2	
+T25	0.26	DRILL AND TAP FOR 1/4-20 SCREW
+FT25-28	0.255	DRILL AND FINE TAP FOR 1/4-28 SCREW
+T31	0.3225	DRILL AND TAP FOR 5/16-18 SCREW
+FT31-24	0.32000007	DRILL AND FINE TAP FOR 5/16-24 SCREW
+T37	0.385	DRILL AND TAP FOR 3/8-16 SCREW
+T50	0.51	DRILL AND TAP FOR 1/2-13 SCREW
+FT50-20	0.505	DRILL AND FINE TAP FOR 1/2-20 SCREW
+T62	0.635	DRILL AND TAP FOR 5/8-11 SCREW
+T75	0.76	DRILL AND TAP FOR 3/4-10 SCREW
+T87	0.885	DRILL AND TAP FOR 7/8-9 SCREW
+T100	1.01	DRILL AND TAP FOR 1.0-8 SCREW
+T125	1.26	DRILL AND TAP FOR 1 1/4-7 SCREW
+T150	1.51	DRILL AND TAP FOR 1 1/2-6 SCREW
+T3	0.128110236	DRILL AND TAP FOR 3mm SCREW
+T3	0.122047244	DRILL AND TAP FOR 3mm SCREW
+T4	0.167480315	DRILL AND TAP FOR 4mm SCREW
+T4	0.161417323	DRILL AND TAP FOR 4mm SCREW
+T5	0.206850394	DRILL AND TAP FOR 5mm SCREW
+T5	0.200787402	DRILL AND TAP FOR 5mm SCREW
+T6	0.246220472	DRILL AND TAP FOR 6mm SCREW
+T6	0.24015748	DRILL AND TAP FOR 6mm SCREW
+T8	0.32496063	DRILL AND TAP FOR 8mm SCREW
+FT8-1	0.31996063	DRILL AND TAP FOR 8mm SCREW
+T10	0.403700787	DRILL AND TAP FOR 10mm SCREW
+FT10-1.0	0.40000007	DRILL AND TAP FOR 10mm SCREW
+FT10-1.25	0.398700787	DRILL AND TAP FOR 10mm SCREW
+T12	0.482440945	DRILL AND TAP FOR 12mm SCREW
+FT12-1.5	0.48000007	DRILL AND TAP FOR 12mm SCREW
+FT12-1.25	0.477440945	DRILL AND TAP FOR 12mm SCREW
+FT12-1	0.475000007	DRILL AND TAP FOR 12mm SCREW
+FT14-1.5	0.555000007	DRILL AND TAP FOR 14mm SCREW
+T16	0.63992126	DRILL AND TAP FOR 16mm SCREW
+FT16-1.5	0.63500007	DRILL AND TAP FOR 16mm SCREW
+FT18-1	0.71300007	DRILL AND TAP FOR 18mm SCREW
+T20	0.797401575	DRILL AND TAP FOR 20mm SCREW
+FT20-1.5	0.80000007	DRILL AND TAP FOR 20mm SCREW
+FT22-1.5	0.867000007	DRILL AND TAP FOR 22mm SCREW
+T24	0.95488189	DRILL AND TAP FOR 24mm SCREW
+FT24-1.5	0.94738189	DRILL AND TAP FOR 24mm SCREW
+FT24-2	0.94988	DRILL AND TAP FOR 24mm SCREW
+FT25-1.5	0.989251969	DRILL AND TAP FOR 25mm SCREW
+FT26-1.5	1.02600007	DRILL AND TAP FOR 26mm SCREW
+T30	1.191102362	DRILL AND TAP FOR 30mm SCREW
+FT30	1.122047244	DRILL AND TAP FOR 30mm SCREW
+T36	1.427322835	DRILL AND TAP FOR 36mm SCREW
+T42	1.663543307	DRILL AND TAP FOR 42mm SCREW
+T48	1.89976378	DRILL AND TAP FOR 48mm SCREW
+D11	0.1250009	DRILL AND REAM FOR 1/8 DOWEL
+D18	0.1875009	DRILL AND REAM FOR 3/16 DOWEL
+D25	0.2500009	DRILL AND REAM FOR 1/4 DOWEL
+D31	0.3125009	DRILL AND REAM FOR 5/16 DOWEL
+D37	0.3750009	DRILL AND REAM FOR 3/8 DOWEL
+D50	0.5000009	DRILL AND REAM FOR 1/2 DOWEL
+D62	0.6250009	DRILL AND REAM FOR 5/8 DOWEL
+D75	0.7500009	DRILL AND REAM FOR 3/4 DOWEL
+D100	1.0000009	DRILL AND REAM FOR 1.0 DOWEL
+D3	0.118110272	DRILL AND REAM FOR 3mm DOWEL
+D4	0.15748035	DRILL AND REAM FOR 4mm DOWEL
+D5	0.196850429	DRILL AND REAM FOR 5mm DOWEL
+D6	0.236220508	DRILL AND REAM FOR 6mm DOWEL
+D8	0.314960665	DRILL AND REAM FOR 8mm DOWEL
+D10	0.393700823	DRILL AND REAM FOR 10mm DOWEL
+D12	0.47244098	DRILL AND REAM FOR 12mm DOWEL
+D13	0.511811059	DRILL AND REAM FOR 13mm DOWEL
+D16	0.629921295	DRILL AND REAM FOR 16mm DOWEL
+D20	0.78740161	DRILL AND REAM FOR 20mm DOWEL
+D24	0.944881925	DRILL AND REAM FOR 24mm DOWEL
+J14	0.1115015	
+J15	0.1165015	
+J17	0.1460015	
+J19	0.1595015	
+J25	0.2600015	DRILL AND TAP FOR 1/4 JIG JACK
+J31	0.3225015	DRILL AND TAP FOR 5/16 JIG JACK
+J37	0.3850015	DRILL AND TAP FOR 3/8 JIG JACK
+J50	0.5100015	DRILL AND TAP FOR 1/2 JIG JACK
+J62	0.6350015	DRILL AND TAP FOR 5/8 JIG JACK
+J75	0.7600015	DRILL AND TAP FOR 3/4 JIG JACK
+J87	0.8850015	DRILL AND TAP FOR 7/8 JIG JACK
+J4	0.16748037	DRILL AND TAP FOR 4mm JIG JACK
+J5	0.206850449	DRILL AND TAP FOR 5mm JIG JACK
+J6	0.246220528	DRILL AND TAP FOR 6mm JIG JACK
+J8	0.324960685	DRILL AND TAP FOR 8mm JIG JACK
+J10	0.403700843	DRILL AND TAP FOR 10mm JIG JACK
+J12	0.482441	DRILL AND TAP FOR 12mm JIG JACK
+J16	0.639921315	DRILL AND TAP FOR 16mm JIG JACK
+J20	0.79740163	DRILL AND TAP FOR 20mm JIG JACK
+J24	0.954881945	DRILL AND TAP FOR 24mm JIG JACK
+GP55	0.0625007	
+GP86	0.0940007	
+GP148	0.1560007	
+GPM140	0.061811024	
+GPM218	0.094094488	
+GPM376	0.155905512	
+M37	0.3755	
+M43	0.438	
+M50	0.5005	
+M62	0.6255	
+M75	0.7505	
+M87	0.8755	
+M100	1.0005	
+M125	1.2505	
+M150	1.5005	
+M175	1.7505	
+M10	0.394200787	
+M13	0.512311024	
+M16	0.63042126	
+M20	0.787901575	
+M22	0.866641732	
+M25	0.984751969	
+M30	1.181602362	
+M32	1.26034252	
+M38	1.496562992	
+M40	1.57530315	
+M45	1.772153543	
+WS11	0.125000001	DRILL 1/8 WIRECUT START HOLE
+WS25	0.250000001	DRILL 1/4 WIRECUT START HOLE
+WS37	0.375000001	DRILL 3/8 WIRECUT START HOLE
+NPT060	0.32300007	
+NPT012	0.41500007	
+NPT025	0.55000007	
+NPT037	0.68500007	
+NPT050	0.85000007	
+NPT075	1.06000007	
+NPT100	1.32500007	
+NPT125	1.67000007	
+NPT150	1.91000007	
+NPT200	2.38500007	
+NPT250	2.88500007	
+NPT300	3.51000007	
+BSPP12-28	0.41000007	
+NPTF1/8-27 3/4 TPF	0.411000001	
+NPTF1/4-18 3/4 TPF	0.554000007	
+NPTF3/8-18 3/4 TPF	0.681000001	
+NPTF1/2-14 3/4 TPF	0.841000007	
+Heli-Coil M12x1.75	0.592551227	
+///////////////////
+
+:BillOfMaterial_PURCHASED_MATERIALS:
+DAYTON
+MOELLER
+KALLER
+LANE
+MISUMI
+DADCO
+FORWARD
+HYSON
+STANDFAST
+STANDARD LIFTERS
+AJACS
+JOLICO
+LAMINA
+DANLY
+DANLY/IEM
+SELFLUBE
+MDL
+SANKYO
+REID
+STOCK
+SYRON
+TURCK
+STRUCTURAL
+IMP
+ARGON
+AMCOR
+DESTACO
+BOHLER UDDERHOLM
+BALLUFF
+BANNER
+IFM
+PUR
+:END:
+
+//{Attribute title}:{Column}
+:BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH:
+{DESCRIPTION}:{3}
+{MATERIAL}:{4}
+{ComponentDescriptionUGS}:{8}
+:END:
+
+:BillOfMaterial_ATS_EXCEL:
+U:\nxFiles\Excel\ats.xlsx
+:END:
+
+:BillOfMaterial_CTS_EXCEL:
+U:\nxFiles\Excel\cts.xlsx
+:END:
+
+:BillOfMaterial_DTS_EXCEL:
+U:\nxFiles\Excel\dts.xlsx
+:END:
+
+:BillOfMaterial_ETS_EXCEL:
+U:\nxFiles\Excel\ets.xlsx
+:END:
+
+:BillOfMaterial_HTS_EXCEL:
+U:\nxFiles\Excel\hts.xlsx
+:END:
+
+:BillOfMaterial_RTS_EXCEL:
+U:\nxFiles\Excel\rts.xlsx
+:END:
+
+:BillOfMaterial_UGS_EXCEL:
+U:\nxFiles\Excel\ugs.xlsx
+:END:
+
+//////////////////////
+Bentler.cdf
+Wed Feb  1 15:01:05 2023
+Color Definition File 
+ 
+ 
+Background                        0.0000000  0.0000000  0.0000000
+Blue                              0.0000000  0.0000000  1.0000000 16
+Green                             0.0000000  1.0000000  0.0000000 15
+Cyan                              0.0000000  1.0000000  1.0000000 17
+Red                               1.0000000  0.0000000  0.0000000 7
+Magenta                           1.0000000  0.0000000  1.0000000 12
+Yellow                            1.0000000  1.0000000  0.0000000 20
+White                             1.0000000  1.0000000  1.0000000 28
+Olive                             0.6862745  1.0000000  0.6862745 9
+Pink                              1.0000000  0.6862745  0.6862745 19
+Brown                             0.8235294  0.6862745  0.5019608 2
+Orange                            1.0000000  0.5000000  0.0000000 8
+Purple                            0.3725490  0.0000000  0.3725490 18
+Dark-Red                          0.6000000  0.0000000  0.0000000 1
+Aquamarine                        0.2000000  0.6700000  0.4700000 11
+Gray                              0.4001500  0.4001500  0.4001500 58
+Light Spring Green                0.6000000  1.0000000  0.4000000
+Light Hard Spring                 0.6000000  1.0000000  0.2000000
+Spring Spring Yellow              0.6000000  1.0000000  0.0000000 40
+Light Faded Cyan                  0.4000000  1.0000000  1.0000000
+Light Teal Green                  0.4000000  1.0000000  0.8000000
+Light Teal Cyan                   0.4000000  1.0000000  0.6000000
+Light Faded Green                 0.4000000  1.0000000  0.4000000
+Light Green Spring                0.4000000  1.0000000  0.2000000
+Spring Spring Green               0.4000000  1.0000000  0.0000000
+Light Hard Cyan                   0.2000000  1.0000000  1.0000000
+Light Cyan Teal                   0.2000000  1.0000000  0.8000000 43
+Light Hard Teal                   0.2000000  1.0000000  0.6000000
+Light Green Teal                  0.6078431  0.7843137  0.0000000
+Light Hard Green                  0.2000000  1.0000000  0.2000000
+Green Green Spring                0.2000000  1.0000000  0.0000000
+Pure Cyan                         0.0000000  1.0000000  1.0000000 59
+Cyan Cyan Teal                    0.0000000  1.0000000  0.8000000 44
+Teal Teal Cyan                    0.0000000  1.0000000  0.6000000
+Teal Teal Green                   0.0000000  1.0000000  0.4000000
+Green Green Teal                  0.0000000  1.0000000  0.2000000
+Pure Green                        0.0000000  1.0000000  0.0000000 52
+Pure White                        1.0000000  1.0000000  1.0000000 29
+Pale Weak Red                     1.0000000  0.8000000  0.8000000
+Pale Dull Orange                  1.0000000  0.8000000  0.6000000
+Light Orange Yellow               1.0000000  0.7450980  0.2745098 38
+Light Yellow Orange               1.0000000  0.8000000  0.2000000
+Pure Yellow                       1.0000000  1.0000000  0.0000000
+Pale Weak Blue                    0.8000000  0.8000000  1.0000000
+Pale Gray                         1.0000000  1.0000000  0.6862745 56
+Light Weak Yellow                 0.8000000  0.8000000  0.6000000
+Light Dull Yellow                 0.8000000  0.8000000  0.4000000
+Medium Faded Yellow               0.8000000  0.8000000  0.2000000
+Dark Hard Yellow                  1.0000000  0.3725490  0.0000000
+Pale Dull Azure                   0.6000000  0.8000000  1.0000000
+Light Weak Cyan                   0.0000000  0.6862745  0.6862745 57
+Light Weak Green                  0.6000000  0.8000000  0.6000000
+Light Dull Spring                 0.6000000  0.8000000  0.4000000
+Medium Spring Yellow              0.6000000  0.8000000  0.2000000
+Dark Yellow Spring                0.6000000  0.8000000  0.0000000
+Light Azure Cyan                  0.4000000  0.8000000  1.0000000
+Light Dull Cyan                   0.4000000  0.8000000  0.8000000
+Light Dull Teal                   0.4000000  0.8000000  0.6000000 41
+Light Dull Green                  0.4000000  0.8000000  0.4000000
+Medium Spring Green               0.4000000  0.8000000  0.2000000
+Dark Hard Spring                  0.4000000  0.8000000  0.0000000
+Light Cyan Azure                  0.2000000  0.8000000  1.0000000
+Medium Faded Cyan                 0.2000000  0.8000000  0.8000000
+Medium Teal Cyan                  0.2000000  0.8000000  0.6000000
+Medium Teal Green                 0.2000000  0.8000000  0.4000000
+Medium Faded Green                0.2000000  0.8000000  0.2000000
+Dark Green Spring                 0.2000000  0.8000000  0.0000000
+Cyan Cyan Azure                   0.0000000  0.8000000  1.0000000
+Dark Hard Cyan                    0.0000000  0.8000000  0.8000000
+Dark Cyan Teal                    0.0000000  0.8000000  0.6000000
+Dark Hard Teal                    0.0000000  0.8000000  0.4000000 42
+Dark Green Teal                   0.3254902  0.8745098  0.5333333
+Dark Hard Green                   0.0000000  0.8000000  0.0000000
+Pale Dull Magenta                 1.0000000  0.6000000  1.0000000
+Pale Dull Pink                    1.0000000  0.6000000  0.8000000
+Pale Dull Red                     1.0000000  0.6000000  0.6000000 37
+Light Orange Red                  1.0000000  0.6000000  0.4000000
+Light Hard Orange                 1.0000000  0.6000000  0.2000000
+Orange Orange Yellow              1.0000000  0.6862745  0.0000000 50
+Pale Dark Violet                  0.5019608  0.0000000  1.0000000 45
+Light Weak Magenta                0.8000000  0.6000000  0.8000000 47
+Light Weak Red                    0.8000000  0.6000000  0.6000000
+Light Dull Orange                 0.8000000  0.6000000  0.4000000
+Medium Faded Orange               0.8000000  0.6000000  0.2000000
+Dark Hard Orange                  0.8000000  0.6000000  0.0000000
+Pale Dull Blue                    0.3725490  0.3725490  0.6862745
+Light Weak Blue                   0.6000000  0.6000000  0.8000000
+Light Gray                        0.3725490  0.3725490  0.3725490 27
+Medium Weak Yellow                0.6000000  0.6000000  0.4000000
+Dark Dull Yellow                  0.6000000  0.6000000  0.2000000
+Dark Faded Yellow                 0.6000000  0.6000000  0.0000000
+Light Azure Blue                  0.8235294  0.8235294  1.0000000 33
+Light Dull Azure                  0.4000000  0.6000000  0.8000000
+Medium Weak Cyan                  0.4000000  0.6000000  0.6000000 30
+Medium Weak Green                 0.4000000  0.6000000  0.4000000
+Dark Dull Spring                  0.4000000  0.6000000  0.2000000
+Dark Spring Yellow                0.4000000  0.6000000  0.0000000
+Light Hard Azure                  0.2000000  0.6000000  1.0000000
+Medium Azure Cyan                 0.2000000  0.6000000  0.8000000 23
+Dark Dull Cyan                    0.2000000  0.6000000  0.6000000
+Dark Dull Teal                    0.6862745  0.6862745  0.3725490
+Dark Dull Green                   0.2000000  0.6000000  0.2000000 21
+Dark Spring Green                 0.2000000  0.6000000  0.0000000
+Azure Azure Cyan                  0.0000000  0.6000000  1.0000000
+Dark Cyan Azure                   0.0000000  0.6000000  0.8000000
+Dark Faded Cyan                   0.0000000  0.6000000  0.6000000
+Dark Teal Cyan                    0.0000000  0.6000000  0.4000000
+Dark Teal Green                   0.0000000  0.6000000  0.2000000
+Dark Faded Green                  0.0000000  0.5019608  0.0000000 54
+Light Faded Magenta               1.0000000  0.4000000  1.0000000 36
+Light Pink Magenta                1.0000000  0.8549020  0.7254902
+Light Pink Red                    1.0000000  0.4000000  0.6000000
+Light Faded Red                   1.0000000  0.4000000  0.4000000
+Light Red Orange                  1.0000000  0.4000000  0.2000000 14
+Orange Orange Red                 1.0000000  0.4000000  0.0000000
+Light Violet Magenta              0.8745098  0.6862745  1.0000000
+Light Dull Magenta                0.8000000  0.4000000  0.8000000
+Light Dull Pink                   0.8000000  0.4000000  0.6000000
+Light Dull Red                    0.8000000  0.4000000  0.4000000
+Medium Dark Red                   0.8000000  0.4000000  0.2000000
+Dark Hard Orange                  0.8000000  0.4000000  0.0000000
+Light Vivid Blue                  0.6000000  0.4000000  1.0000000
+Light Dull Violet                 0.6000000  0.4000000  0.8000000 46
+Medium Weak Magenta               0.6000000  0.4000000  0.6000000 55
+Medium Weak Red                   0.6000000  0.4000000  0.4000000
+Dark Dull Orange                  0.6000000  0.4000000  0.2000000
+Dark Orange Yellow                0.6000000  0.4000000  0.0000000
+Light Faded Blue                  0.2941176  0.6862745  1.0000000
+Light Dull Blue                   0.4000000  0.4000000  0.8000000
+Medium Weak Blue                  0.4000000  0.4000000  0.6000000
+Dark Gray                         0.4000000  0.4000000  0.4000000 26
+Dark Weak Yellow                  0.4000000  0.4000000  0.2000000
+Obscure Dark Yellow               0.4000000  0.4000000  0.0000000
+Light Blue Azure                  0.0000000  0.4980392  1.0000000 31
+Medium Azure Blue                 0.2000000  0.4000000  0.8000000 22
+Dark Dull Azure                   0.2000000  0.4000000  0.6000000
+Dark Weak Cyan                    0.2000000  0.4000000  0.4000000
+Dark Weak Green                   0.2000000  0.4000000  0.2000000
+Obscure Dull Spring               0.2000000  0.4000000  0.0000000
+Azure Azure Blue                  0.0000000  0.4000000  1.0000000
+Dark Hard Azure                   0.0000000  0.4000000  0.8000000
+Dark Azure Cyan                   0.0000000  0.4000000  0.6000000
+Obscure Dull Cyan                 0.0000000  0.4000000  0.4000000
+Obscure Dull Teal                 0.0000000  0.4000000  0.2000000 5
+Obscure Dull Green                0.0000000  0.4000000  0.0000000 3
+Light Hard Magenta                1.0000000  0.2000000  1.0000000
+Light Magenta Pink                1.0000000  0.2000000  0.8000000
+Light Hard Pink                   1.0000000  0.2000000  0.6000000
+Light Red Pink                    1.0000000  0.2000000  0.4000000
+Light Hard Red                    1.0000000  0.2000000  0.2000000
+Red Red Orange                    1.0000000  0.2000000  0.0000000
+Light Magenta Violet              0.8000000  0.2000000  1.0000000
+Medium Faded Magenta              0.8000000  0.2000000  0.8000000
+Medium Pink Magenta               0.8000000  0.2000000  0.6000000
+Medium Pink Red                   0.8000000  0.2000000  0.4000000
+Medium Faded Red                  0.8000000  0.2000000  0.2000000
+Dark Red Orange                   0.8000000  0.2000000  0.0000000
+Light Hard Violet                 0.6000000  0.2000000  1.0000000
+Medium Violet Magent              0.6862745  0.1764706  1.0000000
+Dark Dull Magenta                 0.6000000  0.2000000  0.6000000 53
+Dark Dull Pink                    0.6000000  0.2000000  0.4000000
+Dark Dull Red                     0.6000000  0.2000000  0.2000000 13
+Dark Orange Red                   0.6000000  0.2000000  0.0000000
+Light Blue Violet                 0.4000000  0.2000000  1.0000000
+Medium Vivid Blue                 0.4000000  0.2000000  0.8000000
+Dark Blue Violet                  0.4000000  0.2000000  0.6000000 34
+Dark Weak Magenta                 0.4000000  0.2000000  0.4000000 6
+Dark Weak Red                     0.4000000  0.2000000  0.2000000
+Obscure Dull Orange               0.4000000  0.2000000  0.0000000
+Light Hard Blue                   0.6862745  0.9333333  0.9333333
+Medium Faded Blue                 0.2000000  0.2000000  0.8000000 4
+Dark Dull Blue                    0.2000000  0.2000000  0.6000000 0
+Dark Weak Blue                    0.2000000  0.2000000  0.4000000
+Obscure Gray                      0.2000000  0.2000000  0.2000000 25
+Obscure Weak Yellow               0.2000000  0.2000000  0.0000000
+Blue Blue Azure                   0.0000000  0.2000000  1.0000000
+Dark Blue Azure                   0.0000000  0.2000000  0.8000000
+Dark Azure Blue                   0.0000000  0.2000000  0.6000000
+Obscure Dull Azure                0.0000000  0.2000000  0.4000000 10
+Obscure Weak Cyan                 0.0000000  0.2000000  0.2000000
+Obscure Weak Green                0.0000000  0.2000000  0.0000000
+Pure Magenta                      1.0000000  0.0000000  1.0000000 39
+Medium Magenta Pink               1.0000000  0.0000000  0.8000000
+Pale Pink Magenta                 1.0000000  0.0000000  0.6000000
+Pale Pink Red                     1.0000000  0.0000000  0.4000000
+Red Red Pink                      1.0000000  0.0000000  0.2000000
+Pure Red                          1.0000000  0.0000000  0.0000000 48
+Magenta Magenta Viol              0.8000000  0.0000000  1.0000000
+Dark Hard Magenta                 0.8000000  0.0000000  0.8000000
+Dark Magenta Pink                 0.8000000  0.0000000  0.6000000
+Dark Hard Pink                    0.8000000  0.0000000  0.4000000
+Dark Red Pink                     0.8000000  0.0000000  0.2000000 35
+Dark Hard Red                     0.8000000  0.0000000  0.0000000
+Violet Violet Magent              0.6000000  0.0000000  1.0000000
+Dark Magenta Violet               0.6000000  0.0000000  0.8000000
+Dark Faded Magenta                0.6000000  0.0000000  0.6000000
+Dark Pink Magenta                 0.6000000  0.0000000  0.4000000
+Dark Pink Red                     0.6000000  0.0000000  0.2000000
+Dark Faded Red                    0.6000000  0.0000000  0.0000000
+Violet Violet Blue                0.4000000  0.0000000  1.0000000
+Dark Hard Violet                  0.4000000  0.0000000  0.8000000
+Dark Violet Magenta               0.4000000  0.0000000  0.6000000 51
+Obscure Dull Magenta              0.4000000  0.0000000  0.4000000
+Obscure Dull Pink                 0.4000000  0.0000000  0.2000000
+Obscure Dull Red                  0.3725490  0.0000000  0.0000000
+Blue Blue Violet                  0.2000000  0.0000000  1.0000000 32
+Dark Blue Violet                  0.0000000  0.0000000  0.3725490
+Dark Violet Blue                  0.2000000  0.0000000  0.6000000
+Obscure Dull Violet               0.2000000  0.0000000  0.4000000
+Obscure Weak Magenta              0.2000000  0.0000000  0.2000000
+Obscure Weak Red                  0.2000000  0.0000000  0.0000000 49
+Pure Blue                         0.0000000  0.0000000  1.0000000
+Dark Hard Blue                    0.0000000  0.0000000  0.8000000
+Dark Faded Blue                   0.0000000  0.0000000  0.6000000
+Obscure Dull Blue                 0.0000000  0.0000000  0.4000000
+Obscure Weak Blue                 0.0000000  0.0000000  0.2000000
+Pure Black                        0.0000000  0.0000000  0.0000000 24
+//////////////////////////////////////
+
+///////////////////////////////////////
+AddFastenersPreferredDiameters
+
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-010.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-012.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-016.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-020.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-025.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-030.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-035.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-012.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-016.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-020.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-025.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-030.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-035.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-040.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-045.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-050.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-055.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-060.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-065.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-020.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-030.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-040.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-050.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-070.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-090.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-030.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-040.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-050.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-070.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-090.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-110.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-040.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-055.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-070.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-090.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-110.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-050.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-070.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-090.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-110.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-150.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-075.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-125.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-200.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-300.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-400.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-125.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-200.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-300.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-400.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-500.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-125.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-200.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-300.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-400.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-500.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-200.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-300.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-400.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-500.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-650.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-010-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-012-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-016-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-020-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-025-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-030-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-035-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-012-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-016-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-020-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-025-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-030-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-035-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-040-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-045-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-050-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-055-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-060-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-065-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-020-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-030-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-040-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-050-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-070-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-090-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-030-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-040-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-050-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-070-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-090-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-110-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-040-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-055-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-070-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-090-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-110-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-050-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-070-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-090-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-110-2x.prt
+G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-150-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-075-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-125-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-200-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-300-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-400-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-125-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-200-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-300-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-400-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-500-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-125-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-200-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-300-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-400-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-500-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-200-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-300-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-400-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-500-2x.prt
+G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-650-2x.prt
+////////////////////////////////////////////////////////
+
+//////////////////////////////////
+DrainHoleSettings
+
+<?xml version="1.0" encoding="utf-8"?>
+<DrainHoleSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/DrainHoleCreator">
+  <Corners>true</Corners>
+  <CurveColor>10</CurveColor>
+  <CurveLayer>8</CurveLayer>
+  <CurveName>DRAIN_HOLE_CURVE</CurveName>
+  <Diameter>2</Diameter>
+  <DiameterUnits>Inches</DiameterUnits>
+  <ExtrusionEndLimit>-2</ExtrusionEndLimit>
+  <ExtrusionLayer>1</ExtrusionLayer>
+  <ExtrusionName>DRAIN_HOLE_EXTRUSION</ExtrusionName>
+  <ExtrusionStartLimit>0.25</ExtrusionStartLimit>
+  <FeatureGroupName>DRAIN_HOLE_FEATURE_GROUP</FeatureGroupName>
+  <MidPoints>true</MidPoints>
+  <SubtractHoles>true</SubtractHoles>
+  <SubtractionLayer>1</SubtractionLayer>
+  <SubtractionName>DRAIN_HOLE_SUBTRACTION</SubtractionName>  
+</DrainHoleSettings>
+////////////////////////////////////
+
+///////////////////////////////////////////
+AssemblyColorCode
+
+//{Color Title}{button R}{button G}{button B}{NX Color}{DETAILS}{DCB}
+// DCB stands for "Diesets, Castings, & Burouts.
+:COLORS:
+{Aquamarine}                  {A:255} {B:170} {G:205} {R:102} {NX:14}  {DETAILS:-} {DCB:-Rough castbase color}
+{Blue}                        {A:255} {B:255} {G:0}   {R:0}   {NX:211} {DETAILS:-Semi Finish / Profile, Cut to ZERO of line or TOL +-.010".\n-All Clearance Holes& bottoms of CNC locator counterbore.} {DCB:-Cast Plus 10mm and needs to be rough cut to +-.010".}
+{Cyan}                        {A:255} {B:255} {G:255} {R:0}   {NX:3}   {DETAILS:-Finish 3D Contour "Contacts the product".} {DCB:-Cast Plus 10mm to finish 3D Contour "Contacts the product".}
+{Dark Grey}                   {A:255} {B:128} {G:128} {R:128} {NX:130} {DETAILS:-} {DCB:-Burnout profiles w/no stock added but qualify during machining.\n-Cast to zero w/no stock added but qualify during machining.}
+{Dark Red}                    {A:255} {B:0}   {G:0}   {R:139} {NX:13}  {DETAILS:-Layout Part Bodies} {DCB:-}
+{Dark Weak Red}               {A:255} {B:19}  {G:69}  {R:139} {NX:167} {DETAILS:-} {DCB:-Burnout profiles same color as base solid color/weld level.}
+{Green}                       {A:255} {B:0}   {G:252} {R:124} {NX:36}  {DETAILS:-Counter bores} {DCB:-}
+{Magenta}                     {A:255} {B:255} {G:0}   {R:255} {NX:181} {DETAILS:-Tapped Holes.} {DCB:-}
+{Orange}                      {A:255} {B:0}   {G:165} {R:255} {NX:11}  {DETAILS:-Finish Bore Size "SLIP FIT"\n-Toe clamp bushings/pins.\n-CNC locator counterbore sides.} {DCB:-}
+{Pale Red}                    {A:255} {B:153} {G:153} {R:255} {NX:75}  {DETAILS:-Layout Slugs} {DCB:-}
+{Red}           	      {A:255} {B:0}   {G:0}   {R:255} {NX:186} {DETAILS:-Trim profiles of punches,die steels, retainers, & windowsTOL.+-.001"} {DCB:-}
+{White}         	      {A:255} {B:255} {G:255} {R:255} {NX:37}  {DETAILS:-Tooling holes.} {DCB:-}
+{Yellow}        	      {A:255} {B:0}   {G:255} {R:255} {NX:42}  {DETAILS:-Finish Profile, Finish Planner surfaces, Wire burntap side, & side with CNC locator counterboreTOL. +-.001".\n-Reamed holes for dowels.} {DCB:-Cast Plus 10mm to finish Profile/Finish Planner surfaces TOL. +-.001".}
+{Light Weak Magenta}          {A:255} {B:204} {G:153} {R:204} {NX:80}  {DETAILS:-Fine thread tap.} {DCB:-}
+:END:
+///////////////////////////////////////////
+
+
+///////////////////////////////////////
+DrawDie
+
+:OP_020_000_REGEX:
+^\d+-020-000$
+:END:
+
+:OP_020_LAYOUT_REGEX:
+^\d+-020-layout$
+:END:
+
+:CompName_LowerPost:
+100
+:END:
+
+:CompName_LowerBinder:
+// This has to be a number that can be converted to an integer.
+// Program will fail otherwise.
+101
+:END:
+
+:CompName_UpperCavity:
+// This has to be a number that can be converted to an integer.
+// Program will fail otherwise.
+600
+:END:
+
+:Material_LowerPost:
+D2
+:END:
+
+:Material_LowerBinder:
+D2
+:END:
+
+:Material_UpperCavity:
+D2
+:END:
+
+:HeightZCLowerBinder:
+2.5
+:END:
+
+:UPPER_CAVITY_REFERENCE_BOOLEAN:
+// Subtract, Intersect, Unite
+{^OP-020-UPR-3D$},{Subtract},{0}
+:END:
+
+:LOWER_BINDER_REFERENCE_BOOLEAN:
+// Subtract, Intersect, Unite
+{^OP-020-LWR-3D$},{Subtract},{0}
+{^OP-020-PAD-PROFILE$},{Subtract},{0}
+:END:
+
+:LOWER_POST_REFERENCE_BOOLEAN:
+// Subtract, Intersect, Unite
+{^OP-020-LWR-3D$},{Subtract},{0}
+{^OP-020-PAD-PROFILE$},{Intersect},{0}
+{^OP-\d{3}-LWR-3D.*WITH(\s*|-|_)PROFILE$},{Subtract},{1}
+:END:
+
+:STANDOFF_SEED_FILE:
+G:\0Library\Standoffs\Standoff Square Lower Metric.prt
+:END:
+
+:SMART_KEY_SEED_FILE:
+G:\0Library\Keys\Smart Key Metric.prt
+:END:
+
+:SMART_MISUMI_NEST_GAUGES:
+G:\0Library\Gauges\Misumi\Smart Misumi-nest-gauges.prt
+:END:
+
+:SEED_PART:
+G:\0Library\SeedFiles\Components\seed-base.prt
+:END:
+
+:REFERENCE_BOOLEANS:
+// Subtract, Intersect, Unite
+{UPPER_CAVITY},{^OP(\s*|-|_)020(\s*|-|_)UPR(\s*|-|_)3D$},{Subtract},{0}
+{LOWER_BINDER},{^OP(\s*|-|_)020(\s*|-|_)LWR(\s*|-|_)3D$},{Subtract},{0}
+{LOWER_BINDER},{^OP(\s*|-|_)020(\s*|-|_)PAD(\s*|-|_)PROFILE$},{Subtract},{0}
+{LOWER_BINDER},{^OP(\s*|-|_)020(\s*|-|_)BINDER(\s*|-|_)3D(.*)WITH(\s*|-|_)PROFILE$},{Subtract},{1}
+{LOWER_POST},{^OP(\s*|-|_)020(\s*|-|_)LWR(\s*|-|_)3D$},{Subtract},{0}
+{LOWER_POST},{^OP(\s*|-|_)020(\s*|-|_)LWR(\s*|-|_)PROFILE$},{Intersect},{0}
+{LOWER_POST},{^OP(\s*|-|_)\d{3}(\s*|-|_)LWR(\s*|-|_)3D(.*)WITH(\s*|-|_)PROFILE$},{Subtract},{1}
+:END:
+
+:STRIP_CONTROL_MATERIAL_TITLE:
+M
+:END:
+///////////////////////////////////////
+
+///////////////////////////////////////
+Design Check
+
+:DESIGN_CHECK_VIEW_AND_REVISION:
+Design Check: 4.0
+:END:
+
+:WireTapNotes_PreCheck_Titles:
+WTN
+:END:
+
+:WireTapNotes_PreCheck_Values:
+YES
+:END:
+
+:WireTapNotes_Check_Titles:
+DETAIL NAME
+:END:
+
+:WireTapNotes_Check_Values:
+TRIM
+:END:
+
+:Burnouts_Titles_1:
+MATERIAL
+:END:
+
+:Burnouts_Values_1:
+HRS PLT
+4140 PLT
+4140 PH PLT
+:END:
+
+:Burnouts_DrawingSheetName:
+BURNOUT
+:END:
+
+:Metric_Tolerance:
+//Millimeters
+0.0254
+:END:
+
+:English_Tolerance:
+//Inches
+0.001
+:END:
+
+:999_BLOCK_REGEX:
+(?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)
+:END:
+
+:CBoreDepth_EnglishShcsRegex:
+// Regular Text Expression to match english Shcs with.
+^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$
+:END:
+
+:CBoreDepth_MetricShcsRegex:
+// Regular Text Expression to match metric Shcs with.
+^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$
+:END:
+
+// These are in millimeters.
+:CBoreDepth_Metric:
+NA	4	5	6	8	10	12	16	20	24	30	36
+008	2	0.5	NA	NA	NA	NA	NA	NA	NA	NA	NA
+010	4	2.5	1	NA	NA	NA	NA	NA	NA	NA	NA
+012	4	4.5	3	1.5	NA	NA	NA	NA	NA	NA	NA
+016	4	5	6	4	1.5	NA	NA	NA	NA	NA	NA
+020	4	5	6	8	5	2	NA	NA	NA	NA	NA
+025	4	5	6	8	10	7	1	NA	NA	NA	NA
+030	4	5	6	8	10	12	6	NA	NA	NA	NA
+035	4	5	6	8	10	12	11	5	NA	NA	NA
+040	NA	NA	6	8	10	12	16	10	4	NA	NA
+045	NA	NA	6	8	10	12	16	15	9	NA	NA
+050	NA	NA	6	8	10	12	16	20	14	5	NA
+055	NA	NA	6	8	10	12	16	20	19	10	NA
+060	NA	NA	6	8	10	12	16	20	24	15	6
+065	NA	NA	6	8	10	12	16	20	24	20	11
+070	NA	NA	6	NA	10	12	16	20	24	25	16
+075	NA	NA	NA	NA	10	12	16	20	24	30	21
+080	NA	NA	NA	NA	10	12	16	20	24	30	26
+090	NA	NA	NA	NA	10	12	16	20	24	30	36
+100	NA	NA	NA	NA	10	12	16	20	24	30	36
+110	NA	NA	NA	NA	10	12	16	20	24	30	36
+120	NA	NA	NA	NA	10	12	16	20	24	30	36
+130	NA	NA	NA	NA	10	12	16	20	24	30	36
+140	NA	NA	NA	NA	10	12	16	20	24	30	36
+150	NA	NA	NA	NA	10	12	16	20	24	30	36
+160	NA	NA	NA	NA	NA	NA	16	20	NA	NA	NA
+180	NA	NA	NA	NA	NA	NA	16	20	NA	NA	NA
+:END:
+
+// These are in inches.
+:CBoreDepth_English:
+NA	0004	0006	0008	0010	0250	0313	0375	0500	0625	0750	0875	1000	1250	1500
+025	NA	0.043	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+037	0.112	0.138	0.129	0.09	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+050	NA	0.138	0.164	0.19	0.125	0.031	NA	NA	NA	NA	NA	NA	NA	NA
+062	NA	0.138	0.164	0.19	0.25	0.156	0.062	NA	NA	NA	NA	NA	NA	NA
+075	NA	0.138	0.164	0.19	0.25	0.313	0.188	NA	NA	NA	NA	NA	NA	NA
+100	NA	0.138	0.164	0.19	0.25	0.313	0.375	0.25	0.063	NA	NA	NA	NA	NA
+125	NA	0.138	0.164	0.19	0.25	0.313	0.375	0.5	0.313	0.125	NA	NA	NA	NA
+150	NA	0.138	0.164	0.19	0.25	0.313	0.375	0.5	0.625	0.375	0.1875	NA	NA	NA
+175	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.625	0.4375	.25	NA	NA
+200	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.75	0.6875	.5	0.125	NA
+225	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.75	0.875	.75	0.375	NA
+250	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	0.625	0.25
+275	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	0.875	0.5
+300	NA	NA	NA	0.19	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.125	0.75
+325	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.0
+350	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.25
+375	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+400	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+450	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+500	NA	NA	NA	NA	0.25	0.313	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+550	NA	NA	NA	NA	NA	NA	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+600	NA	NA	NA	NA	NA	NA	0.375	0.5	0.625	0.75	0.875	1	1.25	1.5
+650	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
+700	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
+750	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
+800	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
+:END:
+
+:LINKED_BODY_FEATURE_NAME:
+LINKED_BODY
+:END:
+
+:OP_NUMBER:
+(?!000)(?<OpNumber>[0-9]{3})
+:END:
+
+:GFOLDER_JOB_FOLDER_REGEX:
+([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)
+:END:
+
+:Detail_Number_Regex:
+(?<DetailNumber>[0-9]{3,})
+:END:
+
+:GFOLDER_ASSEMBLY_FOLDER_REGEX:
+[0-9]{1,}-[0-9]{1,}
+:END:
+
+:Customer_Job_Op_Regex:
+<rec>Customer_Job_Number_Regex</rec>-<rec>OP_NUMBER</rec>
+:END:
+
+:Detail_Structure_Regex:
+\\<rec>Customer_Job_Op_Regex</rec>-<rec>Detail_Number_Regex</rec>\\
+:END:
+
+:COMPONENT_NAMES_REGEX:
+^(?<DetailNumber>[0-9]{3})[A_Z]{1}$
+:END:
+
+:Customer_Job_Number_Regex:
+(?<CustomerJobNumber>[0-9A-Z_]{4,})
+:END:
+
+:0LIBRARY_REGEX:
+^G:\\0Library\\.*\.prt$
+:END:
+
+:W_DRIVE_REGEX:
+^W:\\.*\.prt$
+:END:
+
+:CBORE_DEPTH_IGNORE_PATHS_REGEX:
+^G:\\0Library\\.*\.prt$
+^W:\\.*\.prt$
+:END:
+
+
+
+:CBORE_DEPTH_MATCH_PATHS_REGEX:
+[0-9]{4,}-[0-9]{3}-[0-9]{3}
+:END:
+
+:DETAIL_STRUCTURE_REGEX:
+[0-9]{4,}-[0-9]{3}-[0-9]{3}
+:END:
+
+
+:INTERPART_EXPRESSIONS_GFOLDER_REGEX_MATCH:
+\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\.*\.prt$
+:END:
+
+:GFOLDER_REGEXES:
+^G:\\0Library\\.*\.prt$
+^G:\\0Press\\.*\.prt$
+^W:\\.*\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\[0-9]{1,}-[0-9]{3}\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\grippers\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
+:END:
+
+:FULLY_LOAD_ASSEMBLY_REGEXES:
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\[0-9]{1,}-[0-9]{3}\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\grippers\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
+:END:
+
+:PARTIALLY_LOAD_ASSEMBLY_REGEXES:
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
+^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
+:END:
+
+
+
+
+
+:CBORE_DEPTH_TITLES_1:
+MATERIAL
+:END:
+
+:SIZE_DESCRIPTION_TITLES_1:
+MATERIAL
+:END:
+
+:CASTING_MATERIALS_TITLES:
+MATERIAL
+:END:
+
+:CASTING_MATERIALS_VALUES:
+GM190
+GM238
+GM241
+GM245
+GM246
+GM338
+S0050A
+S0030A
+G2500
+G3500
+D4512
+D5506
+D6510
+CARMO CAST
+GM68M
+S0030
+:END:
+
+:GuideBushings_GuidePins_Titles:
+LibraryPath
+:END:
+
+:GuideBushings_GuidePins_Values:
+GuideBushings
+GuidePins
+:END:
+
+// The following list is identical to the one sitting in the actual UCF file on the UDrive. 
+// However we removed "METALS PLUS" and "01 from the list.
+:COMPONENT_MATERIALS:
+A2
+A2 GS
+ACUSEAL
+ALUM
+AMPCO 18
+CALDIE
+CARMO
+CRS
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+HRS
+HRS PLT
+H13
+H13 PREMIUM
+O1
+O1 GS
+O1 DR
+Ovar Superior
+P20
+S7
+S7 GS
+STEELCRAFT
+STRUCTURAL
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+OTHER
+:END:
+
+:CBORE_DEPTH_COMPONENT_MATERIALS:
+A2
+A2 GS
+ACUSEAL
+ALUM
+AMPCO 18
+CALDIE
+CARMO
+CRS
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+HRS
+HRS PLT
+H13
+H13 PREMIUM
+O1
+O1 DR
+Ovar Superior
+P20
+S7
+S7 GS
+STEELCRAFT
+STRUCTURAL
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+OTHER
+:END:
+
+:DESCRIPTION_TITLES:
+DESCRIPTION
+:END:
+
+:DESCRIPTION_IGNORE_VALUES:
+(\d+\.\d+)|(\d+\.)|(\.\d+)
+:END:
+
+:SIZE_TITLES:
+DESCRIPTION
+:END:
+
+
+//(\d+)(?<=(\d+))
+
+//\s*see[-_ ]?3d[-_ ]?data\s*
+
+
+
+
+:DOUBLE_DECIMAL_REGEX:
+(\d+\.?\d*|\.\d*)
+:END:
+
+// The difference between this and "DOUBLE_DECIMAL_REGEX" is that this won't match integers.
+// It requires that a decimal must be present in the number in order to match.
+:DOUBLE_DECIMAL_REQUIRE_PERIOD_REGEX:
+(\d+\.\d*|\.\d*)
+:END:
+
+:SIZE_DESCRIPTION_IGNORE_PATHS_REGEX:
+^G:\\0Library\\.*\.prt$
+^W:\\.*\.prt$
+:END:
+
+
+//([0-9]\.[0-9]*)
+
+//:DOUBLE_DECIMAL_REQUIRE_PERIOD_REGEX:
+//(\d+\.\d*|\.\d*)
+//:END:
+
+:SIZE_DESCRIPTION_REGEX:
+([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*
+:END:
+
+:SIZE_DESCRIPTION_BURN_REGEX:
+//^Burn\s*(?<BurnHeight>\d+\.?\d*)
+^Burn\s*(?<BurnHeight>(\d+\.\d+)|(\d+\.)|(\.\d+))
+:END:
+
+
+
+///////////////////////////////////////
+
+
+
+//////////////////////////////////
+TSG_Tag_DataTypes
+
+.catpart
+.catproduct
+.prt
+.stp
+.step
+.igs
+.iges
+//////////////////////////////////
+

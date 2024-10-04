@@ -1,29 +1,29 @@
 insert into ConceptControlFile 
 values
-('COMPONENT_MATERIALS', ''),
-Vanadis4
-('COMPONENT_MATERIALS', ''),
-4140
-('COMPONENT_MATERIALS', ''),
-4140 PH
-('COMPONENT_MATERIALS', ''),
-4140 PH PLT
-('COMPONENT_MATERIALS', ''),
-4140 PLT
-('COMPONENT_MATERIALS', ''),
-6150
-('COMPONENT_MATERIALS', ''),
-OTHER
-('COMPONENT_MATERIALS', ''),
-MISC
-('COMPONENT_MATERIALS', ''),
-Dayton-Alter
-('COMPONENT_MATERIALS', ''),
-Moeller-Alter
-('COMPONENT_MATERIALS', ''),
-Impax-Alter
-('COMPONENT_MATERIALS', ''),
-EZ_FIT-Alter
+('COMPONENT_MATERIALS', 'Vanadis4'),
+
+('COMPONENT_MATERIALS', '4140'),
+
+('COMPONENT_MATERIALS', '4140 PH'),
+
+('COMPONENT_MATERIALS', '4140 PH PLT'),
+
+('COMPONENT_MATERIALS', '4140 PLT'),
+
+('COMPONENT_MATERIALS', '6150'),
+
+('COMPONENT_MATERIALS', 'OTHER'),
+
+('COMPONENT_MATERIALS', 'MISC'),
+
+('COMPONENT_MATERIALS', 'Dayton-Alter'),
+
+('COMPONENT_MATERIALS', 'Moeller-Alter'),
+
+('COMPONENT_MATERIALS', 'Impax-Alter'),
+
+('COMPONENT_MATERIALS', 'EZ_FIT-Alter'),
+
 ('COMPONENT_MATERIALS', ''),
 Misumi-Alter
 ('COMPONENT_MATERIALS', ''),
@@ -49,6 +49,7 @@ HRS PLT
 4140 PLT
 4140 PH PLT
 :END_COMPONENT_BURN_MATERIALS:
+
 ('', ''),
 :PURCHASED_MATERIALS:
 DAYTON
@@ -311,7 +312,7 @@ ENGLISH
 
 
 
-
+('', '', 0)
 :SimulationControlFile_SIM_SPECIAL_REGEX:
 //Line below is obsolete 2018-10-12
 //^(?<CustomerNumber>[0-9_]{4,})-simulation$
@@ -319,14 +320,17 @@ ENGLISH
 ^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$
 :END:
 
+('', '', 0)
 :SimulationControlFile_H:
 C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def
 :END:
 
+('', '', 0)
 :SimulationControlFile_IGES_FILE_SETTINGS_PATH:
 C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def
 :END:
 
+('', '', 0)
 :SimulationControlFile_COMBO_OPERATION_ITEMS:
 d1
 d2
@@ -366,13 +370,14 @@ MidSurfCurve
 RefData
 :END:
 
-
+('', '', 0),
 :SimulationControlFile_COMBO_SURFACE_ITEMS:
 lwr
 upr
 Pad Profile
 :END:
 
+('', '', 0),
 :SimulationControlFile_COMBO_TOOL_SIDE_ITEMS:
 lwr
 upr
@@ -382,6 +387,7 @@ punch
 lifter
 :END:
 
+('', '', 0),
 :SimulationControlFile_COMBO_VERSION_#:
 v01
 v02
@@ -435,6 +441,7 @@ v49
 v50
 :END:
 
+('', '', 0),
 :SimulationControlFile_COMBO_DATA_R_LEVELS:
 r001
 r002
@@ -447,6 +454,7 @@ r008
 r009
 :END:
 
+('', '', 0),
 :SimulationControlFile_COMBO_EC:
 501
 502
@@ -460,6 +468,7 @@ r009
 510
 :END:
 
+('', '', 0),
 :SimulationControlFile_COMBO_PROPOSAL_DATA:
 p1
 p2
@@ -473,11 +482,13 @@ p9
 p10
 :END:
 
+('', '', 0),
 :SimulationControlFile_SIM_DRIVE_PATH:
 S:\\Active
 :END:
 
 
+('', '', 0),
 Holechart.txt
 ////////////////////////
 Label	Size	Description
@@ -653,6 +664,7 @@ NPTF1/2-14 3/4 TPF	0.841000007
 Heli-Coil M12x1.75	0.592551227	
 ///////////////////
 
+('', '', 0),
 :BillOfMaterial_PURCHASED_MATERIALS:
 DAYTON
 MOELLER
@@ -688,6 +700,7 @@ IFM
 PUR
 :END:
 
+('', '', 0),
 //{Attribute title}:{Column}
 :BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH:
 {DESCRIPTION}:{3}
@@ -695,34 +708,42 @@ PUR
 {ComponentDescriptionUGS}:{8}
 :END:
 
+('', '', 0),
 :BillOfMaterial_ATS_EXCEL:
 U:\nxFiles\Excel\ats.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_CTS_EXCEL:
 U:\nxFiles\Excel\cts.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_DTS_EXCEL:
 U:\nxFiles\Excel\dts.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_ETS_EXCEL:
 U:\nxFiles\Excel\ets.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_HTS_EXCEL:
 U:\nxFiles\Excel\hts.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_RTS_EXCEL:
 U:\nxFiles\Excel\rts.xlsx
 :END:
 
+('', '', 0),
 :BillOfMaterial_UGS_EXCEL:
 U:\nxFiles\Excel\ugs.xlsx
 :END:
 
+('', '', 0),
 //////////////////////
 Bentler.cdf
 Wed Feb  1 15:01:05 2023
@@ -948,6 +969,7 @@ Obscure Weak Blue                 0.0000000  0.0000000  0.2000000
 Pure Black                        0.0000000  0.0000000  0.0000000 24
 //////////////////////////////////////
 
+('', '', 0),
 ///////////////////////////////////////
 AddFastenersPreferredDiameters
 
@@ -1075,6 +1097,8 @@ G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-500-2x.pr
 G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-650-2x.prt
 ////////////////////////////////////////////////////////
 
+
+('', '', 0),
 //////////////////////////////////
 DrainHoleSettings
 
@@ -1098,6 +1122,8 @@ DrainHoleSettings
 </DrainHoleSettings>
 ////////////////////////////////////
 
+
+('', '', 0),
 ///////////////////////////////////////////
 AssemblyColorCode
 
@@ -1123,48 +1149,57 @@ AssemblyColorCode
 
 
 ///////////////////////////////////////
-DrawDie
 
+('DrawDie_', ''),
 :OP_020_000_REGEX:
 ^\d+-020-000$
 :END:
 
+('DrawDie_', ''),
 :OP_020_LAYOUT_REGEX:
 ^\d+-020-layout$
 :END:
 
+('DrawDie_', ''),
 :CompName_LowerPost:
 100
 :END:
 
+('DrawDie_', ''),
 :CompName_LowerBinder:
 // This has to be a number that can be converted to an integer.
 // Program will fail otherwise.
 101
 :END:
 
+('DrawDie_', ''),
 :CompName_UpperCavity:
 // This has to be a number that can be converted to an integer.
 // Program will fail otherwise.
 600
 :END:
 
+('DrawDie_', ''),
 :Material_LowerPost:
 D2
 :END:
 
+('DrawDie_', ''),
 :Material_LowerBinder:
 D2
 :END:
 
+('DrawDie_', ''),
 :Material_UpperCavity:
 D2
 :END:
 
+('DrawDie_', ''),
 :HeightZCLowerBinder:
 2.5
 :END:
 
+('DrawDie_', ''),
 :UPPER_CAVITY_REFERENCE_BOOLEAN:
 // Subtract, Intersect, Unite
 {^OP-020-UPR-3D$},{Subtract},{0}
@@ -1178,23 +1213,30 @@ D2
 
 :LOWER_POST_REFERENCE_BOOLEAN:
 // Subtract, Intersect, Unite
+('DrawDie_', ''),
 {^OP-020-LWR-3D$},{Subtract},{0}
+('DrawDie_', ''),
 {^OP-020-PAD-PROFILE$},{Intersect},{0}
+('DrawDie_', ''),
 {^OP-\d{3}-LWR-3D.*WITH(\s*|-|_)PROFILE$},{Subtract},{1}
 :END:
 
+('DrawDie_', ''),
 :STANDOFF_SEED_FILE:
 G:\0Library\Standoffs\Standoff Square Lower Metric.prt
 :END:
 
+('DrawDie_', ''),
 :SMART_KEY_SEED_FILE:
 G:\0Library\Keys\Smart Key Metric.prt
 :END:
 
+('DrawDie_', ''),
 :SMART_MISUMI_NEST_GAUGES:
 G:\0Library\Gauges\Misumi\Smart Misumi-nest-gauges.prt
 :END:
 
+('DrawDie_', ''),
 :SEED_PART:
 G:\0Library\SeedFiles\Components\seed-base.prt
 :END:
@@ -1209,7 +1251,7 @@ G:\0Library\SeedFiles\Components\seed-base.prt
 {LOWER_POST},{^OP(\s*|-|_)020(\s*|-|_)LWR(\s*|-|_)PROFILE$},{Intersect},{0}
 {LOWER_POST},{^OP(\s*|-|_)\d{3}(\s*|-|_)LWR(\s*|-|_)3D(.*)WITH(\s*|-|_)PROFILE$},{Subtract},{1}
 :END:
-
+('DrawDie_', ''),
 :STRIP_CONTROL_MATERIAL_TITLE:
 M
 :END:
@@ -1218,59 +1260,72 @@ M
 ///////////////////////////////////////
 Design Check
 
+('', ''),
 :DESIGN_CHECK_VIEW_AND_REVISION:
 Design Check: 4.0
 :END:
 
+('', ''),
 :WireTapNotes_PreCheck_Titles:
 WTN
 :END:
 
+('', ''),
 :WireTapNotes_PreCheck_Values:
 YES
 :END:
 
+('', ''),
 :WireTapNotes_Check_Titles:
 DETAIL NAME
 :END:
 
+('', ''),
 :WireTapNotes_Check_Values:
 TRIM
 :END:
 
+('', ''),
 :Burnouts_Titles_1:
 MATERIAL
 :END:
 
+('', ''),
 :Burnouts_Values_1:
 HRS PLT
 4140 PLT
 4140 PH PLT
 :END:
 
+('', ''),
 :Burnouts_DrawingSheetName:
 BURNOUT
 :END:
 
+('', ''),
 :Metric_Tolerance:
 //Millimeters
 0.0254
 :END:
 
+('', ''),
 :English_Tolerance:
 //Inches
 0.001
 :END:
 
+('', ''),
 :999_BLOCK_REGEX:
 (?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)
 :END:
 
+('', ''),
 :CBoreDepth_EnglishShcsRegex:
 // Regular Text Expression to match english Shcs with.
 ^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$
 :END:
 
+('', ''),
 :CBoreDepth_MetricShcsRegex:
 // Regular Text Expression to match metric Shcs with.
 ^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$
@@ -1338,70 +1393,85 @@ NA	0004	0006	0008	0010	0250	0313	0375	0500	0625	0750	0875	1000	1250	1500
 800	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
 :END:
 
+('', ''),
 :LINKED_BODY_FEATURE_NAME:
 LINKED_BODY
 :END:
 
+('', ''),
 :OP_NUMBER:
 (?!000)(?<OpNumber>[0-9]{3})
 :END:
 
+('', ''),
 :GFOLDER_JOB_FOLDER_REGEX:
 ([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)
 :END:
 
+('', ''),
 :Detail_Number_Regex:
 (?<DetailNumber>[0-9]{3,})
 :END:
 
+('', ''),
 :GFOLDER_ASSEMBLY_FOLDER_REGEX:
 [0-9]{1,}-[0-9]{1,}
 :END:
 
+('', ''),
 :Customer_Job_Op_Regex:
 <rec>Customer_Job_Number_Regex</rec>-<rec>OP_NUMBER</rec>
 :END:
 
+('', ''),
 :Detail_Structure_Regex:
 \\<rec>Customer_Job_Op_Regex</rec>-<rec>Detail_Number_Regex</rec>\\
 :END:
 
+('', ''),
 :COMPONENT_NAMES_REGEX:
 ^(?<DetailNumber>[0-9]{3})[A_Z]{1}$
 :END:
 
+('', ''),
 :Customer_Job_Number_Regex:
 (?<CustomerJobNumber>[0-9A-Z_]{4,})
 :END:
 
+('', ''),
 :0LIBRARY_REGEX:
 ^G:\\0Library\\.*\.prt$
 :END:
 
+('', ''),
 :W_DRIVE_REGEX:
 ^W:\\.*\.prt$
 :END:
 
+('', ''),
 :CBORE_DEPTH_IGNORE_PATHS_REGEX:
 ^G:\\0Library\\.*\.prt$
 ^W:\\.*\.prt$
 :END:
 
 
-
+('', ''),
 :CBORE_DEPTH_MATCH_PATHS_REGEX:
 [0-9]{4,}-[0-9]{3}-[0-9]{3}
 :END:
 
+('', ''),
 :DETAIL_STRUCTURE_REGEX:
 [0-9]{4,}-[0-9]{3}-[0-9]{3}
 :END:
 
 
+('', ''),
 :INTERPART_EXPRESSIONS_GFOLDER_REGEX_MATCH:
 \\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\.*\.prt$
 :END:
 
+('', ''),
 :GFOLDER_REGEXES:
 ^G:\\0Library\\.*\.prt$
 ^G:\\0Press\\.*\.prt$
@@ -1413,6 +1483,7 @@ LINKED_BODY
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
 :END:
 
+('', ''),
 :FULLY_LOAD_ASSEMBLY_REGEXES:
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\[0-9]{1,}-[0-9]{3}\\.+\.prt$
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
@@ -1421,6 +1492,7 @@ LINKED_BODY
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
 :END:
 
+('', ''),
 :PARTIALLY_LOAD_ASSEMBLY_REGEXES:
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
 ^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
@@ -3697,4 +3769,4 @@ public static void Iges(string partPath, string igesPath, bool wait)
 																																				
 																																				
 																																				
-																																				
+// 3728

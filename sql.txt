@@ -3315,3 +3315,341 @@ ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
 WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
 EXPORT_DIMENSIONS_AS = REAL
 SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
+
+CBoreDepthsEnglish
+"START"	"4"	"6"	"8"	"10"	"250"	"313"	"375"	"500"	"625"	"750"	"875"	"1000"	"1250"	"1500"
+"025"	"NA"	"0.043"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"
+"037"	0.112	"0.138"	"0.129"	"0.09"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"
+"050"	"NA"	"0.138"	"0.164"	"0.19"	"0.125"	"0.031"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"
+"062"	"NA"	"0.138"	"0.164"	"0.19"	"0.25"	"0.156"	"0.062"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"
+"075"	"NA"	"0.138"	"0.164"	"0.19"	"0.25"	"0.313"	"0.188"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"
+"100"	"NA"	"0.138"	"0.164"	"0.19"	"0.25"	"0.313"	"0.375"	"0.25"	"0.063"	"NA"	"NA"	"NA"	"NA"	"NA"
+"125"	"NA"	"0.138"	"0.164"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.313"	"0.125"	"NA"	"NA"	"NA"	"NA"
+"150"	"NA"	"0.138"	"0.164"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.375"	"0.1875"	"NA"	"NA"	"NA"
+"175"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.625"	"0.4375"	".25"	"NA"	"NA"
+"200"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.6875"	".5"	"0.125"	"NA"
+"225"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	".75"	"0.375"	"NA"
+"250"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"0.625"	"0.25"
+"275"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"0.875"	"0.5"
+"300"	"NA"	"NA"	"NA"	"0.19"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.125"	"0.75"
+"325"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.0"
+"350"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.25"
+"375"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"400"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"450"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"500"	"NA"	"NA"	"NA"	"NA"	"0.25"	"0.313"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"550"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"600"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.375"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"650"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"700"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"750"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+"800"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"0.5"	"0.625"	"0.75"	"0.875"	"1"	"1.25"	"1.5"
+
+CBoreDepthsMetric
+"START"	"4"	"5"	"6"	"8"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"008"	"2"	"0.5"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"																									
+"010"	"4"	"2.5"	"1"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"																									
+"012"	"4"	"4.5"	"3"	"1.5"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"																									
+"016"	"4"	"5"	"6"	"4"	"1.5"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"																									
+"020"	"4"	"5"	"6"	"8"	"5"	"2"	"NA"	"NA"	"NA"	"NA"	"NA"																									
+"025"	"4"	"5"	"6"	"8"	"10"	"7"	"1"	"NA"	"NA"	"NA"	"NA"																									
+"030"	"4"	"5"	"6"	"8"	"10"	"12"	"6"	"5"	"NA"	"NA"	"NA"																									
+"035"	"4"	"5"	"6"	"8"	"10"	"12"	"11"	"10"	"NA"	"NA"	"NA"																									
+"040"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"15"	"4"	"NA"	"NA"																									
+"045"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"20"	"9"	"5"	"NA"																									
+"050"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"20"	"14"	"10"	"NA"																									
+"055"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"20"	"19"	"15"	"6"																									
+"060"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"20"	"24"	"20"	"11"																									
+"065"	"NA"	"NA"	"6"	"8"	"10"	"12"	"16"	"20"	"24"	"25"	"16"																									
+"070"	"NA"	"NA"	"6"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"21"																									
+"075"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"26"																									
+"080"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"090"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"100"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"110"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"115"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"120"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"130"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"140"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"150"	"NA"	"NA"	"NA"	"NA"	"10"	"12"	"16"	"20"	"24"	"30"	"36"																									
+"160"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"16"	"20"	"NA"	"NA"	"NA"																									
+"180"	"NA"	"NA"	"NA"	"NA"	"NA"	"NA"	"16"	"20"	"NA"	"NA"	"NA"																									
+																																				
+																																				
+component-builder-detail-materials
+backing-plate
+
+A2
+A2 GS
+O1
+O6
+O1 GS
+O1 DR
+S7 GS
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+
+component-builder-detail-materials
+block
+
+A2
+A2 GS
+ACUSEAL
+ALUM
+AMPCO 18
+AMPCO 21
+CALDIE
+CARMO
+CRS
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+METALS PLUS
+S0030A
+HRS
+HRS-NPA
+HRS PLT
+H13
+H13 PREMIUM
+O1
+O6
+O1 GS
+O1 DR
+Ovar Superior
+P20
+S7
+S7 GS
+STEELCRAFT
+STRUCTURAL
+Vanadis4
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+OTHER
+MISC
+
+
+
+component-builder-detail-materials
+lifter
+
+CRS
+HRS
+HRS PLT
+O1
+O6
+O1 GS
+P20
+STRUCTURAL
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+																																				
+																																				
+																																				
+component-builder-detail-materials
+form
+
+A2
+CALDIE
+CARMO
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+H13
+H13 PREMIUM
+O1
+O6
+O1 GS
+O1 DR
+P20
+S7
+S7 GS
+Vanadis4
+4140
+4140 PH
+6150
+
+
+																																				
+component-builder-detail-materials
+window
+
+A2
+A2 GS
+CRS
+HRS
+4140
+4140 PH
+
+																																				
+																																				
+component-builder-detail-materials
+retainer
+
+A2
+CRS
+D2
+HRS
+P20
+S7
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+
+
+component-builder-detail-materials
+pad
+
+CRS
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+HRS
+HRS PLT
+4140
+4140 PH
+4140 PH PLT
+4140 PLT																													
+																																				
+																																				
+																																				
+																																				
+component-builder-detail-materials
+purchased
+
+A2
+A2 GS
+ACUSEAL
+ALUM
+AMPCO 18
+AMPCO 21
+CALDIE
+CARMO
+CRS
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+METALS PLUS
+S0030A
+HRS
+HRS-NPA
+HRS PLT
+H13
+H13 PREMIUM
+O1
+O6
+O1 GS
+O1 DR
+Ovar Superior
+P20
+S7
+S7 GS
+STEELCRAFT
+STRUCTURAL
+Vanadis4
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+OTHER
+MISC
+Dayton-Alter
+Moeller-Alter
+Impax-Alter
+EZ_FIT-Alter
+Misumi-Alter
+Selflube-Alter
+NAAMS-Alter
+Sankyo NAAMS-Alter
+Danly NAAMS-Alter
+Selflube NAAMS-Alter
+Danly-Alter
+MDL-Alter
+
+
+																																				
+component-builder-detail-materials
+trim
+
+A2
+D2
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+P20
+S7
+
+
+																																				
+component-builder-detail-materials
+shim
+
+A2
+A2 GS
+CRS
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+METALS PLUS
+O1
+O6
+O1 GS
+4140
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				
+																																				

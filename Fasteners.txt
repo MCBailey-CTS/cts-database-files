@@ -1,0 +1,42 @@
+:shcs_start:
+CBORE*          	BODY  CBORE                 REVOLVED(8)  99
+TAP*            	BODY  TAP                   CYLINDER(9)  99
+SHORT-TAP*      	BODY  SHORT-TAP             CYLINDER(13) 99
+SLOT_CBORE*     	BODY  SLOT_CBORE            EXTRUDE(23)  99
+CLR_HOLE*       	BODY  CLR_HOLE              REVOLVED(8)  99
+CLR_SCREW_HEAD* 	BODY  CLR_SCREW_HEAD        REVOLVED(29) 99
+HANDLING*       	Empty SHORT-TAP             CYLINDER(13) 98
+HANDLING_HARD   	Empty HARD_TAP_CLR          Unite(46)    99    
+WIRE_TAP        	Empty SHORT-TAP             CYLINDER(13) 98
+HARD_TAP_CLR*   	BODY  HARD_TAP_CLR          Unite(46)    99
+TAP_INSERT_STEEL_ONLY*	BODY  TAP_INSERT_STEEL_ONLY CYLINDER(17) 99
+:shcs_end:
+					
+:dowel_start:
+CBORE*       BODY  CBORE      CYLINDER(3)  99
+REAM*        BODY  REAM       CYLINDER(5)  99
+REAM_SHORT*  BODY  REAM_SHORT CYLINDER(10) 99
+BLIND_REAM*  BODY  BLIND_REAM CYLINDER(14) 99
+CLR_HOLE     BODY  CLR_HOLE   CYLINDER(8)  99
+CLR_DRILL*   BODY  CLR_HOLE   CYLINDER(8)  99
+TOOLING*     Empty REAM_SHORT CYLINDER(10) 97
+:dowel_end:
+
+:jck-screw_start:
+CBORE*           BODY CBORE           CYLINDER(0) 99
+CBORE_BLIND*     BODY CBORE_BLIND     CYLINDER(4) 99
+CBORE_BLIND_OPP  BODY CBORE_BLIND_OPP CYLINDER(9) 99
+BLIND_OPP*       BODY CBORE_BLIND_OPP CYLINDER(9) 99
+CLR_HOLE*        BODY CLR_HOLE        CYLINDER(7) 99
+:jck-screw_end:
+
+:jck-screw-tsg_start:
+CBORE*           BODY CBORE           CYLINDER(0) 99
+CBORE_BLIND*     BODY CBORE_BLIND     CYLINDER(3) 99
+CBORE_BLIND_OPP  BODY CBORE_BLIND_OPP CYLINDER(8) 99
+BLIND_OPP*       BODY CBORE_BLIND_OPP CYLINDER(8) 99
+CLR_HOLE*        BODY CLR_HOLE        CYLINDER(6) 99
+:jck-screw-tsg_end:
+
+* means that it will show up in the Add Fastener Reference Set ComboBox.
+// will mean ignore that reference set entirely in all ufuncs.

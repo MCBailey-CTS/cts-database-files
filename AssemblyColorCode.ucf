@@ -1,0 +1,18 @@
+//{Color Title}{button R}{button G}{button B}{NX Color}{DETAILS}{DCB}
+// DCB stands for "Diesets, Castings, & Burouts.
+:COLORS:
+{Aquamarine}                  {A:255} {B:170} {G:205} {R:102} {NX:14}  {DETAILS:-} {DCB:-Rough castbase color}
+{Blue}                        {A:255} {B:255} {G:0}   {R:0}   {NX:211} {DETAILS:-Semi Finish / Profile, Cut to ZERO of line or TOL +-.010".\n-All Clearance Holes& bottoms of CNC locator counterbore.} {DCB:-Cast Plus 10mm and needs to be rough cut to +-.010".}
+{Cyan}                        {A:255} {B:255} {G:255} {R:0}   {NX:3}   {DETAILS:-Finish 3D Contour "Contacts the product".} {DCB:-Cast Plus 10mm to finish 3D Contour "Contacts the product".}
+{Dark Grey}                   {A:255} {B:128} {G:128} {R:128} {NX:130} {DETAILS:-} {DCB:-Burnout profiles w/no stock added but qualify during machining.\n-Cast to zero w/no stock added but qualify during machining.}
+{Dark Red}                    {A:255} {B:0}   {G:0}   {R:139} {NX:13}  {DETAILS:-Layout Part Bodies} {DCB:-}
+{Dark Weak Red}               {A:255} {B:19}  {G:69}  {R:139} {NX:167} {DETAILS:-} {DCB:-Burnout profiles same color as base solid color/weld level.}
+{Green}                       {A:255} {B:0}   {G:252} {R:124} {NX:36}  {DETAILS:-Counter bores} {DCB:-}
+{Magenta}                     {A:255} {B:255} {G:0}   {R:255} {NX:181} {DETAILS:-Tapped Holes.} {DCB:-}
+{Orange}                      {A:255} {B:0}   {G:165} {R:255} {NX:11}  {DETAILS:-Finish Bore Size "SLIP FIT"\n-Toe clamp bushings/pins.\n-CNC locator counterbore sides.} {DCB:-}
+{Pale Red}                    {A:255} {B:153} {G:153} {R:255} {NX:75}  {DETAILS:-Layout Slugs} {DCB:-}
+{Red}           	      {A:255} {B:0}   {G:0}   {R:255} {NX:186} {DETAILS:-Trim profiles of punches,die steels, retainers, & windowsTOL.+-.001"} {DCB:-}
+{White}         	      {A:255} {B:255} {G:255} {R:255} {NX:37}  {DETAILS:-Tooling holes.} {DCB:-}
+{Yellow}        	      {A:255} {B:0}   {G:255} {R:255} {NX:42}  {DETAILS:-Finish Profile, Finish Planner surfaces, Wire burntap side, & side with CNC locator counterboreTOL. +-.001".\n-Reamed holes for dowels.} {DCB:-Cast Plus 10mm to finish Profile/Finish Planner surfaces TOL. +-.001".}
+{Light Weak Magenta}          {A:255} {B:204} {G:153} {R:204} {NX:80}  {DETAILS:-Fine thread tap.} {DCB:-}
+:END:

@@ -1,0 +1,7 @@
+.catpart
+.catproduct
+.prt
+.stp
+.step
+.igs
+.iges

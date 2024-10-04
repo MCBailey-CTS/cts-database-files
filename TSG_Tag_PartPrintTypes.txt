@@ -1,0 +1,10 @@
+.pdf
+.tiff
+.xlsx
+.pptx
+.tif
+.png
+.jpg
+.jpeg
+.jt
+.pvz

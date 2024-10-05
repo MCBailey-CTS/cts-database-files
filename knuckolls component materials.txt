@@ -1,0 +1,207 @@
+																																		
+component-builder-detail-materials
+backing-plate
+
+A2
+A2 GS
+O1
+O6
+O1 GS
+O1 DR
+S7 GS
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+
+component-builder-detail-materials
+block
+
+A2
+A2 GS
+ACUSEAL
+ALUM
+AMPCO 18
+AMPCO 21
+CALDIE
+CARMO
+CRS
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+METALS PLUS
+S0030A
+HRS
+HRS-NPA
+HRS PLT
+H13
+H13 PREMIUM
+O1
+O6
+O1 GS
+O1 DR
+Ovar Superior
+P20
+S7
+S7 GS
+STEELCRAFT
+STRUCTURAL
+Vanadis4
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+OTHER
+MISC
+
+
+
+component-builder-detail-materials
+lifter
+
+CRS
+HRS
+HRS PLT
+O1
+O6
+O1 GS
+P20
+STRUCTURAL
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150
+																																				
+																																				
+																																				
+component-builder-detail-materials
+form
+
+A2
+CALDIE
+CARMO
+D2
+DC53
+DIEVAR
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+H13
+H13 PREMIUM
+O1
+O6
+O1 GS
+O1 DR
+P20
+S7
+S7 GS
+Vanadis4
+4140
+4140 PH
+6150
+
+
+																																				
+component-builder-detail-materials
+window
+
+A2
+A2 GS
+CRS
+HRS
+4140
+4140 PH
+
+																																				
+																																				
+component-builder-detail-materials
+retainer
+
+A2
+CRS
+D2
+HRS
+P20
+S7
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+
+
+component-builder-detail-materials
+pad
+
+CRS
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+HRS
+HRS PLT
+4140
+4140 PH
+4140 PH PLT
+4140 PLT																													
+																																				
+																																				
+																																				
+																																				
+
+
+
+																																				
+component-builder-detail-materials
+trim
+
+A2
+D2
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+S0030A
+P20
+S7
+
+
+																																				
+component-builder-detail-materials
+shim
+
+A2
+A2 GS
+CRS
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+METALS PLUS
+O1
+O6
+O1 GS
+4140
+					

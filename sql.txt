@@ -10,32 +10,59 @@ values
 ('DESIGN_CHECK_999_BLOCK_REGEX', '(?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)'),
 ('DESIGN_CHECK_CBoreDepth_EnglishShcsRegex', '^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$'),
 ('DESIGN_CHECK_CBoreDepth_MetricShcsRegex', '^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$'),
-
-('', ''),
-:COMPONENT_NAMES_REGEX:
-^(?<DetailNumber>[0-9]{3})[A_Z]{1}$'),
-:END:
-
-('', ''),
-:Customer_Job_Number_Regex:
-(?<CustomerJobNumber>[0-9A-Z_]{4,})'),
-:END:
-
-('', ''),
-:0LIBRARY_REGEX:
-^G:\\0Library\\.*\.prt$'),
-:END:
-
-('', ''),
-:W_DRIVE_REGEX:
-^W:\\.*\.prt$'),
-:END:
-
-('', ''),
-:CBORE_DEPTH_IGNORE_PATHS_REGEX:
-^G:\\0Library\\.*\.prt$'),
-^W:\\.*\.prt$'),
-:END:
+('TSG_Tag_PartPrintTypes', '.pdf'),
+('TSG_Tag_PartPrintTypes', '.tiff'),
+('TSG_Tag_PartPrintTypes', '.xlsx'),
+('TSG_Tag_PartPrintTypes', '.pptx'),
+('TSG_Tag_PartPrintTypes', '.tif'),
+('TSG_Tag_PartPrintTypes', '.png'),
+('TSG_Tag_PartPrintTypes', '.jpg'),
+('TSG_Tag_PartPrintTypes', '.jpeg'),
+('TSG_Tag_PartPrintTypes', '.jt'),
+('TSG_Tag_PartPrintTypes', '.pvz'),
+('CTS_ATTRIBUTE_UNITS', 'N/A'),
+('SimulationControlFile_SIM_SPECIAL_REGEX', '^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$'),
+('SimulationControlFile_H', 'C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-020.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-030.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-020.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-030.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-050.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-020.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-030.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-050.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-020.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-030.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-050.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-090.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-150.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-050.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-090.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-120.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-060.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-020-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-030-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-020-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-030-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-050-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-020-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-030-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-050-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-020-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-030-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-050-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-090-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-150-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-050-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-090-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-120-2x.prt'),
+('AddFastenersPreferredDiametersGm','G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-060-2x.prt')
+('COMPONENT_NAMES_REGEX', '^(?<DetailNumber>[0-9]{3})[A_Z]{1}$'),
+('Customer_Job_Number_Regex', '(?<CustomerJobNumber>[0-9A-Z_]{4,})'),
+('0LIBRARY_REGEX', '^G:\\0Library\\.*\.prt$'),
+('W_DRIVE_REGEX', '^W:\\.*\.prt$'),
+('CBORE_DEPTH_IGNORE_PATHS_REGEX', '^G:\\0Library\\.*\.prt$'),
+('CBORE_DEPTH_IGNORE_PATHS_REGEX', '^W:\\.*\.prt$'),
 
 
 :DESCRIPTION_TITLES:
@@ -66,22 +93,12 @@ DESCRIPTION'),
 // It requires that a decimal must be present in the number in order to match.
 :DOUBLE_DECIMAL_REQUIRE_PERIOD_REGEX:
 (\d+\.\d*|\.\d*)'),
-:END:
 
-:SIZE_DESCRIPTION_IGNORE_PATHS_REGEX:
-^G:\\0Library\\.*\.prt$'),
-^W:\\.*\.prt$'),
-:END:
+('SIZE_DESCRIPTION_IGNORE_PATHS_REGEX', '^G:\\0Library\\.*\.prt$'),
+('SIZE_DESCRIPTION_IGNORE_PATHS_REGEX', '^W:\\.*\.prt$'),
 
-('', ''),
-:CBORE_DEPTH_MATCH_PATHS_REGEX:
-[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
-:END:
-
-('', ''),
-:DETAIL_STRUCTURE_REGEX:
-[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
-:END:
+('CBORE_DEPTH_MATCH_PATHS_REGEX', '[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
+('DETAIL_STRUCTURE_REGEX', '[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
 
 
 ('', ''),
@@ -174,126 +191,15 @@ M
 
 
 /////////////////////////////
-TSG_Tag_PartPrintTypes
 
-.pdf
-.tiff
-.xlsx
-.pptx
-.tif
-.png
-.jpg
-.jpeg
-.jt
-.pvz
+
+
 /////////////////////////////
 
 
-
 ////////////////////////////////////
 
-////////////////////////////////////
 
-/////////////////////////////////////
-SevenZipFolderStructure
-
-:FOLDERS_TO_DELETE_REGEX:
-FileCleanup
-:END:
-
-:INITIAL_DIRECTORY:
-G:\
-:END:
-
-:DETAIL_STRUCT_REGEX:
-"^[0-9]{4,}-(?<Op>[0-9]{3})-(?<DetailNumber>[0-9]{3})$"
-:END:
-
-:DETAIL_ASSEMBLY_STRUCT_REGEX:
-"^[0-9]{4,}-(?<AssemblyOp>[0-9]{4,})-(?<DetailNumber>[0-9]{3})$"
-:END:
-
-:GFOLDER_JOB_FOLDER_REGEX:
-\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\
-:END:
-
-:GFOLDER_FOLDERS_ZIP_ALL_SUBFOLDERS:
-\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\grippers\\
-\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\[0-9]{4,}-[0-9]{4,}\\
-:END:
-
-:GFOLDER_FOLDERS_ZIP_NO_SUBFOLDERS:
-\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\mathdata\\(?!\\)
-\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\simulation\\(?!\\)
-:END:
-
-//.*\\(?<CtsJobNumber>[0-9]{1,}) \((?<Customer>[a-z]{1,})-(?<CusomterJobNumber>[0-9]{1,})\)\\simulation\\(?!\\).*
-
-:SEVEN_ZIP_EXECUTABLE:
-C:\Program Files\7-Zip\7z.exe
-:END:
-
-:DIALOG_FILTER:
-Part Files (*.prt)|*-000.prt|All files (*.*)|*.*
-:END:
-
-
-
-:DIRECTORY_REGEXES:
-// Matches only part files in the top level directory of "mathdata" or "simulation".
-^([A-Za-z]{1}:{1})\\(.+)\\(mathdata|simulation)\\([^\\]{1,})\.prt$
-
-// Matches only part files at any level of the directory "grippers".
-^([A-Za-z]{1}:{1})\\(.+)\\(grippers)\\.*\.prt$
-:END:
-
-:TOP_DIRECTORY_ONLY:
-mathdata
-simulation
-:END:
-
-:ALL_DIRECTORIES:
-grippers
-:END:
-/////////////////////////////////////
-
-////////////////////////////////////
-AddFastenersPreferredDiametersGm
-
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-020.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-030.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-020.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-030.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-050.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-020.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-030.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-050.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-020.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-030.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-050.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-090.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-150.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-050.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-090.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-120.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-060.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-020-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-030-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-020-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-030-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-050-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-020-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-030-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-050-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-020-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-030-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-050-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-090-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-150-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-050-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-090-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-120-2x.prt
-G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-060-2x.prt
 ////////////////////////////////////
 
 /////////////////////////////////////////

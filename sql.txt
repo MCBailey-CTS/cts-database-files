@@ -1,11 +1,5 @@
 insert into ConceptControlFile 
 values
-
-
-
-
-
-
 ('CTS_ATTRIBUTE_SHOP', 'N/A'),
 ('CTS_ATTRIBUTE_SHOP', 'ATS'),
 ('CTS_ATTRIBUTE_SHOP', 'DTS'),
@@ -13,146 +7,113 @@ values
 ('CTS_ATTRIBUTE_SHOP', 'HTS'),
 ('CTS_ATTRIBUTE_SHOP', 'RTS'),
 ('CTS_ATTRIBUTE_SHOP', 'CTS'),
-
-('DESCRIPTION_ATTRIBUTE_NAME', ''),
-DESCRIPTION'),
-
-('MATERIAL_ATTRIBUTE_NAME', ''),
-MATERIAL'),
-
-
-('DETAIL_NUMBER_ATTRIBUTE_NAME', ''),
-DETAIL NUMBER'),
-
-('CASTING_MATERIALS', ''),
-GM190'),
-GM238'),
-GM241'),
-GM245'),
-GM246'),
-GM338'),
-S0050A'),
-S0030A'),
-G2500'),
-G3500'),
-D4512'),
-D5506'),
-D6510'),
-CARMO CAST'),
-GM68M'),
-S0030'),
-
-
-
-
-
-('', ''),
-:CTS_ATTRIBUTE_SHOP1NAME:
-N/A'),
-ADVANCED'),
-DIENAMIC'),
-ENGINEERED'),
-HOTSTAMP'),
-RAPID'),
-
-
+('DESCRIPTION_ATTRIBUTE_NAME', 'DESCRIPTION'),
+('MATERIAL_ATTRIBUTE_NAME', 'MATERIAL'),
+('DETAIL_NUMBER_ATTRIBUTE_NAME', 'DETAIL NUMBER'),
+('CASTING_MATERIALS', 'GM190'),
+('CASTING_MATERIALS', 'GM238'),
+('CASTING_MATERIALS', 'GM241'),
+('CASTING_MATERIALS', 'GM245'),
+('CASTING_MATERIALS', 'GM246'),
+('CASTING_MATERIALS', 'GM338'),
+('CASTING_MATERIALS', 'S0050A'),
+('CASTING_MATERIALS', 'S0030A'),
+('CASTING_MATERIALS', 'G2500'),
+('CASTING_MATERIALS', 'G3500'),
+('CASTING_MATERIALS', 'D4512'),
+('CASTING_MATERIALS', 'D5506'),
+('CASTING_MATERIALS', 'D6510'),
+('CASTING_MATERIALS', 'CARMO CAST'),
+('CASTING_MATERIALS', 'GM68M'),
+('CASTING_MATERIALS', 'S0030'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'N/A'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'ADVANCED'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'DIENAMIC'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'ENGINEERED'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'HOTSTAMP'),
+('CTS_ATTRIBUTE_SHOP1NAME', 'RAPID'),
 ('CTS_ATTRIBUTE_UNITS', 'N/A', 0),
-
-('CTS_ATTRIBUTE_UNITS', '', 0),
-METRIC'),
-('CTS_ATTRIBUTE_UNITS', '', 0),
-ENGLISH'),
-
-
-
-('', '', 0)
-:SimulationControlFile_SIM_SPECIAL_REGEX:
-//Line below is obsolete 2018-10-12
-//^(?<CustomerNumber>[0-9_]{4,})-simulation$
-//Updated to below to allow for file names like "2456-01-simulation"
-^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$'),
-:END:
-
-('', '', 0)
-:SimulationControlFile_H:
-C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def'),
-:END:
-
-('', '', 0)
-:SimulationControlFile_IGES_FILE_SETTINGS_PATH:
-C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def'),
-:END:
-
-
-('', '', 0),
-:SimulationControlFile_COMBO_SURFACE_ITEMS:
-lwr'),
-upr'),
-Pad Profile'),
-
-
-('', '', 0),
-:SimulationControlFile_COMBO_TOOL_SIDE_ITEMS:
-lwr'),
-upr'),
-post'),
-pad'),
-punch'),
-lifter'),
-
-
-('', '', 0),
-:SimulationControlFile_SIM_DRIVE_PATH:
-S:\\Active'),
-
-
-
-
-('', '', 0),
-//{Attribute title}:{Column}
-:BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH:
-{DESCRIPTION}:{3}'),
-{MATERIAL}:{4}'),
-{ComponentDescriptionUGS}:{8}'),
-
-
-('', '', 0),
-:BillOfMaterial_ATS_EXCEL:
-U:\nxFiles\Excel\ats.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_CTS_EXCEL:
-U:\nxFiles\Excel\cts.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_DTS_EXCEL:
-U:\nxFiles\Excel\dts.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_ETS_EXCEL:
-U:\nxFiles\Excel\ets.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_HTS_EXCEL:
-U:\nxFiles\Excel\hts.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_RTS_EXCEL:
-U:\nxFiles\Excel\rts.xlsx'),
-:END:
-
-('', '', 0),
-:BillOfMaterial_UGS_EXCEL:
-U:\nxFiles\Excel\ugs.xlsx'),
-:END:
-
-
-
+('CTS_ATTRIBUTE_UNITS', 'METRIC'),
+('CTS_ATTRIBUTE_UNITS', 'ENGLISH'),
+('SimulationControlFile_SIM_SPECIAL_REGEX', '^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$'),
+('SimulationControlFile_H', 'C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def'),
+('SimulationControlFile_IGES_FILE_SETTINGS_PATH', 'C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def'),
+('SimulationControlFile_COMBO_SURFACE_ITEMS', 'lwr'),
+('SimulationControlFile_COMBO_SURFACE_ITEMS', 'upr'),
+('SimulationControlFile_COMBO_SURFACE_ITEMS', 'Pad Profile'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'lwr'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'upr'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'post'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'pad'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'punch'),
+('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'lifter'),
+('SimulationControlFile_SIM_DRIVE_PATH', 'S:\\Active'),
+('component_builder_detail_materials_purchased', 'A2'),
+('component_builder_detail_materials_purchased', 'A2 GS'),
+('component_builder_detail_materials_purchased', 'ACUSEAL'),
+('component_builder_detail_materials_purchased', 'ALUM'),
+('component_builder_detail_materials_purchased', 'AMPCO 18'),
+('component_builder_detail_materials_purchased', 'AMPCO 21'),
+('component_builder_detail_materials_purchased', 'CALDIE'),
+('component_builder_detail_materials_purchased', 'CARMO'),
+('component_builder_detail_materials_purchased', 'CRS'),
+('component_builder_detail_materials_purchased', 'D2'),
+('component_builder_detail_materials_purchased', 'DC53'),
+('component_builder_detail_materials_purchased', 'DIEVAR'),
+('component_builder_detail_materials_purchased', 'GM190/S0050A'),
+('component_builder_detail_materials_purchased', 'GM238/G2500'),
+('component_builder_detail_materials_purchased', 'GM241/G3500'),
+('component_builder_detail_materials_purchased', 'GM245/D4512'),
+('component_builder_detail_materials_purchased', 'GM246/D5506'),
+('component_builder_detail_materials_purchased', 'GM338/D6510'),
+('component_builder_detail_materials_purchased', 'GM68M/S0030'),
+('component_builder_detail_materials_purchased', 'METALS PLUS'),
+('component_builder_detail_materials_purchased', 'S0030A'),
+('component_builder_detail_materials_purchased', 'HRS'),
+('component_builder_detail_materials_purchased', 'HRS-NPA'),
+('component_builder_detail_materials_purchased', 'HRS PLT'),
+('component_builder_detail_materials_purchased', 'H13'),
+('component_builder_detail_materials_purchased', 'H13 PREMIUM'),
+('component_builder_detail_materials_purchased', 'O1'),
+('component_builder_detail_materials_purchased', 'O6'),
+('component_builder_detail_materials_purchased', 'O1 GS'),
+('component_builder_detail_materials_purchased', 'O1 DR'),
+('component_builder_detail_materials_purchased', 'Ovar Superior'),
+('component_builder_detail_materials_purchased', 'P20'),
+('component_builder_detail_materials_purchased', 'S7'),
+('component_builder_detail_materials_purchased', 'S7 GS'),
+('component_builder_detail_materials_purchased', 'STEELCRAFT'),
+('component_builder_detail_materials_purchased', 'STRUCTURAL'),
+('component_builder_detail_materials_purchased', 'Vanadis4'),
+('component_builder_detail_materials_purchased', '4140'),
+('component_builder_detail_materials_purchased', '4140 PH'),
+('component_builder_detail_materials_purchased', '4140 PH PLT'),
+('component_builder_detail_materials_purchased', '4140 PLT'),
+('component_builder_detail_materials_purchased', '6150'),
+('component_builder_detail_materials_purchased', 'OTHER'),
+('component_builder_detail_materials_purchased', 'MISC'),
+('component_builder_detail_materials_purchased', 'Dayton-Alter'),
+('component_builder_detail_materials_purchased', 'Moeller-Alter'),
+('component_builder_detail_materials_purchased', 'Impax-Alter'),
+('component_builder_detail_materials_purchased', 'EZ_FIT-Alter'),
+('component_builder_detail_materials_purchased', 'Misumi-Alter'),
+('component_builder_detail_materials_purchased', 'Selflube-Alter'),
+('component_builder_detail_materials_purchased', 'NAAMS-Alter'),
+('component_builder_detail_materials_purchased', 'Sankyo NAAMS-Alter'),
+('component_builder_detail_materials_purchased', 'Danly NAAMS-Alter'),
+('component_builder_detail_materials_purchased', 'Selflube NAAMS-Alter'),
+('component_builder_detail_materials_purchased', 'Danly-Alter'),
+('component_builder_detail_materials_purchased', 'MDL-Alter'),
+('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{DESCRIPTION}:{3}', '//{Attribute title}:{Column}'),
+('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{MATERIAL}:{4}', '//{Attribute title}:{Column}'),
+('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{ComponentDescriptionUGS}:{8}', '//{Attribute title}:{Column}'),
+('BillOfMaterial_ATS_EXCEL', 'U:\nxFiles\Excel\ats.xlsx'),
+('BillOfMaterial_CTS_EXCEL', 'U:\nxFiles\Excel\cts.xlsx'),
+('BillOfMaterial_DTS_EXCEL', 'U:\nxFiles\Excel\dts.xlsx'),
+('BillOfMaterial_ETS_EXCEL', 'U:\nxFiles\Excel\ets.xlsx'),
+('BillOfMaterial_HTS_EXCEL', 'U:\nxFiles\Excel\hts.xlsx'),
+('BillOfMaterial_RTS_EXCEL', 'U:\nxFiles\Excel\rts.xlsx'),
+('BillOfMaterial_UGS_EXCEL', 'U:\nxFiles\Excel\ugs.xlsx'),
 
 ('', '', 0),
 ///////////////////////////////////////////
@@ -181,81 +142,22 @@ AssemblyColorCode
 
 ///////////////////////////////////////
 
-('DrawDie_', ''),
-:OP_020_000_REGEX:
-^\d+-020-000$
-:END:
-
-('DrawDie_', ''),
-:OP_020_LAYOUT_REGEX:
-^\d+-020-layout$
-:END:
-
-('DrawDie_', ''),
-:CompName_LowerPost:
-100
-:END:
-
-('DrawDie_', ''),
-:CompName_LowerBinder:
-// This has to be a number that can be converted to an integer.
-// Program will fail otherwise.
-101
-:END:
-
-('DrawDie_', ''),
-:CompName_UpperCavity:
-// This has to be a number that can be converted to an integer.
-// Program will fail otherwise.
-600
-:END:
-
-('DrawDie_', ''),
-:Material_LowerPost:
-D2
-:END:
-
-('DrawDie_', ''),
-:Material_LowerBinder:
-D2
-:END:
-
-('DrawDie_', ''),
-:Material_UpperCavity:
-D2
-:END:
-
-('DrawDie_', ''),
-:HeightZCLowerBinder:
-2.5
-:END:
-
-('DrawDie_', ''),
-:UPPER_CAVITY_REFERENCE_BOOLEAN:
-// Subtract, Intersect, Unite
-{^OP-020-UPR-3D$},{Subtract},{0}
-:END:
-
-:LOWER_BINDER_REFERENCE_BOOLEAN:
-// Subtract, Intersect, Unite
-{^OP-020-LWR-3D$},{Subtract},{0}
-{^OP-020-PAD-PROFILE$},{Subtract},{0}
-:END:
-
-:LOWER_POST_REFERENCE_BOOLEAN:
-// Subtract, Intersect, Unite
-('DrawDie_', ''),
-{^OP-020-LWR-3D$},{Subtract},{0}
-('DrawDie_', ''),
-{^OP-020-PAD-PROFILE$},{Intersect},{0}
-('DrawDie_', ''),
-{^OP-\d{3}-LWR-3D.*WITH(\s*|-|_)PROFILE$},{Subtract},{1}
-:END:
-
-('DrawDie_', ''),
-:STANDOFF_SEED_FILE:
-G:\0Library\Standoffs\Standoff Square Lower Metric.prt
-:END:
+('DrawDie_OP_020_000_REGEX', '^\d+-020-000$'),
+('DrawDie_OP_020_LAYOUT_REGEX', '^\d+-020-layout$'),
+('DrawDie_CompName_LowerPost', '100'),
+('DrawDie_CompName_LowerBinder', '101'),
+('DrawDie_CompName_UpperCavity', '600'),
+('DrawDie_Material_LowerPost', 'D2'),
+('DrawDie_Material_LowerBinder', 'D2'),
+('DrawDie_Material_UpperCavity', 'D2'),
+('DrawDie_HeightZCLowerBinder', '2.5'),
+('DrawDie_UPPER_CAVITY_REFERENCE_BOOLEAN', '{^OP-020-UPR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
+('DrawDie_LOWER_BINDER_REFERENCE_BOOLEAN', '{^OP-020-LWR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
+('DrawDie_LOWER_BINDER_REFERENCE_BOOLEAN', '{^OP-020-PAD-PROFILE$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
+('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-020-LWR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
+('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-020-PAD-PROFILE$},{Intersect},{0}', '// Subtract, Intersect, Unite'),
+('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-\d{3}-LWR-3D.*WITH(\s*|-|_)PROFILE$},{Subtract},{1}'),
+('DrawDie_STANDOFF_SEED_FILE', 'G:\0Library\Standoffs\Standoff Square Lower Metric.prt'),
 
 ('DrawDie_', ''),
 :SMART_KEY_SEED_FILE:
@@ -289,77 +191,77 @@ M
 ///////////////////////////////////////
 
 ///////////////////////////////////////
-Design Check
 
-('', ''),
+
+('Design_Check_', ''),
 :DESIGN_CHECK_VIEW_AND_REVISION:
-Design Check: 4.0
+Design Check: 4.0'),
 :END:
 
 ('', ''),
 :WireTapNotes_PreCheck_Titles:
-WTN
+WTN'),
 :END:
 
 ('', ''),
 :WireTapNotes_PreCheck_Values:
-YES
+YES'),
 :END:
 
 ('', ''),
 :WireTapNotes_Check_Titles:
-DETAIL NAME
+DETAIL NAME'),
 :END:
 
 ('', ''),
 :WireTapNotes_Check_Values:
-TRIM
+TRIM'),
 :END:
 
 ('', ''),
 :Burnouts_Titles_1:
-MATERIAL
+MATERIAL'),
 :END:
 
 ('', ''),
 :Burnouts_Values_1:
-HRS PLT
-4140 PLT
-4140 PH PLT
+HRS PLT'),
+4140 PLT'),
+4140 PH PLT'),
 :END:
 
 ('', ''),
 :Burnouts_DrawingSheetName:
-BURNOUT
+BURNOUT'),
 :END:
 
 ('', ''),
 :Metric_Tolerance:
 //Millimeters
-0.0254
+0.0254'),
 :END:
 
 ('', ''),
 :English_Tolerance:
 //Inches
-0.001
+0.001'),
 :END:
 
 ('', ''),
 :999_BLOCK_REGEX:
-(?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)
+(?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)'),
 :END:
 
 ('', ''),
 :CBoreDepth_EnglishShcsRegex:
 // Regular Text Expression to match english Shcs with.
-^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$
+^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$'),
 :END:
 
 ('', ''),
 :CBoreDepth_MetricShcsRegex:
 // Regular Text Expression to match metric Shcs with.
-^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$
+^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$'),
 :END:
 
 // These are in millimeters.
@@ -426,151 +328,125 @@ NA	0004	0006	0008	0010	0250	0313	0375	0500	0625	0750	0875	1000	1250	1500
 
 ('', ''),
 :LINKED_BODY_FEATURE_NAME:
-LINKED_BODY
+LINKED_BODY'),
 :END:
 
 ('', ''),
 :OP_NUMBER:
-(?!000)(?<OpNumber>[0-9]{3})
+(?!000)(?<OpNumber>[0-9]{3})'),
 :END:
 
 ('', ''),
 :GFOLDER_JOB_FOLDER_REGEX:
-([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)
+([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)'),
 :END:
 
 ('', ''),
 :Detail_Number_Regex:
-(?<DetailNumber>[0-9]{3,})
+(?<DetailNumber>[0-9]{3,})'),
 :END:
 
 ('', ''),
 :GFOLDER_ASSEMBLY_FOLDER_REGEX:
-[0-9]{1,}-[0-9]{1,}
+[0-9]{1,}-[0-9]{1,}'),
 :END:
 
 ('', ''),
 :Customer_Job_Op_Regex:
-<rec>Customer_Job_Number_Regex</rec>-<rec>OP_NUMBER</rec>
+<rec>Customer_Job_Number_Regex</rec>-<rec>OP_NUMBER</rec>'),
 :END:
 
 ('', ''),
 :Detail_Structure_Regex:
-\\<rec>Customer_Job_Op_Regex</rec>-<rec>Detail_Number_Regex</rec>\\
+\\<rec>Customer_Job_Op_Regex</rec>-<rec>Detail_Number_Regex</rec>\\'),
 :END:
 
 ('', ''),
 :COMPONENT_NAMES_REGEX:
-^(?<DetailNumber>[0-9]{3})[A_Z]{1}$
+^(?<DetailNumber>[0-9]{3})[A_Z]{1}$'),
 :END:
 
 ('', ''),
 :Customer_Job_Number_Regex:
-(?<CustomerJobNumber>[0-9A-Z_]{4,})
+(?<CustomerJobNumber>[0-9A-Z_]{4,})'),
 :END:
 
 ('', ''),
 :0LIBRARY_REGEX:
-^G:\\0Library\\.*\.prt$
+^G:\\0Library\\.*\.prt$'),
 :END:
 
 ('', ''),
 :W_DRIVE_REGEX:
-^W:\\.*\.prt$
+^W:\\.*\.prt$'),
 :END:
 
 ('', ''),
 :CBORE_DEPTH_IGNORE_PATHS_REGEX:
-^G:\\0Library\\.*\.prt$
-^W:\\.*\.prt$
+^G:\\0Library\\.*\.prt$'),
+^W:\\.*\.prt$'),
 :END:
 
 
 ('', ''),
 :CBORE_DEPTH_MATCH_PATHS_REGEX:
-[0-9]{4,}-[0-9]{3}-[0-9]{3}
+[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
 :END:
 
 ('', ''),
 :DETAIL_STRUCTURE_REGEX:
-[0-9]{4,}-[0-9]{3}-[0-9]{3}
+[0-9]{4,}-[0-9]{3}-[0-9]{3}'),
 :END:
 
 
 ('', ''),
 :INTERPART_EXPRESSIONS_GFOLDER_REGEX_MATCH:
-\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\.*\.prt$
+\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\.*\.prt$'),
 :END:
 
-('', ''),
-:GFOLDER_REGEXES:
-^G:\\0Library\\.*\.prt$
-^G:\\0Press\\.*\.prt$
-^W:\\.*\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\[0-9]{1,}-[0-9]{3}\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\grippers\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
-:END:
-
-('', ''),
-:FULLY_LOAD_ASSEMBLY_REGEXES:
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\[0-9]{1,}-[0-9]{3}\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\grippers\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\layout\\.+\.prt$
-:END:
-
-('', ''),
-:PARTIALLY_LOAD_ASSEMBLY_REGEXES:
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\simulation\\.+\.prt$
-^([a-zA-Z]):\\([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)\\mathdata\\.+\.prt$
-:END:
 
 
 
 
 
 :CBORE_DEPTH_TITLES_1:
-MATERIAL
+MATERIAL'),
 :END:
 
 :SIZE_DESCRIPTION_TITLES_1:
-MATERIAL
+MATERIAL'),
 :END:
 
 :CASTING_MATERIALS_TITLES:
-MATERIAL
+MATERIAL'),
 :END:
 
 :CASTING_MATERIALS_VALUES:
-GM190
-GM238
-GM241
-GM245
-GM246
-GM338
-S0050A
-S0030A
-G2500
-G3500
-D4512
-D5506
-D6510
-CARMO CAST
-GM68M
-S0030
+GM190'),
+GM238'),
+GM241'),
+GM245'),
+GM246'),
+GM338'),
+S0050A'),
+S0030A'),
+G2500'),
+G3500'),
+D4512'),
+D5506'),
+D6510'),
+CARMO CAST'),
+GM68M'),
+S0030'),
 :END:
 
 :GuideBushings_GuidePins_Titles:
-LibraryPath
+LibraryPath'),
 :END:
 
 :GuideBushings_GuidePins_Values:
-GuideBushings
-GuidePins
+GuideBushings'),
+GuidePins'),
 :END:
 
 // The following list is identical to the one sitting in the actual UCF file on the UDrive. 
@@ -657,15 +533,15 @@ OTHER
 :END:
 
 :DESCRIPTION_TITLES:
-DESCRIPTION
+DESCRIPTION'),
 :END:
 
 :DESCRIPTION_IGNORE_VALUES:
-(\d+\.\d+)|(\d+\.)|(\.\d+)
+(\d+\.\d+)|(\d+\.)|(\.\d+)'),
 :END:
 
 :SIZE_TITLES:
-DESCRIPTION
+DESCRIPTION'),
 :END:
 
 
@@ -677,18 +553,18 @@ DESCRIPTION
 
 
 :DOUBLE_DECIMAL_REGEX:
-(\d+\.?\d*|\.\d*)
+(\d+\.?\d*|\.\d*)'),
 :END:
 
 // The difference between this and "DOUBLE_DECIMAL_REGEX" is that this won't match integers.
 // It requires that a decimal must be present in the number in order to match.
 :DOUBLE_DECIMAL_REQUIRE_PERIOD_REGEX:
-(\d+\.\d*|\.\d*)
+(\d+\.\d*|\.\d*)'),
 :END:
 
 :SIZE_DESCRIPTION_IGNORE_PATHS_REGEX:
-^G:\\0Library\\.*\.prt$
-^W:\\.*\.prt$
+^G:\\0Library\\.*\.prt$'),
+^W:\\.*\.prt$'),
 :END:
 
 
@@ -699,12 +575,12 @@ DESCRIPTION
 //:END:
 
 :SIZE_DESCRIPTION_REGEX:
-([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*
+([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*\s*X\s*([0-9]*\.[0-9]{2,3}).*'),
 :END:
 
 :SIZE_DESCRIPTION_BURN_REGEX:
 //^Burn\s*(?<BurnHeight>\d+\.?\d*)
-^Burn\s*(?<BurnHeight>(\d+\.\d+)|(\d+\.)|(\.\d+))
+^Burn\s*(?<BurnHeight>(\d+\.\d+)|(\d+\.)|(\.\d+))'),
 :END:
 
 
@@ -716,13 +592,13 @@ DESCRIPTION
 //////////////////////////////////
 TSG_Tag_DataTypes
 
-.catpart
-.catproduct
-.prt
-.stp
-.step
-.igs
-.iges
+.catpart'),
+.catproduct'),
+.prt'),
+.stp'),
+.step'),
+.igs'),
+.iges'),
 //////////////////////////////////
 
 //////////////////////////////////////
@@ -1016,58 +892,85 @@ M20
 M22
 0.98475196850394
 M25
+
 1.18160236200000
 M30
+
 1.26034251968504
 M32
+
 1.49656299212598
 M38
+
 1.57530314960630
 M40
+
 1.77215354330709
 M45
+
 0.12500000090000
 WS11
+
 0.25000000090000
 WS25
+
 0.37500000090000
 WS37
+
 0.32300007000000
 NPT060
+
 0.41500007000000
 NPT012
+
 0.55000007000000
 NPT025
+
 0.68500007000000
 NPT037
+
 0.85000007000000
 NPT050
+
 1.06000007000000
 NPT075
+
 1.32500007000000
 NPT100
+
 1.67000007000000
 NPT125
+
 1.91000007000000
 NPT150
+
 2.38500007000000
 NPT200
+
 2.88500007000000
 NPT250
+
 3.51000007000000
 NPT300
+
 0.41000007000000
 BSPP12-28
+
 0.41100000070000
 NPTF1/8-27 3/4 TPF
+
 0.55400000700000
 NPTF1/4-18 3/4 TPF
+
 0.68100000070000
 NPTF3/8-18 3/4 TPF
+
 0.84100000700000
 NPTF1/2-14 3/4 TPF
+
 0.59255122707000
 Heli-Coil M12x1.75
+
 diameter to match--
 --1st line of text--
 ////////////////////////////////////////////////////
@@ -1116,8 +1019,8 @@ C6 0.28125023622047
 C6 0.27559055118110
 C8 0.35937502362205
 C10 0.43750023622047
-
 C12 0.53125023622047
+
 0.57812530000000
 C13
 
@@ -1126,18 +1029,25 @@ C16
 
 0.82812503937008
 C20
+
 1.00000023622047
 C24
+
 1.25000023622047
 C30
+
 1.49606535433071
 C36
+
 0.12200000000000
 T#4-40
+
 0.14800000000000
 T15
+
 0.17400000000000
 T17
+
 0.20000000000000
 T19
 
@@ -1152,46 +1062,67 @@ FT31-24 0.32000007000000
 T37 0.38500000000000
 
 T50 0.51000000000000
+
 0.50500000000000
 FT50-20
+
 0.63500000000000
 T62
+
 0.76000000000000
 T75
+
 0.88500000000000
 T87
+
 1.01000000000000
 T100
+
 1.26000000000000
 T125
+
 1.51000000000000
 T150
+
 0.12811023622047
 T3
+
 0.12204724409449
 T3
+
 0.16748031496063
 T4
+
 0.16141732283465
 T4
+
 0.20685039370079
 T5
+
 0.20078740157480
 T5
+
 0.24622047244094
 T6
+
 0.24015748031496
 T6
+
 0.32496062992126
 T8
+
 0.31996062992125
 FT8-1
+
 0.40370078740157
 T10
+
 0.40000007000000
 FT10-1.0
+
 0.39870078740157
 FT10-1.25
+
 0.48244094488189
 T12
 
@@ -1214,24 +1145,34 @@ T20 0.79740157480315
 FT20-1.5 0.80000007000000
 
 FT22-1.5 0.86700000700000
+
 0.95488188976378
 T24
+
 0.94738188976378
 FT24-1.5
+
 0.94988000000000
 FT24-2
+
 0.98925196850393
 FT25-1.5
+0
 1.02600007000000
 FT26-1.5
+
 1.19110236220472
 T30
+
 1.12204724409448
 FT30
+
 1.42732283464567
 T36
+
 1.66354330708661
 T42
+
 1.89976377952755
 T48
 
@@ -1672,548 +1613,6 @@ G:\0Library\Fasteners\English\Dowels\1000-dwl-200.prt
 G:\0Library\Fasteners\English\JackScrews\_0500-jck-screw-tsg.prt
 //////////////////////////////////
 
-U:\nxFiles\Step Translator\ExternalStep_AllLayers.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-APPLICATION_PROTOCOL=AP214
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Continue if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load As Saved
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids,Wireframe,Surfaces
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1-256
-Authorization=
-UGI_PROC_ASSEM=Overwrite load_options.def values
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 11.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=C:\Users\administrator\*.prt
-
-U:\nxFiles\Step Translator\ExternalStep_Design.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-APPLICATION_PROTOCOL=AP214
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Continue if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load As Saved
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids,Wireframe,Surfaces
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1-49,60-256
-Authorization=
-UGI_PROC_ASSEM=Overwrite load_options.def values
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 11.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=C:\Users\administrator\*.prt
-
-
-U:\nxFiles\Step Translator\ExternalStep_Detail.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Continue if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load As Saved
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254000000
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCE_FORMAT=NX
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1, 111
-Authorization=
-UGI_PROC_ASSEM=Overwrite load_options.def values
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 4.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=H:\\*.prt
-
-U:\nxFiles\Step Translator\ExternalStep_Assembly.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-APPLICATION_PROTOCOL=AP214
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Continue if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load As Saved
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids,Wireframe,Surfaces
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1-256
-Authorization=
-UGI_PROC_ASSEM=Overwrite load_options.def values
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 11.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=C:\Users\administrator\*.prt
-
-
-U:\nxFiles\Step Translator\214ug.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Abort if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load As Saved
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCE_FORMAT=STEP
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids,Wireframe,Surfaces
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1-256
-Authorization=
-UGI_PROC_ASSEM=Overwrite load_options.def values
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 9.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=C:\Users\dvanderwerf\*.prt
-
-U:\nxFiles\Step Translator\214ug_3d_data.def
-DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-INDIVIDUAL_LIST=
-MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-UGI_LAYERE_MASK=
-UGI_LOAD_VER=Load Exact Version
-UGI_COMP_FAIL=Abort if Load Fails
-SMOOTH_BSURFS=On
-UGI_LOAD_OPTION=Load From Assem Dir
-RECALL_DEF_FILE=ugstep214.def
-Description=
-PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
-CNV_MODE=On-Line
-EXPORT_EXTERNAL_REFERENCE_FORMAT=STEP
-EXPORT_EXTERNAL_REFERENCES=Off
-SHORT_LONG_NAMES=Long
-Organization=
-EXPORT_VALPROPS=Off
-MODULES_MASK=Solids,Wireframe
-AP214_DIS_OR_CD1=IS
-LOG_FILE=
-CHOOSE_DIRECTION=UG to STEP
-AUTOMATIC_SURF_SEW=Off
-File_Name=
-PROCESS_PART_LIST=
-UGI_LOAD_COMP=Load Components
-UGI_LAYERD_MASK=
-Author=
-UGI_COMP_SUB=Do not Allow Substitution
-UGI_LAYER_MASK=1,94,96,99
-Authorization=
-UGI_PROC_ASSEM=Use load_options.def options
-Imp_Level=1
-ZERO_LAYER_DEFAULT=1
-Pre_Version=STEP214UG NX 9.0
-SAVE_DEF_FILE=ugstep214.def
-UGI_SEARCH_DIRS=
-ASSEMBLY_MAP=Off
-FILE_FILTER=C:\Users\dvanderwerf\*.prt
-
-U:\nxFiles\Step Translator\Default_igesexport.def
-CHOOSE_DIRECTION = UG to IGES
-CNV_MODE = on-line
-SAVE_DEF_FILE = igesexport.def
-RECALL_DEF_FILE = igesexport.def
-LOG_FILE = igesexport.log
-MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-JAMA = off
-IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
-IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
-IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
-IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
-IG2UG_ENABLE_LAYER = 
-IG2UG_DISABLE_LAYER = 
-IG2UG_LAYER_MASK = 0-99999
-ZERO_LAYER_DEFAULT = 1
-BSURFACE_MAP = On
-SURFOFREV_MAP = On
-VIEWMOD_MAP = Off
-SMOOTH_BSURFS = On
-ASSEMBLY_MAP = Off
-IGES_ATTRIBUTE = Off
-SUPPRESS_LABELS = Off
-SCALE_TEXT_AND_ARROWS = Off
-RULED_SURFACE_MAP = B-Surface
-COPIOUS_DATA_MAP = Group of Linear NURB Splines
-SUBTEXT_MAP = Visible in Component Part Only
-TRIM_SURF_TOL = 0.001
-FIXUP_TOL = 0.0005
-BASE_PART_IN = igesnullnx110_in.prt
-BASE_PART_MM = igesnullnx110_mm.prt
-FILE_FILTER = *.prt
-PROCESS_PART_LIST = 
-INDIVIDUAL_LIST = 
-ID_FOR_REC =  
-ENTER_START_SECTION = 
-START_FILE_NAME = 
-SURF_DIST_TOL = 0.002
-AUTHOR = 
-COMPANY = 
-UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
-UGI_USER_DEFINED_VIEWS = 
-UGI_DRAWING_NAMES = 
-UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
-UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
-UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
-UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
-UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
-VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
-UGI_LAYERE_MASK = 
-UGI_LAYERD_MASK = 
-UGI_LAYER_MASK = 1-256
-CROSSHATCH_MAP = Sectioned Area
-TRIMMED_SURFACE_MAP = Off
-PERIODIC_SURFACE_MAP = Off
-LINE_FONT_MAP = IGES Line Font Number
-COLOR_FONT_MAP = Color Definition
-OUTPUT_FORMAT = On
-UGI_PROC_ASSEM = Use load_options.def options
-UGI_COMP_FAIL = Abort if Load Fails
-UGI_LOAD_COMP = Load Components
-UGI_LOAD_VER = Load Exact Version
-UGI_COMP_SUB = Do not Allow Substitution
-UGI_LOAD_OPTION = Load From Assem Dir
-UGI_SEARCH_DIRS = 
-MAX_LINE_THICK = 2.0000000
-IGES_BLACK = black
-IGES_WHITE = white
-SYSMOD_DIM = On
-MODEL_DIM = 10000.0000000
-SYSPT_RESOLUTION = On
-POINT_RESOLUTION = 0.00100
-AUTOMATIC_SURF_SEW = Off
-IGES_DIM_TO_UG_ASSORT = Yes
-IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
-IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
-SURFREV_MAP = B-Surface
-TABCYL_MAP = On
-FORCE_B-SURFACES = No
-REFERENCE_CSYS_FOR_EXPORT = ABS
-USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
-
-U:\nxFiles\Step Translator\Default_igesimport.def
-CHOOSE_DIRECTION = IGES to UG
-CNV_MODE = on-line
-SAVE_DEF_FILE = igesimport.def
-RECALL_DEF_FILE = igesimport.def
-LOG_FILE = igesimport.log
-MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-JAMA = off
-IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
-IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
-IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
-IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
-IG2UG_ENABLE_LAYER = 
-IG2UG_DISABLE_LAYER = 
-IG2UG_LAYER_MASK = 0-99999
-ZERO_LAYER_DEFAULT = 1
-BSURFACE_MAP = On
-SURFOFREV_MAP = On
-VIEWMOD_MAP = Off
-SMOOTH_BSURFS = On
-ASSEMBLY_MAP = Off
-IGES_ATTRIBUTE = Off
-SUPPRESS_LABELS = Off
-SCALE_TEXT_AND_ARROWS = Off
-RULED_SURFACE_MAP = B-Surface
-COPIOUS_DATA_MAP = Group of Linear NURB Splines
-SUBTEXT_MAP = Visible in Component Part Only
-TRIM_SURF_TOL = 0.001
-FIXUP_TOL = 0.0005
-BASE_PART_IN = igesnullnx110_in.prt
-BASE_PART_MM = igesnullnx110_mm.prt
-FILE_FILTER = *.igs
-PROCESS_PART_LIST = 
-INDIVIDUAL_LIST = 
-ID_FOR_REC =  
-ENTER_START_SECTION = 
-START_FILE_NAME = 
-SURF_DIST_TOL = 0.002
-AUTHOR = 
-COMPANY = 
-UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
-UGI_USER_DEFINED_VIEWS = 
-UGI_DRAWING_NAMES = 
-UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
-UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
-UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
-UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
-UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
-VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
-UGI_LAYERE_MASK = 
-UGI_LAYERD_MASK = 
-UGI_LAYER_MASK = 1-256
-CROSSHATCH_MAP = Sectioned Area
-TRIMMED_SURFACE_MAP = Off
-PERIODIC_SURFACE_MAP = Off
-LINE_FONT_MAP = IGES Line Font Number
-COLOR_FONT_MAP = Color Definition
-OUTPUT_FORMAT = On
-UGI_PROC_ASSEM = Use load_options.def options
-UGI_COMP_FAIL = Abort if Load Fails
-UGI_LOAD_COMP = Load Components
-UGI_LOAD_VER = Load Exact Version
-UGI_COMP_SUB = Do not Allow Substitution
-UGI_LOAD_OPTION = Load From Assem Dir
-UGI_SEARCH_DIRS = 
-MAX_LINE_THICK = 0.0000000
-IGES_BLACK = black
-IGES_WHITE = white
-SYSMOD_DIM = On
-MODEL_DIM = 10000.0000000
-SYSPT_RESOLUTION = On
-POINT_RESOLUTION = 0.00100
-AUTOMATIC_SURF_SEW = On
-IGES_DIM_TO_UG_ASSORT = Yes
-IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
-IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
-SURFREV_MAP = B-Surface
-TABCYL_MAP = On
-FORCE_B-SURFACES = No
-REFERENCE_CSYS_FOR_EXPORT = ABS
-USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
-
-U:\nxFiles\Step Translator\Default_step214ug.def
-CHOOSE_DIRECTION = STEP to UG
-APPLICATION_PROTOCOL = AP214
-CNV_MODE = On-Line
-SAVE_DEF_FILE = step214ug.def
-RECALL_DEF_FILE = step214ug.def
-LOG_FILE = step214ug.log
-MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-Description =
-Imp_Level = 1
-File_Name =
-Author =
-Organization =
-Pre_Version = STEP214UG NX 11.0
-Authorization =
-UGI_LAYERE_MASK =
-UGI_LAYERD_MASK =
-UGI_LAYER_MASK = 1-256
-MODULES_MASK = Solids,Wireframe,Surfaces,PMI
-PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
-SHORT_LONG_NAMES = Long
-FILE_FILTER =
-PROCESS_PART_LIST =
-INDIVIDUAL_LIST =
-ZERO_LAYER_DEFAULT = 1
-AP214_DIS_OR_CD1 = IS
-EXPORT_VALPROPS = Off
-EXPORT_EXTERNAL_REFERENCES = Off
-EXPORT_EXTERNAL_REFERENCE_FORMAT = STEP
-AUTOMATIC_SURF_SEW = Off
-ASSEMBLY_MAP = Off
-UGI_PROC_ASSEM = Use load_options.def options
-UGI_COMP_FAIL = Abort if Load Fails
-UGI_LOAD_COMP = Load Components
-UGI_LOAD_VER = Load Exact Version
-UGI_COMP_SUB = Do not Allow Substitution
-UGI_LOAD_OPTION = Load From Assem Dir
-UGI_SEARCH_DIRS =
-
-U:\nxFiles\Step Translator\Default_ugstep214.def
-CHOOSE_DIRECTION = UG to STEP
-CNV_MODE = On-Line
-SAVE_DEF_FILE = ugstep214.def
-RECALL_DEF_FILE = ugstep214.def
-LOG_FILE = ugstep214.log
-MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
-Description =
-Imp_Level = 1
-File_Name =
-Author =
-Organization =
-Pre_Version = STEP214UG NX 11.0
-Authorization =
-UGI_LAYERE_MASK =
-UGI_LAYERD_MASK =
-UGI_LAYER_MASK = 1-256
-MODULES_MASK = Solids,Wireframe,Surfaces,PMI
-PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
-SHORT_LONG_NAMES = Long
-FILE_FILTER =
-PROCESS_PART_LIST =
-INDIVIDUAL_LIST =
-ZERO_LAYER_DEFAULT = 1
-AP214_DIS_OR_CD1 = IS
-EXPORT_VALPROPS = Off
-EXPORT_EXTERNAL_REFERENCES = Off
-AUTOMATIC_SURF_SEW = Off
-ASSEMBLY_MAP = Off
-UGI_PROC_ASSEM = Use load_options.def options
-UGI_COMP_FAIL = Abort if Load Fails
-UGI_LOAD_COMP = Load Components
-UGI_LOAD_VER = Load Exact Version
-UGI_COMP_SUB = Do not Allow Substitution
-UGI_LOAD_OPTION = Load From Assem Dir
-UGI_SEARCH_DIRS =
-APPLICATION_PROTOCOL=AP214
-
-U:\nxFiles\Step Translator\dxfdwg.def
-!Common Settings keywords
-LOG_FILE =
-MSG_MASK = VOLUMINOUS
-DSP_MASK = VOLUMINOUS
-!dxftoug or dwgtoug keywords
-UNITS = Metric
-MAX_SPLINE_DEGREE = 3
-UGI_DIM_IMPORT_FLAG = GROUP
-!ugtodxf or ugtodwg keywords
-UGI_SOLID_EXPORT = 
-ACAD_VERSION = R2004
-UGI_CURVE_MASK = Points,Lines,Arcs,Conics,B-Curves,Silhouette Curves,Solid Edges on Drawings
-UGI_SURF_MASK = 
-UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Centerlines,Crosshatching,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
-UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets
-UGI_SOLID_MASK = 
-UGI_DRAWING_NAMES =
-UGI_USER_DEFINED_VIEWS = 
-BCRVD = 2
-SURFU = 8
-SURFV = 8
-UGI_PROC_ASSEM = Use load_options.def options
-UGI_COMP_FAIL = Abort if Load Fails
-UGI_LOAD_COMP = Load Components
-UGI_LOAD_VER = Load Exact Version
-UGI_COMP_SUB = Do not Allow Substitution
-UGI_LOAD_OPTION = Load From Assem Dir
-UGI_SEARCH_DIRS = 
-VIEW_MODERASE_MODE = YES
-ASSEMBLY_MAP=ON
-FILL_MODE=OFF
-BASE_PART_MM = dwgnullnx90_mm.prt
-BASE_PART_IN = dwgnullnx90_in.prt
-UGI_GDT_EXPORT_AS_BLOCK = NO
-EXPORT_DRAWING_USING_CGM = NO
-IMPORT_ACAD_MODEL_DATA = YES
-IMPORT_ACAD_MODEL_DATA_TO = MODELING
-IMPORT_ACAD_LAYOUTS = YES
-IMPORT_ALL_ACAD_LAYOUTS = YES
-ACAD_LAYOUTS_TO_IMPORT = 
-IMPORT_ACAD_LAYOUTS_TO = IMPORTED_VIEW 
-IMPORT_ACAD_CURVES_ON_SKETCH = NO 
-AVOID_NX_TEMPLATE_PART_LAYERS = YES 
-SET_NX_LAYER_NUMBER_FROM_PREFIX = NO
-SKIP_UNREFERENCED_ACAD_LAYERS = YES 
-IMPORT_UNSELECTED_ACAD_LAYERS = NO 
-IMPORT_UNSELECTED_ACAD_LAYERS_TO = 256 
-UNSELECTED_ACAD_LAYER_LIST =  
-NON_NUMERIC_LAYER_SORTING_CRITERIA = ALPHABETICAL
-IMPORT_ACAD_BLOCK_AS = GROUP
-ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
-WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
-EXPORT_DIMENSIONS_AS = REAL
-SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
 
 CBoreDepthsEnglish
 "START"	"4"	"6"	"8"	"10"	"250"	"313"	"375"	"500"	"625"	"750"	"875"	"1000"	"1250"	"1500"
@@ -2440,65 +1839,7 @@ HRS PLT
 																																				
 																																				
 																																				
-component-builder-detail-materials
-purchased
 
-A2
-A2 GS
-ACUSEAL
-ALUM
-AMPCO 18
-AMPCO 21
-CALDIE
-CARMO
-CRS
-D2
-DC53
-DIEVAR
-GM190/S0050A
-GM238/G2500
-GM241/G3500
-GM245/D4512
-GM246/D5506
-GM338/D6510
-GM68M/S0030
-METALS PLUS
-S0030A
-HRS
-HRS-NPA
-HRS PLT
-H13
-H13 PREMIUM
-O1
-O6
-O1 GS
-O1 DR
-Ovar Superior
-P20
-S7
-S7 GS
-STEELCRAFT
-STRUCTURAL
-Vanadis4
-4140
-4140 PH
-4140 PH PLT
-4140 PLT
-6150
-OTHER
-MISC
-Dayton-Alter
-Moeller-Alter
-Impax-Alter
-EZ_FIT-Alter
-Misumi-Alter
-Selflube-Alter
-NAAMS-Alter
-Sankyo NAAMS-Alter
-Danly NAAMS-Alter
-Selflube NAAMS-Alter
-Danly-Alter
-MDL-Alter
 
 
 																																				

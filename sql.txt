@@ -1,119 +1,7 @@
 insert into ConceptControlFile 
 values
-('CTS_ATTRIBUTE_SHOP', 'N/A'),
-('CTS_ATTRIBUTE_SHOP', 'ATS'),
-('CTS_ATTRIBUTE_SHOP', 'DTS'),
-('CTS_ATTRIBUTE_SHOP', 'ETS'),
-('CTS_ATTRIBUTE_SHOP', 'HTS'),
-('CTS_ATTRIBUTE_SHOP', 'RTS'),
-('CTS_ATTRIBUTE_SHOP', 'CTS'),
-('DESCRIPTION_ATTRIBUTE_NAME', 'DESCRIPTION'),
-('MATERIAL_ATTRIBUTE_NAME', 'MATERIAL'),
-('DETAIL_NUMBER_ATTRIBUTE_NAME', 'DETAIL NUMBER'),
-('CASTING_MATERIALS', 'GM190'),
-('CASTING_MATERIALS', 'GM238'),
-('CASTING_MATERIALS', 'GM241'),
-('CASTING_MATERIALS', 'GM245'),
-('CASTING_MATERIALS', 'GM246'),
-('CASTING_MATERIALS', 'GM338'),
-('CASTING_MATERIALS', 'S0050A'),
-('CASTING_MATERIALS', 'S0030A'),
-('CASTING_MATERIALS', 'G2500'),
-('CASTING_MATERIALS', 'G3500'),
-('CASTING_MATERIALS', 'D4512'),
-('CASTING_MATERIALS', 'D5506'),
-('CASTING_MATERIALS', 'D6510'),
-('CASTING_MATERIALS', 'CARMO CAST'),
-('CASTING_MATERIALS', 'GM68M'),
-('CASTING_MATERIALS', 'S0030'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'N/A'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'ADVANCED'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'DIENAMIC'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'ENGINEERED'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'HOTSTAMP'),
-('CTS_ATTRIBUTE_SHOP1NAME', 'RAPID'),
-('CTS_ATTRIBUTE_UNITS', 'N/A', 0),
-('CTS_ATTRIBUTE_UNITS', 'METRIC'),
-('CTS_ATTRIBUTE_UNITS', 'ENGLISH'),
-('SimulationControlFile_SIM_SPECIAL_REGEX', '^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$'),
-('SimulationControlFile_H', 'C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def'),
-('SimulationControlFile_IGES_FILE_SETTINGS_PATH', 'C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def'),
-('SimulationControlFile_COMBO_SURFACE_ITEMS', 'lwr'),
-('SimulationControlFile_COMBO_SURFACE_ITEMS', 'upr'),
-('SimulationControlFile_COMBO_SURFACE_ITEMS', 'Pad Profile'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'lwr'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'upr'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'post'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'pad'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'punch'),
-('SimulationControlFile_COMBO_TOOL_SIDE_ITEMS', 'lifter'),
-('SimulationControlFile_SIM_DRIVE_PATH', 'S:\\Active'),
-('component_builder_detail_materials_purchased', 'A2'),
-('component_builder_detail_materials_purchased', 'A2 GS'),
-('component_builder_detail_materials_purchased', 'ACUSEAL'),
-('component_builder_detail_materials_purchased', 'ALUM'),
-('component_builder_detail_materials_purchased', 'AMPCO 18'),
-('component_builder_detail_materials_purchased', 'AMPCO 21'),
-('component_builder_detail_materials_purchased', 'CALDIE'),
-('component_builder_detail_materials_purchased', 'CARMO'),
-('component_builder_detail_materials_purchased', 'CRS'),
-('component_builder_detail_materials_purchased', 'D2'),
-('component_builder_detail_materials_purchased', 'DC53'),
-('component_builder_detail_materials_purchased', 'DIEVAR'),
-('component_builder_detail_materials_purchased', 'GM190/S0050A'),
-('component_builder_detail_materials_purchased', 'GM238/G2500'),
-('component_builder_detail_materials_purchased', 'GM241/G3500'),
-('component_builder_detail_materials_purchased', 'GM245/D4512'),
-('component_builder_detail_materials_purchased', 'GM246/D5506'),
-('component_builder_detail_materials_purchased', 'GM338/D6510'),
-('component_builder_detail_materials_purchased', 'GM68M/S0030'),
-('component_builder_detail_materials_purchased', 'METALS PLUS'),
-('component_builder_detail_materials_purchased', 'S0030A'),
-('component_builder_detail_materials_purchased', 'HRS'),
-('component_builder_detail_materials_purchased', 'HRS-NPA'),
-('component_builder_detail_materials_purchased', 'HRS PLT'),
-('component_builder_detail_materials_purchased', 'H13'),
-('component_builder_detail_materials_purchased', 'H13 PREMIUM'),
-('component_builder_detail_materials_purchased', 'O1'),
-('component_builder_detail_materials_purchased', 'O6'),
-('component_builder_detail_materials_purchased', 'O1 GS'),
-('component_builder_detail_materials_purchased', 'O1 DR'),
-('component_builder_detail_materials_purchased', 'Ovar Superior'),
-('component_builder_detail_materials_purchased', 'P20'),
-('component_builder_detail_materials_purchased', 'S7'),
-('component_builder_detail_materials_purchased', 'S7 GS'),
-('component_builder_detail_materials_purchased', 'STEELCRAFT'),
-('component_builder_detail_materials_purchased', 'STRUCTURAL'),
-('component_builder_detail_materials_purchased', 'Vanadis4'),
-('component_builder_detail_materials_purchased', '4140'),
-('component_builder_detail_materials_purchased', '4140 PH'),
-('component_builder_detail_materials_purchased', '4140 PH PLT'),
-('component_builder_detail_materials_purchased', '4140 PLT'),
-('component_builder_detail_materials_purchased', '6150'),
-('component_builder_detail_materials_purchased', 'OTHER'),
-('component_builder_detail_materials_purchased', 'MISC'),
-('component_builder_detail_materials_purchased', 'Dayton-Alter'),
-('component_builder_detail_materials_purchased', 'Moeller-Alter'),
-('component_builder_detail_materials_purchased', 'Impax-Alter'),
-('component_builder_detail_materials_purchased', 'EZ_FIT-Alter'),
-('component_builder_detail_materials_purchased', 'Misumi-Alter'),
-('component_builder_detail_materials_purchased', 'Selflube-Alter'),
-('component_builder_detail_materials_purchased', 'NAAMS-Alter'),
-('component_builder_detail_materials_purchased', 'Sankyo NAAMS-Alter'),
-('component_builder_detail_materials_purchased', 'Danly NAAMS-Alter'),
-('component_builder_detail_materials_purchased', 'Selflube NAAMS-Alter'),
-('component_builder_detail_materials_purchased', 'Danly-Alter'),
-('component_builder_detail_materials_purchased', 'MDL-Alter'),
-('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{DESCRIPTION}:{3}', '//{Attribute title}:{Column}'),
-('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{MATERIAL}:{4}', '//{Attribute title}:{Column}'),
-('BillOfMaterial_ATTRIBUTE_TO_POPULATE_WITH', '{ComponentDescriptionUGS}:{8}', '//{Attribute title}:{Column}'),
-('BillOfMaterial_ATS_EXCEL', 'U:\nxFiles\Excel\ats.xlsx'),
-('BillOfMaterial_CTS_EXCEL', 'U:\nxFiles\Excel\cts.xlsx'),
-('BillOfMaterial_DTS_EXCEL', 'U:\nxFiles\Excel\dts.xlsx'),
-('BillOfMaterial_ETS_EXCEL', 'U:\nxFiles\Excel\ets.xlsx'),
-('BillOfMaterial_HTS_EXCEL', 'U:\nxFiles\Excel\hts.xlsx'),
-('BillOfMaterial_RTS_EXCEL', 'U:\nxFiles\Excel\rts.xlsx'),
-('BillOfMaterial_UGS_EXCEL', 'U:\nxFiles\Excel\ugs.xlsx'),
+
+
 
 ('', '', 0),
 ///////////////////////////////////////////
@@ -142,22 +30,6 @@ AssemblyColorCode
 
 ///////////////////////////////////////
 
-('DrawDie_OP_020_000_REGEX', '^\d+-020-000$'),
-('DrawDie_OP_020_LAYOUT_REGEX', '^\d+-020-layout$'),
-('DrawDie_CompName_LowerPost', '100'),
-('DrawDie_CompName_LowerBinder', '101'),
-('DrawDie_CompName_UpperCavity', '600'),
-('DrawDie_Material_LowerPost', 'D2'),
-('DrawDie_Material_LowerBinder', 'D2'),
-('DrawDie_Material_UpperCavity', 'D2'),
-('DrawDie_HeightZCLowerBinder', '2.5'),
-('DrawDie_UPPER_CAVITY_REFERENCE_BOOLEAN', '{^OP-020-UPR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
-('DrawDie_LOWER_BINDER_REFERENCE_BOOLEAN', '{^OP-020-LWR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
-('DrawDie_LOWER_BINDER_REFERENCE_BOOLEAN', '{^OP-020-PAD-PROFILE$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
-('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-020-LWR-3D$},{Subtract},{0}', '// Subtract, Intersect, Unite'),
-('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-020-PAD-PROFILE$},{Intersect},{0}', '// Subtract, Intersect, Unite'),
-('DrawDie_LOWER_POST_REFERENCE_BOOLEAN', '{^OP-\d{3}-LWR-3D.*WITH(\s*|-|_)PROFILE$},{Subtract},{1}'),
-('DrawDie_STANDOFF_SEED_FILE', 'G:\0Library\Standoffs\Standoff Square Lower Metric.prt'),
 
 ('DrawDie_', ''),
 :SMART_KEY_SEED_FILE:
@@ -193,77 +65,26 @@ M
 ///////////////////////////////////////
 
 
-('Design_Check_', ''),
-:DESIGN_CHECK_VIEW_AND_REVISION:
-Design Check: 4.0'),
-:END:
 
-('', ''),
-:WireTapNotes_PreCheck_Titles:
-WTN'),
-:END:
-
-('', ''),
-:WireTapNotes_PreCheck_Values:
-YES'),
-:END:
-
-('', ''),
-:WireTapNotes_Check_Titles:
-DETAIL NAME'),
-:END:
-
-('', ''),
-:WireTapNotes_Check_Values:
-TRIM'),
-:END:
-
-('', ''),
-:Burnouts_Titles_1:
-MATERIAL'),
-:END:
-
-('', ''),
-:Burnouts_Values_1:
-HRS PLT'),
-4140 PLT'),
-4140 PH PLT'),
-:END:
-
-('', ''),
-:Burnouts_DrawingSheetName:
-BURNOUT'),
-:END:
-
-('', ''),
-:Metric_Tolerance:
-//Millimeters
-0.0254'),
-:END:
-
-('', ''),
-:English_Tolerance:
-//Inches
-0.001'),
-:END:
-
-('', ''),
+('DESIGN_CHECK_', ''),
 :999_BLOCK_REGEX:
 (?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)'),
 :END:
 
-('', ''),
+('DESIGN_CHECK_', ''),
 :CBoreDepth_EnglishShcsRegex:
 // Regular Text Expression to match english Shcs with.
 ^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$'),
 :END:
 
-('', ''),
+('DESIGN_CHECK_', ''),
 :CBoreDepth_MetricShcsRegex:
 // Regular Text Expression to match metric Shcs with.
 ^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$'),
 :END:
 
+
+('DESIGN_CHECK_', ''),
 // These are in millimeters.
 :CBoreDepth_Metric:
 NA	4	5	6	8	10	12	16	20	24	30	36
@@ -295,6 +116,7 @@ NA	4	5	6	8	10	12	16	20	24	30	36
 180	NA	NA	NA	NA	NA	NA	16	20	NA	NA	NA
 :END:
 
+('DESIGN_CHECK_', ''),
 // These are in inches.
 :CBoreDepth_English:
 NA	0004	0006	0008	0010	0250	0313	0375	0500	0625	0750	0875	1000	1250	1500
@@ -326,40 +148,6 @@ NA	0004	0006	0008	0010	0250	0313	0375	0500	0625	0750	0875	1000	1250	1500
 800	NA	NA	NA	NA	NA	NA	NA	0.5	0.625	0.75	0.875	1	1.25	1.5
 :END:
 
-('', ''),
-:LINKED_BODY_FEATURE_NAME:
-LINKED_BODY'),
-:END:
-
-('', ''),
-:OP_NUMBER:
-(?!000)(?<OpNumber>[0-9]{3})'),
-:END:
-
-('', ''),
-:GFOLDER_JOB_FOLDER_REGEX:
-([0-9]{1,}) \([a-z]{1,}-[0-9]{1,}\)'),
-:END:
-
-('', ''),
-:Detail_Number_Regex:
-(?<DetailNumber>[0-9]{3,})'),
-:END:
-
-('', ''),
-:GFOLDER_ASSEMBLY_FOLDER_REGEX:
-[0-9]{1,}-[0-9]{1,}'),
-:END:
-
-('', ''),
-:Customer_Job_Op_Regex:
-<rec>Customer_Job_Number_Regex</rec>-<rec>OP_NUMBER</rec>'),
-:END:
-
-('', ''),
-:Detail_Structure_Regex:
-\\<rec>Customer_Job_Op_Regex</rec>-<rec>Detail_Number_Regex</rec>\\'),
-:END:
 
 ('', ''),
 :COMPONENT_NAMES_REGEX:
@@ -421,23 +209,9 @@ MATERIAL'),
 MATERIAL'),
 :END:
 
-:CASTING_MATERIALS_VALUES:
-GM190'),
-GM238'),
-GM241'),
-GM245'),
-GM246'),
-GM338'),
-S0050A'),
-S0030A'),
-G2500'),
-G3500'),
-D4512'),
-D5506'),
-D6510'),
-CARMO CAST'),
-GM68M'),
-S0030'),
+'),
+::
+
 :END:
 
 :GuideBushings_GuidePins_Titles:

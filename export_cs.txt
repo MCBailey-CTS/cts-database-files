@@ -1,0 +1,269 @@
+Dwg
+{
+    dxfdwgCreator1.ExportData = DxfdwgCreator.ExportDataOption.Drawing;
+    dxfdwgCreator1.AutoCADRevision = DxfdwgCreator.AutoCADRevisionOptions.R2004;
+    dxfdwgCreator1.ViewEditMode = true;
+    dxfdwgCreator1.FlattenAssembly = true;
+    dxfdwgCreator1.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\dxfdwg\\dxfdwg.def";
+    dxfdwgCreator1.ExportFrom = DxfdwgCreator.ExportFromOption.ExistingPart;
+    dxfdwgCreator1.OutputFileType = DxfdwgCreator.OutputFileTypeOption.Dwg;
+    dxfdwgCreator1.ObjectTypes.Curves = true;
+    dxfdwgCreator1.ObjectTypes.Annotations = true;
+    dxfdwgCreator1.ObjectTypes.Structures = true;
+    dxfdwgCreator1.FlattenAssembly = false;
+    dxfdwgCreator1.ExportData = DxfdwgCreator.ExportDataOption.Drawing;
+    dxfdwgCreator1.InputFile = part.FullPath;
+    dxfdwgCreator1.ProcessHoldFlag = true;
+    dxfdwgCreator1.OutputFile = filePath;
+    dxfdwgCreator1.WidthFactorMode = DxfdwgCreator.WidthfactorMethodOptions.AutomaticCalculation;
+    dxfdwgCreator1.LayerMask = "1-256";
+    dxfdwgCreator1.DrawingList = drawingSheetName;
+}
+
+
+
+ExportStripPrintDrawing
+{
+    printBuilder1.ThinWidth = 1.0;
+    printBuilder1.NormalWidth = 2.0;
+    printBuilder1.ThickWidth = 3.0;
+    printBuilder1.Copies = copies;
+    printBuilder1.RasterImages = true;
+    printBuilder1.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+    DrawingSheet[] sheets = _WorkPart.DrawingSheets.ToArray();
+    switch (sheets.Length)
+    {
+        case 0:
+            print("Current work part doesn't not have a sheet to print.");
+            return;
+        case 1:
+            session_.ApplicationSwitchImmediate("UG_APP_DRAFTING");
+            sheets[0].Open();
+            TheUFSession.Draw.IsObjectOutOfDate(sheets[0].Tag, out bool outOfDate);
+            if (outOfDate)
+                try
+                {
+                    TheUFSession.Draw.UpdOutOfDateViews(sheets[0].Tag);
+                    sheets[0].OwningPart.Save(BasePart.SaveComponents.True, BasePart.CloseAfterSave.False);
+                }
+                catch (Exception ex)
+                {
+                    ex.__PrintException();
+                }
+
+            printBuilder1.SourceBuilder.SetSheets(new NXObject[] { sheets[0] });
+            break;
+        default:
+            print("Current work part contains more than 1 sheet.");
+            return;
+    }
+
+    printBuilder1.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+    printBuilder1.Orientation = PrintBuilder.OrientationOption.Landscape;
+    printBuilder1.Paper = PrintBuilder.PaperSize.Inch11x17;
+    printBuilder1.Commit();
+}
+
+
+Iges
+{
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.ExportDrawings = true;
+    igesCreator.InputFile = partPath;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = wait;
+}
+
+Iges
+{
+    IgesCreator igesCreator = Session.GetSession().DexManager.CreateIgesCreator();
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportDrawings = true;
+    igesCreator.MapTabCylToBSurf = true;
+    igesCreator.BcurveTol = 0.050799999999999998;
+    igesCreator.IdenticalPointResolution = 0.001;
+    igesCreator.MaxThreeDMdlSpace = 10000.0;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.MaxLineThickness = 2.0;
+    igesCreator.SysDefmaxThreeDMdlSpace = true;
+    igesCreator.SysDefidenticalPointResolution = true;
+    igesCreator.InputFile = newPartFile;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = false;
+}
+
+ExportSimPackage_Iges
+{
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.ExportDrawings = true;
+    igesCreator.InputFile = partPath;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = wait;
+}
+
+Pdf
+{
+    pdfBuilder.Scale = 1.0;
+    pdfBuilder.Size = PrintPDFBuilder.SizeOption.ScaleFactor;
+    pdfBuilder.OutputText = PrintPDFBuilder.OutputTextOption.Polylines;
+    pdfBuilder.Units = PrintPDFBuilder.UnitsOption.English;
+    pdfBuilder.XDimension = 8.5;
+    pdfBuilder.YDimension = 11.0;
+    pdfBuilder.RasterImages = true;
+    pdfBuilder.Colors = PrintPDFBuilder.Color.BlackOnWhite;
+    pdfBuilder.Watermark = "";
+    UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
+    sheet.Open();
+    pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
+    pdfBuilder.Filename = filePath;
+    pdfBuilder.Commit();
+}
+
+ExportStripPdf
+{
+    pdfBuilder.Scale = 1.0;
+    pdfBuilder.Size = PrintPDFBuilder.SizeOption.ScaleFactor;
+    pdfBuilder.OutputText = PrintPDFBuilder.OutputTextOption.Polylines;
+    pdfBuilder.Units = PrintPDFBuilder.UnitsOption.English;
+    pdfBuilder.XDimension = 8.5;
+    pdfBuilder.YDimension = 11.0;
+    pdfBuilder.RasterImages = true;
+    pdfBuilder.Colors = PrintPDFBuilder.Color.AsDisplayed;
+    pdfBuilder.Watermark = "";
+    UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
+    sheet.Open();
+    pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
+    pdfBuilder.Filename = filePath;
+}
+
+
+Propsal_Data_Step
+{
+    stepCreator.ExportAs = (StepCreator.ExportAsOption)1;
+    stepCreator.ExportFrom = (StepCreator.ExportFromOption)1;
+    stepCreator.ObjectTypes.Solids = true;
+    stepCreator.InputFile = partPath;
+    stepCreator.OutputFile = stepPath;
+    session_.SetUndoMarkName(undoMarkId1, "Export to STEP Options Dialog");
+    stepCreator.SettingsFile = "U:\\nxFiles\\Step Translator\\214ug.def";
+    stepCreator.ObjectTypes.Curves = true;
+    stepCreator.ObjectTypes.Surfaces = true;
+    stepCreator.ObjectTypes.Solids = true;
+    stepCreator.FileSaveFlag = false;
+    stepCreator.ProcessHoldFlag = wait;
+    stepCreator.LayerMask = "1-256";
+}
+
+Step
+{
+    stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
+    stepCreator1.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+    stepCreator1.ObjectTypes.Solids = true;
+    stepCreator1.InputFile = partPath;
+    stepCreator1.OutputFile = dwgPath;
+    stepCreator1.ObjectTypes.Curves = true;
+    stepCreator1.ObjectTypes.Surfaces = true;
+    stepCreator1.ObjectTypes.Solids = true;
+    stepCreator1.FileSaveFlag = false;
+    stepCreator1.ProcessHoldFlag = true;
+    stepCreator1.LayerMask = "1-256";
+}
+
+Stp
+{
+    stepCreator.ExportAs = StepCreator.ExportAsOption.Ap214;
+    stepCreator.SettingsFile = settings_file;
+    stepCreator.ObjectTypes.Solids = true;
+    stepCreator.OutputFile = output_path;
+    stepCreator.BsplineTol = 0.0254;
+    stepCreator.ObjectTypes.Annotations = true;
+    stepCreator.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+    stepCreator.InputFile = partPath;
+    stepCreator.FileSaveFlag = false;
+    stepCreator.LayerMask = "1, 96";
+    stepCreator.ProcessHoldFlag = true;
+}
+
+ExportStripStp
+{
+    step.ExportDestination = BaseCreator.ExportDestinationOption.NativeFileSystem;
+    step.SettingsFile = "U:\\nxFiles\\Step Translator\\ExternalStep_AllLayers.def";
+    step.ExportAs = StepCreator.ExportAsOption.Ap214;
+    step.InputFile = session_.Parts.Work.FullPath;
+    step.OutputFile = outputPath;
+    step.ProcessHoldFlag = true;
+}
+
+StepCreateCasting
+{
+    StepCreator stepCreator1;
+    stepCreator1 = theSession.DexManager.CreateStepCreator();
+    stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
+    stepCreator1.BsplineTol = 0.001;
+    stepCreator1.SettingsFile = "C:\\Program Files\\Siemens\\NX1899\\step214ug\\ugstep214.def";
+    stepCreator1.BsplineTol = 0.001;
+    stepCreator1.InputFile = part.FullPath;
+    theSession.SetUndoMarkName(markId1, "Export STEP File Dialog");
+    Session.UndoMarkId markId2;
+    markId2 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
+    theSession.DeleteUndoMark(markId2, null);
+    Session.UndoMarkId markId3;
+    markId3 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
+    stepCreator1.OutputFile = step_path;
+    stepCreator1.FileSaveFlag = false;
+    stepCreator1.LayerMask = "1,96";
+    stepCreator1.ProcessHoldFlag = true;
+    NXObject nXObject1;
+    nXObject1 = stepCreator1.Commit();
+    theSession.DeleteUndoMark(markId3, null);
+    theSession.SetUndoMarkName(markId1, "Export STEP File");
+    stepCreator1.Destroy();
+}
+
+Print4Views
+{
+    printBuilder.Copies = 1;
+    printBuilder.ThinWidth = 1.0;
+    printBuilder.NormalWidth = 2.0;
+    printBuilder.ThickWidth = 3.0;
+    printBuilder.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+    printBuilder.ShadedGeometry = true;
+    DrawingSheet drawingSheet = __work_part_.DraftingDrawingSheets.FindObject("4-VIEW");
+    drawingSheet.Open();
+    printBuilder.SourceBuilder.SetSheets(new NXObject[] { drawingSheet });
+    printBuilder.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+    printBuilder.Orientation = PrintBuilder.OrientationOption.Landscape;
+    printBuilder.Paper = PrintBuilder.PaperSize.Letter;
+}

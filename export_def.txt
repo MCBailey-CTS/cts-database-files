@@ -951,132 +951,541 @@ FILE_FILTER=C:\Users\administrator\*.prt
 
 
 
+// dxfdwg.def
+!Common Settings keywords
+LOG_FILE =
+MSG_MASK = VOLUMINOUS
+DSP_MASK = VOLUMINOUS
+!dxftoug or dwgtoug keywords
+UNITS = Metric
+MAX_SPLINE_DEGREE = 3
+UGI_DIM_IMPORT_FLAG = GROUP
+!ugtodxf or ugtodwg keywords
+UGI_SOLID_EXPORT = 
+ACAD_VERSION = R2004
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,B-Curves,Silhouette Curves,Solid Edges on Drawings
+UGI_SURF_MASK = 
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Centerlines,Crosshatching,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets
+UGI_SOLID_MASK = 
+UGI_DRAWING_NAMES =
+UGI_USER_DEFINED_VIEWS = 
+SURFU = 8
+SURFV = 8
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+VIEW_MODERASE_MODE = YES
+ASSEMBLY_MAP=ON
+FILL_MODE=OFF
+BASE_PART_MM = dwgnull_mm.prt
+BASE_PART_IN = dwgnull_in.prt
+UGI_GDT_EXPORT_AS_BLOCK = YES
+EXPORT_DRAWING_USING_CGM = NO
+IMPORT_ACAD_MODEL_DATA = YES
+IMPORT_ACAD_MODEL_DATA_TO = MODELING
+IMPORT_ACAD_LAYOUTS = YES
+IMPORT_ALL_ACAD_LAYOUTS = YES
+ACAD_LAYOUTS_TO_IMPORT = 
+IMPORT_ACAD_LAYOUTS_TO = IMPORTED_VIEW 
+IMPORT_ACAD_CURVES_ON_SKETCH = NO 
+AVOID_NX_TEMPLATE_PART_LAYERS = YES 
+SET_NX_LAYER_NUMBER_FROM_PREFIX = NO
+SKIP_UNREFERENCED_ACAD_LAYERS = YES 
+IMPORT_UNSELECTED_ACAD_LAYERS = NO 
+IMPORT_UNSELECTED_ACAD_LAYERS_TO = 256 
+UNSELECTED_ACAD_LAYER_LIST =  
+NON_NUMERIC_LAYER_SORTING_CRITERIA = ALPHABETICAL
+IMPORT_ACAD_BLOCK_AS = GROUP
+ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
+WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
+EXPORT_DIMENSIONS_AS = REAL
+SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
+SIMPLIFY_GEOMETRY = NO
+OPTIMIZE_GEOMETRY = NO
+HEAL_GEOMETRY_ON_IMPORT = NO
+ALTERNATE_SYMBOL_FONT_FOR_EXPORT = Arial Unicode MS
+EXPORT_CURVE_ATTRIBUTES = NO
+! Tolerance used in BSpline to Polyline conversion
+BSPLINE_TO_PLINE_CONV_TOL = 0.08
 
 
-// Propsal Data
-  public static void Step(string partPath, string stepPath, bool wait)
- {
-     try
-     {
-         if (partPath == null)
-             throw new ArgumentNullException(nameof(partPath));
 
-         if (stepPath == null)
-             throw new ArgumentNullException(nameof(stepPath));
-
-         if (!File.Exists(partPath))
-             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
-
-         if (File.Exists(stepPath))
-             throw new ArgumentException(@"Path for Step file already exists.", nameof(stepPath));
-
-
-         Session.UndoMarkId undoMarkId1 = session_.SetUndoMark(0, "Start");
-         StepCreator stepCreator = session_.DexManager.CreateStepCreator();
-         stepCreator.ExportAs = (StepCreator.ExportAsOption)1;
-         stepCreator.ExportFrom = (StepCreator.ExportFromOption)1;
-         stepCreator.ObjectTypes.Solids = true;
-         stepCreator.InputFile = partPath;
-         stepCreator.OutputFile = stepPath;
-         session_.SetUndoMarkName(undoMarkId1, "Export to STEP Options Dialog");
-         stepCreator.SettingsFile = "U:\\nxFiles\\Step Translator\\214ug.def";
-         stepCreator.ObjectTypes.Curves = true;
-         stepCreator.ObjectTypes.Surfaces = true;
-         stepCreator.ObjectTypes.Solids = true;
-         session_.DeleteUndoMark(session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options"),
-             null);
-         Session.UndoMarkId undoMarkId2 =
-             session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options");
-         stepCreator.FileSaveFlag = false;
-         stepCreator.ProcessHoldFlag = wait;
-         stepCreator.LayerMask = "1-256";
-         stepCreator.Commit();
-         session_.DeleteUndoMark(undoMarkId2, null);
-
-         if (wait)
-             print(File.Exists(stepPath)
-                 ? $"Successfully created \"{stepPath}\"."
-                 : $"Unsuccessfully created \"{stepPath}\".");
-     }
-     catch (Exception ex)
-     {
-         ex.__PrintException("Error when creating Step file for " + partPath);
-     }
- }
-
-
-
- public static void Step(string partPath, string dwgPath)
- {
-     try
-     {
-         if (!File.Exists(partPath))
-             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
-
-         if (File.Exists(dwgPath))
-             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
-
-         if (File.Exists(dwgPath))
-             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
-
-         StepCreator stepCreator1 = session_.DexManager.CreateStepCreator();
-         stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
-         stepCreator1.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
-         stepCreator1.ObjectTypes.Solids = true;
-         stepCreator1.InputFile = partPath;
-         stepCreator1.OutputFile = dwgPath;
-         stepCreator1.ObjectTypes.Curves = true;
-         stepCreator1.ObjectTypes.Surfaces = true;
-         stepCreator1.ObjectTypes.Solids = true;
-         stepCreator1.FileSaveFlag = false;
-         stepCreator1.ProcessHoldFlag = true;
-         stepCreator1.LayerMask = "1-256";
-         stepCreator1.Commit();
-     }
-     catch (Exception ex)
-     {
-         ex.__PrintException("Error when creating Step file for " + partPath);
-     }
- }
+// dxfdwg.def
+!Common Settings keywords
+LOG_FILE =
+MSG_MASK = VOLUMINOUS
+DSP_MASK = VOLUMINOUS
+!dxftoug or dwgtoug keywords
+UNITS = Metric
+MAX_SPLINE_DEGREE = 3
+UGI_DIM_IMPORT_FLAG = GROUP
+!ugtodxf or ugtodwg keywords
+UGI_SOLID_EXPORT = 
+ACAD_VERSION = R2004
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,B-Curves,Silhouette Curves,Solid Edges on Drawings
+UGI_SURF_MASK = 
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Centerlines,Crosshatching,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets
+UGI_SOLID_MASK = 
+UGI_DRAWING_NAMES =
+UGI_USER_DEFINED_VIEWS = 
+BCRVD = 2
+SURFU = 8
+SURFV = 8
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+VIEW_MODERASE_MODE = YES
+ASSEMBLY_MAP=ON
+FILL_MODE=OFF
+BASE_PART_MM = dwgnullnx90_mm.prt
+BASE_PART_IN = dwgnullnx90_in.prt
+UGI_GDT_EXPORT_AS_BLOCK = NO
+EXPORT_DRAWING_USING_CGM = NO
+IMPORT_ACAD_MODEL_DATA = YES
+IMPORT_ACAD_MODEL_DATA_TO = MODELING
+IMPORT_ACAD_LAYOUTS = YES
+IMPORT_ALL_ACAD_LAYOUTS = YES
+ACAD_LAYOUTS_TO_IMPORT = 
+IMPORT_ACAD_LAYOUTS_TO = IMPORTED_VIEW 
+IMPORT_ACAD_CURVES_ON_SKETCH = NO 
+AVOID_NX_TEMPLATE_PART_LAYERS = YES 
+SET_NX_LAYER_NUMBER_FROM_PREFIX = NO
+SKIP_UNREFERENCED_ACAD_LAYERS = YES 
+IMPORT_UNSELECTED_ACAD_LAYERS = NO 
+IMPORT_UNSELECTED_ACAD_LAYERS_TO = 256 
+UNSELECTED_ACAD_LAYER_LIST =  
+NON_NUMERIC_LAYER_SORTING_CRITERIA = ALPHABETICAL
+IMPORT_ACAD_BLOCK_AS = GROUP
+ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
+WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
+EXPORT_DIMENSIONS_AS = REAL
+SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
 
 
- 
+// iges.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = iges.def
+RECALL_DEF_FILE = iges.def
+LOG_FILE = iges.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
 
-public static void Stp(string partPath, string output_path, string settings_file)
-   {
-       if (!output_path.EndsWith(".stp"))
-           throw new InvalidOperationException("File path for STP must end with \".stp\".");
 
-       if (File.Exists(output_path))
-           throw new ArgumentOutOfRangeException("output_path", "STP \"" + output_path + "\" already exists.");
+// Default_igesexport.def
+CHOOSE_DIRECTION = UG to IGES
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesexport.def
+RECALL_DEF_FILE = igesexport.def
+LOG_FILE = igesexport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnullnx110_in.prt
+BASE_PART_MM = igesnullnx110_mm.prt
+FILE_FILTER = *.prt
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 2.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
 
-       if (!File.Exists(partPath))
-           throw new FileNotFoundException("Could not find file location \"" + partPath + "\".");
 
-       session_.__FindOrOpen(partPath);
+// Default_igesimport.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesimport.def
+RECALL_DEF_FILE = igesimport.def
+LOG_FILE = igesimport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnullnx110_in.prt
+BASE_PART_MM = igesnullnx110_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = On
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
 
-       StepCreator stepCreator = Session.GetSession().DexManager.CreateStepCreator();
 
-       using (session_.__UsingBuilderDestroyer(stepCreator))
-       {
-           stepCreator.ExportAs = StepCreator.ExportAsOption.Ap214;
-           stepCreator.SettingsFile = settings_file;
-           stepCreator.ObjectTypes.Solids = true;
-           stepCreator.OutputFile = output_path;
-           stepCreator.BsplineTol = 0.0254;
-           stepCreator.ObjectTypes.Annotations = true;
-           stepCreator.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
-           stepCreator.InputFile = partPath;
-           stepCreator.FileSaveFlag = false;
-           stepCreator.LayerMask = "1, 96";
-           stepCreator.ProcessHoldFlag = true;
-           stepCreator.Commit();
-       }
 
-       string switchFilePath = output_path.Replace(".stp", ".log");
+// igesexport.def
+CHOOSE_DIRECTION = UG to IGES
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesexport.def
+RECALL_DEF_FILE = igesexport.def
+LOG_FILE = igesexport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.prt
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 2.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
 
-       if (File.Exists(switchFilePath))
-           File.Delete(switchFilePath);
-   }
-
-   
+// igesimport.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesimport.def
+RECALL_DEF_FILE = igesimport.def
+LOG_FILE = igesimport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+EXTEND_BSURF_FOR_TRIMMING = YES

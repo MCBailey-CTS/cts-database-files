@@ -1,6 +1,82 @@
 insert into ConceptControlFile 
 values
 
+AddFastenersEnglishCycleAdd
+
+125
+0006, 0250-dwl-100, _0250-jck-screw-tsg,
+0006, 0250-dwl-200, _0250-jck-screw-tsg
+0008, 0250-dwl-100, _0250-jck-screw-tsg
+0008, 0250-dwl-200, _0250-jck-screw-tsg
+0010, 0250-dwl-100, _0250-jck-screw-tsg
+0010, 0250-dwl-200, _0250-jck-screw-tsg
+0250, 0250-dwl-100, _0250-jck-screw-tsg
+0250, 0250-dwl-200, _0250-jck-screw-tsg
+0313, 0313-dwl-100, _0313-jck-screw-tsg
+0313, 0313-dwl-200, _0313-jck-screw-tsg
+0375, 0375-dwl-100, _0375-jck-screw-tsg
+0375, 0375-dwl-200, _0375-jck-screw-tsg
+0500, 0500-dwl-100, _0500-jck-screw-tsg
+0500, 0500-dwl-200, _0500-jck-screw-tsg
+0625, 0625-dwl-100, _0500-jck-screw-tsg
+0625, 0625-dwl-200, _0500-jck-screw-tsg
+0750, 0750-dwl-100, _0500-jck-screw-tsg
+0750, 0750-dwl-200, _0500-jck-screw-tsg
+0875, 0750-dwl-100, _0500-jck-screw-tsg
+0875, 0750-dwl-200, _0500-jck-screw-tsg
+1000, 1000-dwl-100, _0500-jck-screw-tsg
+1000, 1000-dwl-200, _0500-jck-screw-tsg
+1250, 1000-dwl-100, _0500-jck-screw-tsg
+1250, 1000-dwl-200, _0500-jck-screw-tsg
+1500, 1000-dwl-100, _0500-jck-screw-tsg
+1500, 1000-dwl-200, _0500-jck-screw-tsg
+
+('ENGLISH_GRID', '0.0625'),
+('ENGLISH_GRID', '0.125'),
+('ENGLISH_GRID', '0.250'),
+('ENGLISH_GRID', '0.500'),
+('ENGLISH_GRID', '0.750'),
+('ENGLISH_GRID', '1.000'),
+('ENGLISH_GRID', '4.000'),
+('ENGLISH_GRID', '6.000'),
+('ENGLISH_GRID', '10.000'),
+
+
+
+('BillOfMaterial_PURCHASED_MATERIALS', DAYTON'),
+('BillOfMaterial_PURCHASED_MATERIALS', MOELLER'),
+('BillOfMaterial_PURCHASED_MATERIALS', KALLER'),
+('BillOfMaterial_PURCHASED_MATERIALS', LANE'),
+('BillOfMaterial_PURCHASED_MATERIALS', MISUMI'),
+('BillOfMaterial_PURCHASED_MATERIALS', DADCO'),
+('BillOfMaterial_PURCHASED_MATERIALS', FORWARD'),
+('BillOfMaterial_PURCHASED_MATERIALS', HYSON'),
+('BillOfMaterial_PURCHASED_MATERIALS', STANDFAST'),
+('BillOfMaterial_PURCHASED_MATERIALS', STANDARD LIFTERS'),
+('BillOfMaterial_PURCHASED_MATERIALS', AJACS'),
+('BillOfMaterial_PURCHASED_MATERIALS', JOLICO'),
+('BillOfMaterial_PURCHASED_MATERIALS', LAMINA'),
+('BillOfMaterial_PURCHASED_MATERIALS', DANLY'),
+('BillOfMaterial_PURCHASED_MATERIALS', DANLY/IEM'),
+('BillOfMaterial_PURCHASED_MATERIALS', SELFLUBE'),
+('BillOfMaterial_PURCHASED_MATERIALS', MDL'),
+('BillOfMaterial_PURCHASED_MATERIALS', SANKYO'),
+('BillOfMaterial_PURCHASED_MATERIALS', REID'),
+('BillOfMaterial_PURCHASED_MATERIALS', STOCK'),
+('BillOfMaterial_PURCHASED_MATERIALS', SYRON'),
+('BillOfMaterial_PURCHASED_MATERIALS', TURCK'),
+('BillOfMaterial_PURCHASED_MATERIALS', STRUCTURAL'),
+('BillOfMaterial_PURCHASED_MATERIALS', IMP'),
+('BillOfMaterial_PURCHASED_MATERIALS', ARGON'),
+('BillOfMaterial_PURCHASED_MATERIALS', AMCOR'),
+('BillOfMaterial_PURCHASED_MATERIALS', DESTACO'),
+('BillOfMaterial_PURCHASED_MATERIALS', BOHLER UDDERHOLM'),
+('BillOfMaterial_PURCHASED_MATERIALS', BALLUFF'),
+('BillOfMaterial_PURCHASED_MATERIALS', BANNER'),
+('BillOfMaterial_PURCHASED_MATERIALS', IFM'),
+('BillOfMaterial_PURCHASED_MATERIALS', PUR'),
+
+
 // The regular expression to match the proposal folders.
  public const string ufunc_proposal_data_wizard_ProposalRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}-p(?<proposalLevel>[0-9]+)(?:-proposal-data)*$";
 

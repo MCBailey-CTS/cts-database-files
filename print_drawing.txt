@@ -1,0 +1,60 @@
+
+
+   public static void ExportStripPrintDrawing(int copies)
+ {
+     if (copies == 0)
+         return;
+
+     Part _WorkPart = Session.GetSession().Parts.Work;
+
+     UFSession TheUFSession = UFSession.GetUFSession();
+
+     //session_.Execute(@"C:\Repos\NXJournals\JOURNALS\export_strip.py", "ExportStrip", "print_drawing_sheet", new object[] { copies });
+     PrintBuilder printBuilder1 = _WorkPart.PlotManager.CreatePrintBuilder();
+
+     try
+     {
+         printBuilder1.ThinWidth = 1.0;
+         printBuilder1.NormalWidth = 2.0;
+         printBuilder1.ThickWidth = 3.0;
+         printBuilder1.Copies = copies;
+         printBuilder1.RasterImages = true;
+         printBuilder1.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+         DrawingSheet[] sheets = _WorkPart.DrawingSheets.ToArray();
+         switch (sheets.Length)
+         {
+             case 0:
+                 print("Current work part doesn't not have a sheet to print.");
+                 return;
+             case 1:
+                 session_.ApplicationSwitchImmediate("UG_APP_DRAFTING");
+                 sheets[0].Open();
+                 TheUFSession.Draw.IsObjectOutOfDate(sheets[0].Tag, out bool outOfDate);
+                 if (outOfDate)
+                     try
+                     {
+                         TheUFSession.Draw.UpdOutOfDateViews(sheets[0].Tag);
+                         sheets[0].OwningPart.Save(BasePart.SaveComponents.True, BasePart.CloseAfterSave.False);
+                     }
+                     catch (Exception ex)
+                     {
+                         ex.__PrintException();
+                     }
+
+                 printBuilder1.SourceBuilder.SetSheets(new NXObject[] { sheets[0] });
+                 break;
+             default:
+                 print("Current work part contains more than 1 sheet.");
+                 return;
+         }
+
+         printBuilder1.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+         printBuilder1.Orientation = PrintBuilder.OrientationOption.Landscape;
+         printBuilder1.Paper = PrintBuilder.PaperSize.Inch11x17;
+         printBuilder1.Commit();
+     }
+     finally
+     {
+         printBuilder1.Destroy();
+     }
+ }

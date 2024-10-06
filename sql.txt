@@ -85,6 +85,18 @@ MATERIAL'),
 ///////////////////////////////////////
 
 
+  --ExportStrip
+    __work_part_.Layers.SetState(1, State.WorkLayer);
+
+--ExportStrip
+ for (int i = 2; i <= 256; i++)
+     __work_part_.Layers.SetState(i, State.Hidden);
+
+--ExportStrip
+ new[] { 6, 10, 200, 201, 202, 254 }.ToList()
+     .ForEach(i => __work_part_.Layers.SetState(i, State.Selectable));
+
+
 ('DrawDie_', ''),
 :SMART_KEY_SEED_FILE:
 G:\0Library\Keys\Smart Key Metric.prt'),

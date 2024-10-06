@@ -1,0 +1,67 @@
+Iges
+{
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.ExportDrawings = true;
+    igesCreator.InputFile = partPath;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = wait;
+}
+
+Iges
+{
+    IgesCreator igesCreator = Session.GetSession().DexManager.CreateIgesCreator();
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportDrawings = true;
+    igesCreator.MapTabCylToBSurf = true;
+    igesCreator.BcurveTol = 0.050799999999999998;
+    igesCreator.IdenticalPointResolution = 0.001;
+    igesCreator.MaxThreeDMdlSpace = 10000.0;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.MaxLineThickness = 2.0;
+    igesCreator.SysDefmaxThreeDMdlSpace = true;
+    igesCreator.SysDefidenticalPointResolution = true;
+    igesCreator.InputFile = newPartFile;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = false;
+}
+
+ExportSimPackage_Iges
+{
+    igesCreator.ExportModelData = true;
+    igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+    igesCreator.ObjectTypes.Curves = true;
+    igesCreator.ObjectTypes.Surfaces = true;
+    igesCreator.ObjectTypes.Annotations = true;
+    igesCreator.ObjectTypes.Structures = true;
+    igesCreator.ObjectTypes.Solids = true;
+    igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+    igesCreator.ExportDrawings = true;
+    igesCreator.InputFile = partPath;
+    igesCreator.OutputFile = igesPath;
+    igesCreator.FileSaveFlag = false;
+    igesCreator.LayerMask = "1-256";
+    igesCreator.DrawingList = "";
+    igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+    igesCreator.ProcessHoldFlag = wait;
+}

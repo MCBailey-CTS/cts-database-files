@@ -3,46 +3,7 @@
 																																				
 ExportSimPackage
 
-public static void Iges(string partPath, string igesPath, bool wait)
-{
-    try
-    {
-        if (File.Exists(igesPath))
-            throw new ArgumentException(@"Path for iges file already exists.", nameof(igesPath));
 
-        IgesCreator igesCreator = Session.GetSession().DexManager.CreateIgesCreator();
-
-        using (session_.__UsingBuilderDestroyer(igesCreator))
-        {
-            igesCreator.ExportModelData = true;
-            igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
-            igesCreator.ObjectTypes.Curves = true;
-            igesCreator.ObjectTypes.Surfaces = true;
-            igesCreator.ObjectTypes.Annotations = true;
-            igesCreator.ObjectTypes.Structures = true;
-            igesCreator.ObjectTypes.Solids = true;
-            igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
-            igesCreator.ExportDrawings = true;
-            igesCreator.InputFile = partPath;
-            igesCreator.OutputFile = igesPath;
-            igesCreator.FileSaveFlag = false;
-            igesCreator.LayerMask = "1-256";
-            igesCreator.DrawingList = "";
-            igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
-            igesCreator.ProcessHoldFlag = wait;
-            igesCreator.Commit();
-        }
-
-        if (wait)
-            print(File.Exists(igesPath)
-                ? $"Successfully created \"{igesPath}\"."
-                : $"Unsuccessfully created \"{igesPath}\".");
-    }
-    catch (Exception ex)
-    {
-        ex.__PrintException("Error when creating Iges file for " + partPath);
-    }
-}
 																																				
 //////////////////////////////////
 

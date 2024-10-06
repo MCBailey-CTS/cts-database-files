@@ -351,4 +351,3081 @@ G:\0Library\Fasteners\English\JackScrews\_0500-jck-screw-tsg.prt
 										
 																																							
 																																				
-// 3728
+ public const string _printerCts = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+
+ public static readonly int[] Layers = { 1, 94, 100, 111, 200, 230 };
+
+public static void CreateCasting(Part part, GFolder folder)
+{
+    StepCreator stepCreator1;
+    stepCreator1 = theSession.DexManager.CreateStepCreator();
+    stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
+    stepCreator1.BsplineTol = 0.001;
+    stepCreator1.SettingsFile = "C:\\Program Files\\Siemens\\NX1899\\step214ug\\ugstep214.def";
+    stepCreator1.BsplineTol = 0.001;
+    stepCreator1.InputFile = part.FullPath;
+    theSession.SetUndoMarkName(markId1, "Export STEP File Dialog");
+    Session.UndoMarkId markId2;
+    markId2 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
+    theSession.DeleteUndoMark(markId2, null);
+    Session.UndoMarkId markId3;
+    markId3 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
+    stepCreator1.OutputFile = step_path;
+    stepCreator1.FileSaveFlag = false;
+    stepCreator1.LayerMask = "1,96";
+    stepCreator1.ProcessHoldFlag = true;
+    NXObject nXObject1;
+    nXObject1 = stepCreator1.Commit();
+    theSession.DeleteUndoMark(markId3, null);
+    theSession.SetUndoMarkName(markId1, "Export STEP File");
+    stepCreator1.Destroy();
+}
+
+  public static void Print4Views(IEnumerable<Part> allParts)
+  {
+      try
+      {
+          bool IsNotAssembly(Part part)
+          {
+              string name = Path.GetFileNameWithoutExtension(part.FullPath);
+
+              if (name == null)
+                  return false;
+
+              name = name.ToLower();
+
+              if (name.EndsWith("000") || name.EndsWith("lsh") || name.EndsWith("ush") || name.EndsWith("lwr") ||
+                  name.EndsWith("upr"))
+                  return false;
+
+              return !name.Contains("lsp") && !name.Contains("usp");
+          }
+
+          List<Part> parts = allParts
+              .Where(part => Regex.IsMatch(part.Leaf, RegexDetail, RegexOptions.IgnoreCase))
+              .Where(IsNotAssembly)
+              .Where(part => part.DraftingDrawingSheets.ToArray().Any(__d => __d.Name.ToUpper() == "4-VIEW"))
+              .ToList();
+
+          parts.Sort((part1, part2) => string.Compare(part1.Leaf, part2.Leaf, StringComparison.Ordinal));
+
+          for (int i = 0; i < parts.Count; i++)
+          {
+              Part part = parts[i];
+
+              TheUFSession.Ui.SetPrompt($"{i + 1} of {parts.Count}. Printing 4-VIEW of {part.Leaf}.");
+
+              __display_part_ = part;
+
+              __work_part_ = __display_part_;
+
+              PrintBuilder printBuilder = __work_part_.PlotManager.CreatePrintBuilder();
+
+              using (new Destroyer(printBuilder))
+              {
+                  printBuilder.Copies = 1;
+
+                  printBuilder.ThinWidth = 1.0;
+
+                  printBuilder.NormalWidth = 2.0;
+
+                  printBuilder.ThickWidth = 3.0;
+
+                  printBuilder.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+
+                  printBuilder.ShadedGeometry = true;
+
+                  DrawingSheet drawingSheet = __work_part_.DraftingDrawingSheets.FindObject("4-VIEW");
+
+                  drawingSheet.Open();
+
+                  printBuilder.SourceBuilder.SetSheets(new NXObject[] { drawingSheet });
+
+                  printBuilder.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+
+                  printBuilder.Orientation = PrintBuilder.OrientationOption.Landscape;
+
+                  printBuilder.Paper = PrintBuilder.PaperSize.Letter;
+
+                  printBuilder.Commit();
+              }
+          }
+      }
+      catch (Exception ex)
+      {
+          ex.__PrintException();
+      }
+  }
+
+public static void Stp(string partPath, string output_path, string settings_file)
+   {
+       if (!output_path.EndsWith(".stp"))
+           throw new InvalidOperationException("File path for STP must end with \".stp\".");
+
+       if (File.Exists(output_path))
+           throw new ArgumentOutOfRangeException("output_path", "STP \"" + output_path + "\" already exists.");
+
+       if (!File.Exists(partPath))
+           throw new FileNotFoundException("Could not find file location \"" + partPath + "\".");
+
+       session_.__FindOrOpen(partPath);
+
+       StepCreator stepCreator = Session.GetSession().DexManager.CreateStepCreator();
+
+       using (session_.__UsingBuilderDestroyer(stepCreator))
+       {
+           stepCreator.ExportAs = StepCreator.ExportAsOption.Ap214;
+           stepCreator.SettingsFile = settings_file;
+           stepCreator.ObjectTypes.Solids = true;
+           stepCreator.OutputFile = output_path;
+           stepCreator.BsplineTol = 0.0254;
+           stepCreator.ObjectTypes.Annotations = true;
+           stepCreator.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+           stepCreator.InputFile = partPath;
+           stepCreator.FileSaveFlag = false;
+           stepCreator.LayerMask = "1, 96";
+           stepCreator.ProcessHoldFlag = true;
+           stepCreator.Commit();
+       }
+
+       string switchFilePath = output_path.Replace(".stp", ".log");
+
+       if (File.Exists(switchFilePath))
+           File.Delete(switchFilePath);
+   }
+
+   public static void Dwg(string partPath, string drawingSheetName, string filePath)
+{
+    string directory = Path.GetDirectoryName(filePath);
+
+    if (File.Exists(filePath))
+        throw new ArgumentOutOfRangeException("output_path", "DWG \"" + filePath + "\" already exists.");
+
+    Part part = session_.__FindOrOpen(partPath);
+
+    DrawingSheet sheet = part.DrawingSheets
+                             .ToArray()
+                             .SingleOrDefault(drawingSheet => drawingSheet.Name == drawingSheetName)
+                         ??
+                         throw new ArgumentException(
+                             $"Part \"{part.Leaf}\" does not have a sheet named \"{drawingSheetName}\".",
+                             "drawingSheetName");
+
+    UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
+
+    if (flag)
+    {
+        SetLayers();
+        UFSession.GetUFSession().Draw.UpdOutOfDateViews(sheet.Tag);
+        part.__Save();
+    }
+
+    DxfdwgCreator dxfdwgCreator1 = session_.DexManager.CreateDxfdwgCreator();
+    using (session_.__UsingBuilderDestroyer(dxfdwgCreator1))
+    {
+        dxfdwgCreator1.ExportData = DxfdwgCreator.ExportDataOption.Drawing;
+        dxfdwgCreator1.AutoCADRevision = DxfdwgCreator.AutoCADRevisionOptions.R2004;
+        dxfdwgCreator1.ViewEditMode = true;
+        dxfdwgCreator1.FlattenAssembly = true;
+        dxfdwgCreator1.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\dxfdwg\\dxfdwg.def";
+        dxfdwgCreator1.ExportFrom = DxfdwgCreator.ExportFromOption.ExistingPart;
+        dxfdwgCreator1.OutputFileType = DxfdwgCreator.OutputFileTypeOption.Dwg;
+        dxfdwgCreator1.ObjectTypes.Curves = true;
+        dxfdwgCreator1.ObjectTypes.Annotations = true;
+        dxfdwgCreator1.ObjectTypes.Structures = true;
+        dxfdwgCreator1.FlattenAssembly = false;
+        dxfdwgCreator1.ExportData = DxfdwgCreator.ExportDataOption.Drawing;
+        dxfdwgCreator1.InputFile = part.FullPath;
+        dxfdwgCreator1.ProcessHoldFlag = true;
+        dxfdwgCreator1.OutputFile = filePath;
+        dxfdwgCreator1.WidthFactorMode = DxfdwgCreator.WidthfactorMethodOptions.AutomaticCalculation;
+        dxfdwgCreator1.LayerMask = "1-256";
+        dxfdwgCreator1.DrawingList = drawingSheetName;
+        dxfdwgCreator1.Commit();
+    }
+
+    string switchFilePath = filePath.Replace(".dwg", ".log");
+
+    if (File.Exists(switchFilePath))
+        File.Delete(switchFilePath);
+}
+
+  public static void Pdf(Part part, string drawingSheetName, string filePath)
+  {
+      string directory = Path.GetDirectoryName(filePath);
+
+      if (!filePath.EndsWith(".pdf"))
+          throw new InvalidOperationException("File path for PDF must end with \".pdf\".");
+
+      if (File.Exists(filePath))
+          throw new ArgumentOutOfRangeException("output_path", "PDF \"" + filePath + "\" already exists.");
+
+      //We can use SingleOrDefault here because NX will prevent the naming of two drawing sheets the exact same string.
+      DrawingSheet sheet = part.DrawingSheets
+                               .ToArray()
+                               .SingleOrDefault(drawingSheet => drawingSheet.Name == drawingSheetName)
+                           ??
+                           throw new ArgumentException(
+                               $@"Part ""{part.Leaf}"" does not have a sheet named ""{drawingSheetName}"".",
+                               "drawingSheetName");
+
+      __display_part_ = part;
+      session_.__SetDisplayToWork();
+      SetLayers();
+
+      PrintPDFBuilder pdfBuilder = part.PlotManager.CreatePrintPdfbuilder();
+
+      using (session_.__UsingBuilderDestroyer(pdfBuilder))
+      {
+          pdfBuilder.Scale = 1.0;
+          pdfBuilder.Size = PrintPDFBuilder.SizeOption.ScaleFactor;
+          pdfBuilder.OutputText = PrintPDFBuilder.OutputTextOption.Polylines;
+          pdfBuilder.Units = PrintPDFBuilder.UnitsOption.English;
+          pdfBuilder.XDimension = 8.5;
+          pdfBuilder.YDimension = 11.0;
+          pdfBuilder.RasterImages = true;
+          pdfBuilder.Colors = PrintPDFBuilder.Color.BlackOnWhite;
+          pdfBuilder.Watermark = "";
+          UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
+
+          if (flag)
+          {
+              UFSession.GetUFSession().Draw.UpdOutOfDateViews(sheet.Tag);
+              part.__Save();
+          }
+          
+          sheet.Open();
+          pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
+          pdfBuilder.Filename = filePath;
+          pdfBuilder.Commit();
+      }
+  }
+
+    public static void Iges(string partPath, string igesPath, bool wait)
+  {
+      try
+      {
+          if (File.Exists(igesPath))
+              throw new ArgumentException(@"Path for iges file already exists.", nameof(igesPath));
+
+          IgesCreator igesCreator = Session.GetSession().DexManager.CreateIgesCreator();
+
+          using (session_.__UsingBuilderDestroyer(igesCreator))
+          {
+              igesCreator.ExportModelData = true;
+              igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+              igesCreator.ObjectTypes.Curves = true;
+              igesCreator.ObjectTypes.Surfaces = true;
+              igesCreator.ObjectTypes.Annotations = true;
+              igesCreator.ObjectTypes.Structures = true;
+              igesCreator.ObjectTypes.Solids = true;
+              igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+              igesCreator.ExportDrawings = true;
+              igesCreator.InputFile = partPath;
+              igesCreator.OutputFile = igesPath;
+              igesCreator.FileSaveFlag = false;
+              igesCreator.LayerMask = "1-256";
+              igesCreator.DrawingList = "";
+              igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+              igesCreator.ProcessHoldFlag = wait;
+              igesCreator.Commit();
+          }
+
+          if (wait)
+              print(File.Exists(igesPath)
+                  ? $"Successfully created \"{igesPath}\"."
+                  : $"Unsuccessfully created \"{igesPath}\".");
+      }
+      catch (Exception ex)
+      {
+          ex.__PrintException("Error when creating Iges file for " + partPath);
+      }
+  }
+
+  ExportStrip
+    __work_part_.Layers.SetState(1, State.WorkLayer);
+
+ for (int i = 2; i <= 256; i++)
+     __work_part_.Layers.SetState(i, State.Hidden);
+
+ new[] { 6, 10, 200, 201, 202, 254 }.ToList()
+     .ForEach(i => __work_part_.Layers.SetState(i, State.Selectable));
+
+       public static void ExportStripStp(string outgoingFolderName)
+  {
+      string outputPath = $"{outgoingFolderName}\\{session_.Parts.Work.Leaf}-{TodaysDate}.stp";
+
+      StepCreator step = session_.DexManager.CreateStepCreator();
+
+      using (session_.__UsingBuilderDestroyer(step))
+      {
+          step.ExportDestination = BaseCreator.ExportDestinationOption.NativeFileSystem;
+
+          step.SettingsFile = "U:\\nxFiles\\Step Translator\\ExternalStep_AllLayers.def";
+
+          step.ExportAs = StepCreator.ExportAsOption.Ap214;
+
+          step.InputFile = session_.Parts.Work.FullPath;
+
+          step.OutputFile = outputPath;
+
+          step.ProcessHoldFlag = true;
+
+          step.Commit();
+      }
+
+      print(File.Exists(outputPath)
+          ? $"Successfully created \"{outputPath}\"."
+          : $"Did not successfully create \"{outputPath}\".");
+  }
+
+  public static void ExportStripPdf(string partPath, string drawingSheetName, string filePath)
+  {
+      string directory = Path.GetDirectoryName(filePath);
+
+
+      if (!filePath.EndsWith(".pdf"))
+          throw new Exception("File path for PDF must end with \".pdf\".");
+
+      if (File.Exists(filePath))
+          throw new Exception($"PDF '{filePath}' already exists.");
+
+      Part part = session_.__FindOrOpen(partPath);
+
+      //We can use SingleOrDefault here because NX will prevent the naming of two drawing sheets the exact same string.
+      DrawingSheet sheet = part.DrawingSheets
+                               .ToArray()
+                               .SingleOrDefault(drawingSheet => drawingSheet.Name == drawingSheetName)
+                           ??
+                           throw new Exception(
+                               $@"Part '{partPath}' does not have a sheet named '{drawingSheetName}'.");
+
+      __display_part_ = part;
+      __work_part_ = __display_part_;
+
+      PrintPDFBuilder pdfBuilder = part.PlotManager.CreatePrintPdfbuilder();
+
+      using (session_.__UsingBuilderDestroyer(pdfBuilder))
+      {
+          pdfBuilder.Scale = 1.0;
+          pdfBuilder.Size = PrintPDFBuilder.SizeOption.ScaleFactor;
+          pdfBuilder.OutputText = PrintPDFBuilder.OutputTextOption.Polylines;
+          pdfBuilder.Units = PrintPDFBuilder.UnitsOption.English;
+          pdfBuilder.XDimension = 8.5;
+          pdfBuilder.YDimension = 11.0;
+          pdfBuilder.RasterImages = true;
+          pdfBuilder.Colors = PrintPDFBuilder.Color.AsDisplayed;
+          pdfBuilder.Watermark = "";
+          UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
+          if (flag)
+          {
+              UFSession.GetUFSession().Draw.UpdOutOfDateViews(sheet.Tag);
+              part.__Save();
+          }
+
+          sheet.Open();
+          pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
+          pdfBuilder.Filename = filePath;
+          pdfBuilder.Commit();
+      }
+  }
+
+
+   public static void ExportStripPrintDrawing(int copies)
+ {
+     if (copies == 0)
+         return;
+
+     Part _WorkPart = Session.GetSession().Parts.Work;
+
+     UFSession TheUFSession = UFSession.GetUFSession();
+
+     //session_.Execute(@"C:\Repos\NXJournals\JOURNALS\export_strip.py", "ExportStrip", "print_drawing_sheet", new object[] { copies });
+     PrintBuilder printBuilder1 = _WorkPart.PlotManager.CreatePrintBuilder();
+
+     try
+     {
+         printBuilder1.ThinWidth = 1.0;
+         printBuilder1.NormalWidth = 2.0;
+         printBuilder1.ThickWidth = 3.0;
+         printBuilder1.Copies = copies;
+         printBuilder1.RasterImages = true;
+         printBuilder1.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+         DrawingSheet[] sheets = _WorkPart.DrawingSheets.ToArray();
+         switch (sheets.Length)
+         {
+             case 0:
+                 print("Current work part doesn't not have a sheet to print.");
+                 return;
+             case 1:
+                 session_.ApplicationSwitchImmediate("UG_APP_DRAFTING");
+                 sheets[0].Open();
+                 TheUFSession.Draw.IsObjectOutOfDate(sheets[0].Tag, out bool outOfDate);
+                 if (outOfDate)
+                     try
+                     {
+                         TheUFSession.Draw.UpdOutOfDateViews(sheets[0].Tag);
+                         sheets[0].OwningPart.Save(BasePart.SaveComponents.True, BasePart.CloseAfterSave.False);
+                     }
+                     catch (Exception ex)
+                     {
+                         ex.__PrintException();
+                     }
+
+                 printBuilder1.SourceBuilder.SetSheets(new NXObject[] { sheets[0] });
+                 break;
+             default:
+                 print("Current work part contains more than 1 sheet.");
+                 return;
+         }
+
+         printBuilder1.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+         printBuilder1.Orientation = PrintBuilder.OrientationOption.Landscape;
+         printBuilder1.Paper = PrintBuilder.PaperSize.Inch11x17;
+         printBuilder1.Commit();
+     }
+     finally
+     {
+         printBuilder1.Destroy();
+     }
+ }
+
+
+ [UFunc(ufunc_proposal_data_wizard)]
+//[RevisionEntry("1.0", "2017", "06", "05")]
+//[Revision("1.0.1", "Revision Log Created for NX 11.")]
+//[RevisionEntry("1.1", "2017", "08", "22")]
+//[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+//[RevisionEntry("1.2", "2017", "08", "29")]
+//[Revision("1.2.1", "Fixed bug where the new component wasn't being created.")]
+//[Revision("1.2.1.1", "Something changed between nx9 and nx11.")]
+//[Revision("1.2.1.2", "Original code did not need a template specified when created a new component in 9.")]
+//[Revision("1.2.1.3", "It appears in 11 that you do in fact need to specify a template.")]
+//[Revision("1.2.2", "Also added a revision number to the form.")]
+//[RevisionEntry("2.0", "2017", "10", "24")]
+//[Revision("2.0.1",
+//    "Fixed bug where during the FindMasters() method, Object Null Reference would occur if one of the child components wasn't loaded.")]
+//[Revision("2.0.1.1", "Unloaded components will be ignored.")]
+//[Revision("2.0.1.2", "Suppressed components will also be ignored.")]
+//[Revision("2.0.2", "Changed Step Translator to use NX11.")]
+//[Revision("2.0.3",
+//    "The last step of the creating the proposal data process is now saving the Master and the simulation file. This only occurs if the process gets all the way to the end without throwing an exception.")]
+//[Revision("2.0.4", "Copy of the step file that is created is also copied to the MathData-P Level folder.")]
+//[Revision("2.0.5",
+//    "Made a change so that if the name of the selected Master is just Master then name the reference set the corresponding RXXPX number, else it functions as normal.")]
+//[Revision("2.0.6",
+//    "In the case of an error that occurs during any point of CreateProposalData method, the program will call a CleanUp() method, it performs the following.")]
+//[Revision("2.0.6.1", "It resets the Master to the state that it was in prior to the previous Proposal Run")]
+//[Revision("2.0.6.2", "It deletes the P Level folder in MathData if it exists.")]
+//[Revision("2.0.6.3", "It deletes the P Level folder in Outgoing if it exists.")]
+//[Revision("2.0.7", "Created a method called CheckPLevels() which performs the following.")]
+//[Revision("2.0.7.1", "Takes the selected P-Level and determines if there are any children under the master, and ")]
+//[Revision("2.0.7.2",
+//    "If there are any children under the Master, any Reference Sets in the Master, any proposal data folders in the outgoing folder, or any proposal data folders in the Mathdata folder with the same P-Level as the selected P-Level. If any of these exist then the user will be prompted to overwrite these occurrences. ")]
+//[RevisionEntry("2.1", "2017", "12", "07")]
+//[Revision("2.1.1", "Fixed issue where the proposal data part file name was being named incorrectly.")]
+//[RevisionEntry("2.2", "2018", "01", "03")]
+//[Revision("2.2.1",
+//    "Made it so that selected masters that are set to “Entire Part” cannot be processed and a subsequent message is displayed to the user.")]
+//[RevisionEntry("2.3", "2018", "11", "29")]
+//[Revision("2.3.1",
+//    "Re arranged form, so that the user can stretch the box and incorporate longer master file names.")]
+//[RevisionEntry("2.4", "2019", "02", "26")]
+//[Revision("2.4.1", "Reorganized code so that is will work with the current folder structure but will allow for,")]
+//[Revision("2.4.1.1", "Either “mathdata” or “Math Data”")]
+//[Revision("2.4.1.2", "And either “outgoingData” or “Outgoing”.")]
+//[Revision("2.4.1.3", "Will not work with the new folder structure yet.")]
+//[Revision("2.4.2",
+//    "When the list box is populated with the masters, it will now show the component name of the master in stead of the actual display of the master.")]
+//[Revision("2.4.2.1",
+//    "This should make it more difficult for the user to accidentally pick one master and then picking the incorrect corresponding sheet body for proposal.")]
+//[Revision("2.4.3",
+//    "Also, when the user hovers over the one of the masters in the list box, the corresponding master in the actual model will highlight.")]
+//[Revision("2.4.3.1", "This will make it easier to determine which master is actually being selected.")]
+//[Revision("2.4.4", "Moved all the code from the proposal data project, to CTS_Library.")]
+//[Revision("2.4.5",
+//    "Instead of having a Release level text box, it has now been changed to a Release and Study radio buttons.")]
+//[Revision("2.4.5.1", "This gives the user the ability to make both release and study data.")]
+//[RevisionEntry("2.5", "2019", "07", "11")]
+//[Revision("2.5.1", "Updated to use the updated GFolder.")]
+//[RevisionEntry("3.0", "2019", "08", "29")]
+//[Revision("3.0.1", "Edited back end of code to make easier to make changes in the future.")]
+//[RevisionEntry("3.1", "2020", "02", "19")]
+//[Revision("3.1.1",
+//    "Updated so that that proposal data will now look for data starting with either \"R\" or \"TSG\".")]
+//[RevisionEntry("3.2", "2020", "09", "24")]
+//[Revision("3.2.1", "Changd \"GetPartNumber\" method in \"Program\".")]
+//[Revision("3.2.2", "It now provides a more descriptive error message when an invalid part is found.")]
+//[RevisionEntry("3.3", "2021", "03", "15")]
+//[Revision("3.3.1", "Removed method that copies the created data to the outgoing folder.")]
+//[RevisionEntry("3.3", "2022", "10", "04")]
+//[Revision("3.3.1",
+//    "Updated the regular expresion of 'PartNumberWithDateRegex' to include \" dash, whitespace, underscore\"")]
+//[RevisionEntry("11.1", "2023", "01", "09")]
+//[Revision("11.1.1", "Removed validation")]
+
+ // The regular expression to match the proposal folders.
+ public const string ProposalRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}-p(?<proposalLevel>[0-9]+)(?:-proposal-data)*$";
+
+ // The regular expression to match the part number with a trailing date.        
+ public const string PartNumberWithDateRegex =
+     @"^(TSG|R)\d+([ps][0-9]+)?[-\s_](?<partNumber>.+)[-\s_][0-9]{4}[-\s_][0-9]{1,2}[-\s_][0-9]{1,2}.*$";
+
+ // The regular expression to match the TSG\R level of a part.
+ public const string RLevel = "^(?<identifier>TSG|R)(?<level>\\d+).+";
+
+
+
+// Propsal Data
+  public static void Step(string partPath, string stepPath, bool wait)
+ {
+     try
+     {
+         if (partPath == null)
+             throw new ArgumentNullException(nameof(partPath));
+
+         if (stepPath == null)
+             throw new ArgumentNullException(nameof(stepPath));
+
+         if (!File.Exists(partPath))
+             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
+
+         if (File.Exists(stepPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(stepPath));
+
+
+         Session.UndoMarkId undoMarkId1 = session_.SetUndoMark(0, "Start");
+         StepCreator stepCreator = session_.DexManager.CreateStepCreator();
+         stepCreator.ExportAs = (StepCreator.ExportAsOption)1;
+         stepCreator.ExportFrom = (StepCreator.ExportFromOption)1;
+         stepCreator.ObjectTypes.Solids = true;
+         stepCreator.InputFile = partPath;
+         stepCreator.OutputFile = stepPath;
+         session_.SetUndoMarkName(undoMarkId1, "Export to STEP Options Dialog");
+         stepCreator.SettingsFile = "U:\\nxFiles\\Step Translator\\214ug.def";
+         stepCreator.ObjectTypes.Curves = true;
+         stepCreator.ObjectTypes.Surfaces = true;
+         stepCreator.ObjectTypes.Solids = true;
+         session_.DeleteUndoMark(session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options"),
+             null);
+         Session.UndoMarkId undoMarkId2 =
+             session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options");
+         stepCreator.FileSaveFlag = false;
+         stepCreator.ProcessHoldFlag = wait;
+         stepCreator.LayerMask = "1-256";
+         stepCreator.Commit();
+         session_.DeleteUndoMark(undoMarkId2, null);
+
+         if (wait)
+             print(File.Exists(stepPath)
+                 ? $"Successfully created \"{stepPath}\"."
+                 : $"Unsuccessfully created \"{stepPath}\".");
+     }
+     catch (Exception ex)
+     {
+         ex.__PrintException("Error when creating Step file for " + partPath);
+     }
+ }
+
+
+
+ [UFunc(ufunc_simulation_data_builder)]
+//[RevisionEntry("1.00", "2017", "06", "05")]
+//[Revision("", "Revision Log Created for NX 11")]
+//[RevisionEntry("1.01", "2017", "08", "22")]
+//[Revision("1.01.1", "Signed so it will run outside of CTS")]
+//[RevisionEntry("2.0", "2017", "09", "13")]
+//[Revision("2.0.1", "Removed a lot of redundant code.")]
+//[Revision("2.0.2", "Added three radio buttons  (.prt, .igs, .stp)")]
+//[Revision("2.0.3", "This gives the user the ability to override the desired export type.")]
+//[RevisionEntry("2.1", "2017", "09", "27")]
+//[Revision("2.1.1", "Fixed bug where original part was being exported versus newly created part.")]
+//[RevisionEntry("2.2", "2018", "01", "03")]
+//[Revision("2.2.1", "Increased the number of versions from 25 to 50.")]
+//[RevisionEntry("2.3", "2018", "04", "26")]
+//[Revision("2.3.1",
+//    "Edited the Regex used to find simulation files and customer numbers in a GFolder. It will allow underscores to be a part of the customer job number.")]
+//[Revision("2.3.2",
+//    "File created from which the simulation regex is read from. This will allow us to be able to change the regex expression without having to edit the code itself.")]
+//[Revision("2.3.3", "Also some of combo box elements are generated using the same file.")]
+//[RevisionEntry("2.4", "2018", "05", "23")]
+//[Revision("2.4.1", "Moved all hardcoded information that populates the combo boxes to the SimulationUcf file.")]
+//[RevisionEntry("2.5", "2019", "06", "28")]
+//[Revision("2.5.1", "Moved engineering text box and swapped it with the proposal text box.")]
+//[Revision("2.5.2", "Changed the proposal text box to be S/P.")]
+//[RevisionEntry("2.6", "2019", "07", "04")]
+//[Revision("2.6.1", "Incorporated new GFolder into program.")]
+//[Revision("2.6.2", "Program will now allow for job tags after the job number.")]
+//[RevisionEntry("2.7", "2019", "07", "23")]
+//[Revision("2.7.1", "Increased the number of versions to 999.")]
+//[Revision("2.7.2", "Fixed issue that caused nx to lock up when the version number is greater than 99.")]
+//[Revision("2.7.3", "Incorporated stock list check off regex.")]
+//[RevisionEntry("2.8", "2019", "08", "28")]
+//[Revision("2.8.1", "GFolder updated to allow old job number under non cts folder.")]
+//[RevisionEntry("2.9", "2020", "08", "26")]
+//[Revision("2.9.1", "Added delete button.")]
+//[Revision("2.9.2", "Incorporated SimDataDeletion into this button.")]
+//[Revision("2.9.3", "SimData deletion will no longer be it's own ufunc.")]
+//[Revision("2.9.4", "Select button will now be disabled unless the user selects a data/tsg level.")]
+//[Revision("2.9.5", "Added a menu with a top most checked box. Allows the user to select the Top Most form option.")]
+//[RevisionEntry("3.0", "2020", "09", "03")]
+//[Revision("3.0.1", "Updated to use new Sim path, Now: \"P:\\CTS_SIM\\Active\"")]
+//[RevisionEntry("3.1", "2020", "09", "24")]
+//[Revision("3.1.1",
+//    "Changed how we find files to overwrite. Chagned from \"Contains\" to \"Equals\" in the \"CheckName\" method in \"Program\".")]
+//[RevisionEntry("11.1", "2023", "01", "09")]
+//[Revision("11.1.1", "Removed validation")]
+//[RevisionEntry("11.2", "2023", "05", "17")]
+//[Revision("11.2.1", "Fixed jons issue where it couldn't find the proper sim folder.")]
+
+ public static void Step(string partPath, string dwgPath)
+ {
+     try
+     {
+         if (!File.Exists(partPath))
+             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
+
+         if (File.Exists(dwgPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
+
+         if (File.Exists(dwgPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
+
+         StepCreator stepCreator1 = session_.DexManager.CreateStepCreator();
+         stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
+         stepCreator1.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+         stepCreator1.ObjectTypes.Solids = true;
+         stepCreator1.InputFile = partPath;
+         stepCreator1.OutputFile = dwgPath;
+         stepCreator1.ObjectTypes.Curves = true;
+         stepCreator1.ObjectTypes.Surfaces = true;
+         stepCreator1.ObjectTypes.Solids = true;
+         stepCreator1.FileSaveFlag = false;
+         stepCreator1.ProcessHoldFlag = true;
+         stepCreator1.LayerMask = "1-256";
+         stepCreator1.Commit();
+     }
+     catch (Exception ex)
+     {
+         ex.__PrintException("Error when creating Step file for " + partPath);
+     }
+ }
+
+ public static void Iges(string newPartFile, string igesPath)
+ {
+     try
+     {
+         IgesCreator igesCreator = Session.GetSession().DexManager.CreateIgesCreator();
+         igesCreator.ExportModelData = true;
+         igesCreator.ExportDrawings = true;
+         igesCreator.MapTabCylToBSurf = true;
+         igesCreator.BcurveTol = 0.050799999999999998;
+         igesCreator.IdenticalPointResolution = 0.001;
+         igesCreator.MaxThreeDMdlSpace = 10000.0;
+         igesCreator.ObjectTypes.Curves = true;
+         igesCreator.ObjectTypes.Surfaces = true;
+         igesCreator.ObjectTypes.Annotations = true;
+         igesCreator.ObjectTypes.Structures = true;
+         igesCreator.ObjectTypes.Solids = true;
+         igesCreator.ExportFrom = IgesCreator.ExportFromOption.ExistingPart;
+         igesCreator.SettingsFile = "C:\\Program Files\\Siemens\\NX 11.0\\iges\\igesexport.def";
+         igesCreator.MaxLineThickness = 2.0;
+         igesCreator.SysDefmaxThreeDMdlSpace = true;
+         igesCreator.SysDefidenticalPointResolution = true;
+         igesCreator.InputFile = newPartFile;
+         igesCreator.OutputFile = igesPath;
+         igesCreator.FileSaveFlag = false;
+         igesCreator.LayerMask = "1-256";
+         igesCreator.DrawingList = "";
+         igesCreator.ViewList = "Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined";
+         igesCreator.ProcessHoldFlag = false;
+         igesCreator.Commit();
+         igesCreator.Destroy();
+     }
+     catch (Exception ex)
+     {
+         ex.__PrintException("Error when creating Iges file for " + igesPath);
+     }
+ }
+
+  public static object[] ComboOperationItems()
+ {
+     return new object[]
+     {
+         "b", "d1",
+         "d2", "d3",
+         "d4", "d5",
+         "d6", "d7",
+         "d8", "d9",
+         "d10", "d11",
+         "d12", "d13",
+         "d14", "d15",
+         "d16", "RefData",
+         "MidSurfCurve", "t1",
+         "t2", "t3",
+         "t4", "t5",
+         "t6", "t7",
+         "t8", "t9",
+         "t10", "t11",
+         "t12", "t13",
+         "t14", "t15",
+         "t16", "Unfold"
+     };
+ }
+
+ public static object[] ComboSurfaceItems()
+ {
+     return new object[] { "lwr", "upr", "Pad Profile" };
+ }
+
+ public static object[] ComboVersionItems()
+ {
+     List<object> list = new List<object>();
+
+     for (int index = 1; index <= 999; index++)
+         list.Add($"v{(index > 9 ? index + "" : $"0{index}")}");
+
+     return list.ToArray();
+ }
+
+ public static object[] ComboToolSideItems()
+ {
+     return new object[] { "lwr", "upr", "post", "pad", "punch", "lifter" };
+ }
+
+  public class SimDataDeletion
+ {
+     public const string _simActive = "P:\\CTS_SIM\\Active";
+ }
+
+ INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_NAMES',N'BLOCK'),
+	 (N'COMPONENT_NAMES',N'TRIM'),
+	 (N'COMPONENT_NAMES',N'FORM'),
+	 (N'COMPONENT_NAMES',N'WINDOW'),
+	 (N'COMPONENT_NAMES',N'PURCHASED'),
+	 (N'COMPONENT_NAMES',N'LIFTER'),
+	 (N'COMPONENT_NAMES',N'PAD'),
+	 (N'COMPONENT_NAMES',N'BACKING PLATE'),
+	 (N'COMPONENT_NAMES',N'SHIM'),
+	 (N'COMPONENT_MATERIALS',N'A2');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'A2 GS'),
+	 (N'COMPONENT_MATERIALS',N'ACUSEAL'),
+	 (N'COMPONENT_MATERIALS',N'ALUM'),
+	 (N'COMPONENT_MATERIALS',N'AMPCO 18'),
+	 (N'COMPONENT_MATERIALS',N'AMPCO 21'),
+	 (N'COMPONENT_MATERIALS',N'CALDIE'),
+	 (N'COMPONENT_MATERIALS',N'CARMO'),
+	 (N'COMPONENT_MATERIALS',N'CRS'),
+	 (N'COMPONENT_MATERIALS',N'D2'),
+	 (N'COMPONENT_MATERIALS',N'DC53');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'DIEVAR'),
+	 (N'COMPONENT_MATERIALS',N'GM190/S0050A'),
+	 (N'COMPONENT_MATERIALS',N'GM238/G2500'),
+	 (N'COMPONENT_MATERIALS',N'GM241/G3500'),
+	 (N'COMPONENT_MATERIALS',N'GM245/D4512'),
+	 (N'COMPONENT_MATERIALS',N'GM246/D5506'),
+	 (N'COMPONENT_MATERIALS',N'GM338/D6510'),
+	 (N'COMPONENT_MATERIALS',N'GM68M/S0030'),
+	 (N'COMPONENT_MATERIALS',N'METALS PLUS'),
+	 (N'COMPONENT_MATERIALS',N'S0030A');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'HRS'),
+	 (N'COMPONENT_MATERIALS',N'HRS-NPA'),
+	 (N'COMPONENT_MATERIALS',N'HRS PLT'),
+	 (N'COMPONENT_MATERIALS',N'H13'),
+	 (N'COMPONENT_MATERIALS',N'H13 PREMIUM'),
+	 (N'COMPONENT_MATERIALS',N'O1'),
+	 (N'COMPONENT_MATERIALS',N'O6'),
+	 (N'COMPONENT_MATERIALS',N'O1 GS'),
+	 (N'COMPONENT_MATERIALS',N'O1 DR'),
+	 (N'COMPONENT_MATERIALS',N'Ovar Superior');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'P20'),
+	 (N'COMPONENT_MATERIALS',N'S7'),
+	 (N'COMPONENT_MATERIALS',N'S7 GS'),
+	 (N'COMPONENT_MATERIALS',N'STEELCRAFT'),
+	 (N'COMPONENT_MATERIALS',N'STRUCTURAL'),
+	 (N'COMPONENT_MATERIALS',N'Vanadis4'),
+	 (N'COMPONENT_MATERIALS',N'4140'),
+	 (N'COMPONENT_MATERIALS',N'4140 PH'),
+	 (N'COMPONENT_MATERIALS',N'4140 PH PLT'),
+	 (N'COMPONENT_MATERIALS',N'4140 PLT');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'6150'),
+	 (N'COMPONENT_MATERIALS',N'OTHER'),
+	 (N'COMPONENT_MATERIALS',N'MISC'),
+	 (N'COMPONENT_MATERIALS',N'Dayton-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Moeller-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Impax-Alter'),
+	 (N'COMPONENT_MATERIALS',N'EZ_FIT-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Misumi-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Selflube-Alter'),
+	 (N'COMPONENT_MATERIALS',N'NAAMS-Alter');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'COMPONENT_MATERIALS',N'Sankyo NAAMS-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Danly NAAMS-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Selflube NAAMS-Alter'),
+	 (N'COMPONENT_MATERIALS',N'Danly-Alter'),
+	 (N'COMPONENT_MATERIALS',N'MDL-Alter'),
+	 (N'COMPONENT_BURN_MATERIALS',N'HRS PLT'),
+	 (N'COMPONENT_BURN_MATERIALS',N'4140 PLT'),
+	 (N'COMPONENT_BURN_MATERIALS',N'4140 PH PLT'),
+	 (N'METRIC_SHCS_LOCATION',N'G:\0Library\Fasteners\Metric'),
+	 (N'INCH_SHCS_LOCATION',N'G:\0Library\Fasteners\English');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'BORDER_FILE_LOCATION',N'G:\0Library\Drafting\CTS-8.5X11A_DrillChart.prt'),
+	 (N'HOLESIZE_FILE_LOCATION',N'U:\nxFiles\UfuncFiles\sizefile.txt'),
+	 (N'PURCHASED_MATERIALS',N'DAYTON'),
+	 (N'PURCHASED_MATERIALS',N'MOELLER'),
+	 (N'PURCHASED_MATERIALS',N'KALLER'),
+	 (N'PURCHASED_MATERIALS',N'LANE'),
+	 (N'PURCHASED_MATERIALS',N'MISUMI'),
+	 (N'PURCHASED_MATERIALS',N'DADCO'),
+	 (N'PURCHASED_MATERIALS',N'FORWARD'),
+	 (N'PURCHASED_MATERIALS',N'HYSON');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'PURCHASED_MATERIALS',N'STANDFAST'),
+	 (N'PURCHASED_MATERIALS',N'STANDARD LIFTERS'),
+	 (N'PURCHASED_MATERIALS',N'AJACS'),
+	 (N'PURCHASED_MATERIALS',N'JOLICO'),
+	 (N'PURCHASED_MATERIALS',N'LAMINA'),
+	 (N'PURCHASED_MATERIALS',N'DANLY'),
+	 (N'PURCHASED_MATERIALS',N'DANLY/IEM'),
+	 (N'PURCHASED_MATERIALS',N'SELFLUBE'),
+	 (N'PURCHASED_MATERIALS',N'MDL'),
+	 (N'PURCHASED_MATERIALS',N'SANKYO');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'PURCHASED_MATERIALS',N'REID'),
+	 (N'PURCHASED_MATERIALS',N'STOCK'),
+	 (N'PURCHASED_MATERIALS',N'SYRON'),
+	 (N'PURCHASED_MATERIALS',N'TURCK'),
+	 (N'PURCHASED_MATERIALS',N'STRUCTURAL'),
+	 (N'PURCHASED_MATERIALS',N'IMP'),
+	 (N'PURCHASED_MATERIALS',N'ARGON'),
+	 (N'PURCHASED_MATERIALS',N'AMCOR'),
+	 (N'PURCHASED_MATERIALS',N'DESTACO'),
+	 (N'PURCHASED_MATERIALS',N'BOHLER UDDERHOLM');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'PURCHASED_MATERIALS',N'BALLUFF'),
+	 (N'PURCHASED_MATERIALS',N'PUR'),
+	 (N'PURCHASED_MATERIALS',N'VOESTALPINE'),
+	 (N'PURCHASED_MATERIALS',N'STOCK NPA'),
+	 (N'PURCHASED_MATERIALS',N'DADCO NPA'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-010.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-012.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-016.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-020.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-025.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-030.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\006\6mm-shcs-035.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-012.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-016.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-020.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-025.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-030.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-035.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-040.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-045.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-050.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-055.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-060.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\008\8mm-shcs-065.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-020.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-030.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-040.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-050.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-070.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\010\10mm-shcs-090.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-030.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-040.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-050.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-070.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-090.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\012\12mm-shcs-110.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-040.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-055.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-070.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-090.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\016\16mm-shcs-110.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-050.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-070.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-090.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-110.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews\020\20mm-shcs-150.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-075.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-125.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-200.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-300.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0375\0375-shcs-400.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-125.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-200.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-300.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-400.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0500\0500-shcs-500.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-125.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-200.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-300.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-400.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0625\0625-shcs-500.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-200.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-300.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-400.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-500.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews\0750\0750-shcs-650.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-010-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-012-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-016-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-020-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-025-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-030-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\006-2x\6mm-shcs-035-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-012-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-016-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-020-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-025-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-030-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-035-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-040-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-045-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-050-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-055-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-060-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\008-2x\8mm-shcs-065-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-020-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-030-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-040-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-050-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-070-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\010-2x\10mm-shcs-090-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-030-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-040-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-050-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-070-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-090-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\012-2x\12mm-shcs-110-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-040-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-055-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-070-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-090-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\016-2x\16mm-shcs-110-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-050-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-070-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-090-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-110-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\Metric\SocketHeadCapScrews-2x\020-2x\20mm-shcs-150-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-075-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-125-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-200-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-300-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0375-2x\0375-shcs-400-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-125-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-200-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-300-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-400-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0500-2x\0500-shcs-500-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-125-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-200-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-300-2x.prt');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-400-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0625-2x\0625-shcs-500-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-200-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-300-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-400-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-500-2x.prt'),
+	 (N'AddFastenersPreferredDiameters',N'G:\0Library\Fasteners\English\SocketHeadCapScrews-2x\0750-2x\0750-shcs-650-2x.prt'),
+	 (N'CUSTOM_DESCRIPTIONS',N'MAKE FROM DET# ###'),
+	 (N'CUSTOM_DESCRIPTIONS',N'NITROGEN PLATE SYSTEM'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CASTING');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST PAD'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST RISER'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST SHOE'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST POST'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST BINDER'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CAST FORM CAVITY'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CHUTE (SEE 3D DATA)'),
+	 (N'CUSTOM_DESCRIPTIONS',N'ROUND (SEE 3D DATA)'),
+	 (N'CUSTOM_DESCRIPTIONS',N'SPECIAL PILOT (SEE 3D DATA)'),
+	 (N'CUSTOM_DESCRIPTIONS',N'SPECIAL PUNCH (SEE 3D DATA)');
+INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
+	 (N'CUSTOM_DESCRIPTIONS',N'SPECIAL BUTTON (SEE 3D DATA)'),
+	 (N'CUSTOM_DESCRIPTIONS',N'SPECIAL RETAINER (SEE 3D DATA)'),
+	 (N'CUSTOM_DESCRIPTIONS',N'CUSTOM STAMP WITH SHARP FACE (SEE 3D DATA)'),
+	 (N'COMPONENT_TOLERANCES',N'GRIND +.005/-.000'),
+	 (N'COMPONENT_TOLERANCES',N'GRIND +.000/-.005'),
+	 (N'DETAIL_TYPE_ATTRIBUTE_NAME',N'DETAIL NAME'),
+	 (N'HEAT_TREAT_ATTRIBUTE_NAME',N'HEAT TREAT');
+
+// Bill of material
+//[RevisionLog("Bill Of Material")]
+//[RevisionEntry("1.00", "2017", "06", "05")]
+//[Revision("1.00.1", "Created for NX 11")]
+//[RevisionEntry("1.10", "2017", "08", "22")]
+//[Revision("1.10.1", "Signed so it can run outside of CTS")]
+//[RevisionEntry("1.11", "2017", "10", "11")]
+//[Revision("1.11.1", "Adjusted filter for counting the quantity of components")]
+//[Revision("1.11.1.1",
+//    "Added a check where the component.Parent.ReferenceSet != \"Empty\" must be true in order for that particular instance to be counted.")]
+//[RevisionEntry("1.2", "2017", "11", "22")]
+//[Revision("1.2.1",
+//    "When creating a stocklist, the program will now copy the excel file off of the “U” drive and rename it to the appropriate title that AssemblyExportDesignData can pick up")]
+//[Revision("1.2.2",
+//    "In the rare occurrence that a stock list already named properly exists, a window will prompt the user to override the file.")]
+//[RevisionEntry("1.3", "2017", "11", "29")]
+//[Revision("1.3.1", "Moved all the resources and processes for closing the excel files.")]
+//[RevisionEntry("1.4", "2017", "12", "28")]
+//[Revision("1.4.1", "Automatically named the stocklist correctly so that Assembly exportDesignData can find it.")]
+//[Revision("1.4.2", "When a bomb is created it will now also create and populate a checker stocklist.")]
+//[Revision("1.4.3", "Casting stock lists will now be named “-casting-stocklist”.")]
+//[Revision("1.4.4", "Made it so that the vendor list will not pop up if there are no vendors to select from.")]
+//[RevisionEntry("1.5", "2018", "01", "08")]
+//[Revision("1.5.1", "The BOM will now open a session of the BOM excel file when the program has completed.")]
+//[Revision("1.5.2",
+//    "Also the form will pop open first and getting the actual details for the BOM will only occur after a shop button is pressed.")]
+//[RevisionEntry("1.6", "2018", "01", "10")]
+//[Revision("1.6.1", "Changed the location of the CheckTemplate to the UDrive.")]
+//[Revision("1.6.2", "U:\\nxFiles\\Excel\\cts\\CheckerTemplate.xls")]
+//[RevisionEntry("1.7", "2018", "01", "29")]
+//[Revision("1.7.1", "Pointed validation method to CTS_Library to fix issue with BOM not validating the RTS server.")]
+//[Revision("1.7.2", "Fixed issue where the colors were coming on the wrong cell in the checker list.")]
+//[RevisionEntry("1.8", "2018", "03", "20")]
+//[Revision("1.8.1", "Fixed issue where the vendor dialog was not opening.")]
+//[Revision("1.8.2", "Added pre check.")]
+//[Revision("1.8.2.1",
+//    "Now the program will go through all the parts that are to be added to the BOM and it checks to make sure that they all have “Material” attribute with a valid value.")]
+//[Revision("1.8.2.2",
+//    "A valid value does not mean it has to be an actual Material the is known, the value just can’t be null, empty, or whitespace.")]
+//[Revision("1.8.2.3", "If one part fails the check then the program terminates")]
+//[RevisionEntry("1.81", "2018", "09", "14")]
+//[Revision("1.81.1",
+//    "Fixed bug that caused program to error out when there was a part file in the current displayed assembly, that didn't have single number within the DisplayName of its components.")]
+//[RevisionEntry("2.0", "2018", "10", "24")]
+//[Revision("2.0.1", "Removed “Reload” button.")]
+//[Revision("2.0.2", "Added “UGS” button.")]
+//[Revision("2.0.3", "Removed “Exit” button.")]
+//[Revision("2.0.4", "Removed both minimum and maximum from control box.")]
+//[Revision("2.0.5", "Added prompt and status changes during the BOM process.")]
+//[Revision("2.0.6",
+//    "When the “UGS” button is clicked, it will look for components with the “ComponentDescriptionUGS” attribute and add the value to the H column in the BOM.")]
+//[Revision("2.0.7",
+//    "Fixed issue where the form would remain idle after the BOM is made, and the user can’t click anything.Gives the appearance that it is frozen.")]
+//[Revision("2.0.7.1",
+//    "This was actually frozen because the checker sheet was being made.Now the form doesn't show until all after the entire process is complete.")]
+//[Revision("2.0.8", "Fixed issue where the BOM seemed to get halfway through populating the actual excel sheet.")]
+//[Revision("2.0.8.1",
+//    "I believe this was caused because the user might accidentally click the sheet while it was being populated.")]
+//[Revision("2.0.8.2", "The excel sheet is now not visible while it is being populated.")]
+//[RevisionEntry("2.1", "2018", "11", "29")]
+//[Revision("2.1.1", "Added a try-catch around the method call to make the Bom Sheet.")]
+//[Revision("2.1.2", "Hopefully this will give us some insight into why the checker sheet is not made sometimes.")]
+//[RevisionEntry("2.2", "2019", "08", "14")]
+//[Revision("2.2.1", "Updated to use new GFolder.")]
+//[RevisionEntry("2.3", "2019", "08", "28")]
+//[Revision("2.3.1", "GFolder updated to allow old job number under non cts folder.")]
+//[RevisionEntry("2.4", "2020", "02", "10")]
+//[Revision("2.4.1", "Updated to use new GFolder which will now search for a valid stock list folder.")]
+//[RevisionEntry("2.5", "2020", "10", "14")]
+//[Revision("2.5.1", "Added a clear selections button to the form.")]
+//[Revision("2.5.2", "Fixed issue where the form sometimes did not remember it's location upon load up.")]
+//[Revision("2.5.3", "Template files for excel bom sheet are updated to use the new version of excel.")]
+//[Revision("2.5.4",
+//    "Template file paths as well as the checker sheet are now determined through the \"U:\\nxFiles\\UfuncFiles\\BillOfMaterial.ucf\".")]
+//[RevisionEntry("2.6", "2021", "02", "11")]
+//[Revision("2.6.1", "Added a size description check to process.")]
+//[Revision("2.6.2",
+//    "Like in Design Check, a size description will be performed on all details prior to building of the BOM.")]
+//[Revision("2.6.3",
+//    "If any detail fails, the user will be notified and the user will have to give the okay to run via a dialog.")]
+//[RevisionEntry("2.7", "2021", "05", "27")]
+//[Revision("2.7.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+//[RevisionEntry("2.8", "2022", "03", "14")]
+//[Revision("2.7.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\BillOfMaterial.ucf\"")]
+//[Revision("2.7.2",
+//    "For Size Validation, the method will now check to see if the AddX, AddY, and AddZ expressions are present and valid.")]
+//[RevisionEntry("2.8", "2022", "09", "09")]
+//[Revision("2.8.1", "The material column in the Bom will now remove '-ALTER'")]
+//[Revision("2.8.2", "The material column in the Checker Sheet will now remove '-ALTER'")]
+//[RevisionEntry("2.9", "2022", "10", "04")]
+//[Revision("2.9.1", "The Rts bom file has been updated with a new logo")]
+//[RevisionEntry("11.1", "2023", "01", "09")]
+//[Revision("11.1.1", "Removed validation")]
+
+// igesexport.def
+CHOOSE_DIRECTION = UG to IGES
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesexport.def
+RECALL_DEF_FILE = igesexport.def
+LOG_FILE = igesexport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.prt
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 2.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+
+// igesimport.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesimport.def
+RECALL_DEF_FILE = igesimport.def
+LOG_FILE = igesimport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+EXTEND_BSURF_FOR_TRIMMING = YES
+
+// ExternalStep_Design.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+APPLICATION_PROTOCOL=AP214
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Continue if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load As Saved
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids,Wireframe,Surfaces
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1-49,60-256
+Authorization=
+UGI_PROC_ASSEM=Overwrite load_options.def values
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 11.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=C:\Users\administrator\*.prt
+
+// ExternalStep_Assembly.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+APPLICATION_PROTOCOL=AP214
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Continue if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load As Saved
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids,Wireframe,Surfaces
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1-256
+Authorization=
+UGI_PROC_ASSEM=Overwrite load_options.def values
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 11.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=C:\Users\administrator\*.prt
+
+// ExternalStep_AllLayers.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+APPLICATION_PROTOCOL=AP214
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Continue if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load As Saved
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids,Wireframe,Surfaces
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1-256
+Authorization=
+UGI_PROC_ASSEM=Overwrite load_options.def values
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 11.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=C:\Users\administrator\*.prt
+
+// dxfdwg.def
+!Common Settings keywords
+LOG_FILE =
+MSG_MASK = VOLUMINOUS
+DSP_MASK = VOLUMINOUS
+!dxftoug or dwgtoug keywords
+UNITS = Metric
+MAX_SPLINE_DEGREE = 3
+UGI_DIM_IMPORT_FLAG = GROUP
+!ugtodxf or ugtodwg keywords
+UGI_SOLID_EXPORT = 
+ACAD_VERSION = R2004
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,B-Curves,Silhouette Curves,Solid Edges on Drawings
+UGI_SURF_MASK = 
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Centerlines,Crosshatching,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets
+UGI_SOLID_MASK = 
+UGI_DRAWING_NAMES =
+UGI_USER_DEFINED_VIEWS = 
+BCRVD = 2
+SURFU = 8
+SURFV = 8
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+VIEW_MODERASE_MODE = YES
+ASSEMBLY_MAP=ON
+FILL_MODE=OFF
+BASE_PART_MM = dwgnullnx90_mm.prt
+BASE_PART_IN = dwgnullnx90_in.prt
+UGI_GDT_EXPORT_AS_BLOCK = NO
+EXPORT_DRAWING_USING_CGM = NO
+IMPORT_ACAD_MODEL_DATA = YES
+IMPORT_ACAD_MODEL_DATA_TO = MODELING
+IMPORT_ACAD_LAYOUTS = YES
+IMPORT_ALL_ACAD_LAYOUTS = YES
+ACAD_LAYOUTS_TO_IMPORT = 
+IMPORT_ACAD_LAYOUTS_TO = IMPORTED_VIEW 
+IMPORT_ACAD_CURVES_ON_SKETCH = NO 
+AVOID_NX_TEMPLATE_PART_LAYERS = YES 
+SET_NX_LAYER_NUMBER_FROM_PREFIX = NO
+SKIP_UNREFERENCED_ACAD_LAYERS = YES 
+IMPORT_UNSELECTED_ACAD_LAYERS = NO 
+IMPORT_UNSELECTED_ACAD_LAYERS_TO = 256 
+UNSELECTED_ACAD_LAYER_LIST =  
+NON_NUMERIC_LAYER_SORTING_CRITERIA = ALPHABETICAL
+IMPORT_ACAD_BLOCK_AS = GROUP
+ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
+WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
+EXPORT_DIMENSIONS_AS = REAL
+SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
+
+// ExternalStep_Detail.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Continue if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load As Saved
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254000000
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCE_FORMAT=NX
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1, 111
+Authorization=
+UGI_PROC_ASSEM=Overwrite load_options.def values
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 4.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=H:\\*.prt
+
+// Default_step214ug.def
+CHOOSE_DIRECTION = STEP to UG
+APPLICATION_PROTOCOL = AP214
+CNV_MODE = On-Line
+SAVE_DEF_FILE = step214ug.def
+RECALL_DEF_FILE = step214ug.def
+LOG_FILE = step214ug.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+Description =
+Imp_Level = 1
+File_Name =
+Author =
+Organization =
+Pre_Version = STEP214UG NX 11.0
+Authorization =
+UGI_LAYERE_MASK =
+UGI_LAYERD_MASK =
+UGI_LAYER_MASK = 1-256
+MODULES_MASK = Solids,Wireframe,Surfaces,PMI
+PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
+SHORT_LONG_NAMES = Long
+FILE_FILTER =
+PROCESS_PART_LIST =
+INDIVIDUAL_LIST =
+ZERO_LAYER_DEFAULT = 1
+AP214_DIS_OR_CD1 = IS
+EXPORT_VALPROPS = Off
+EXPORT_EXTERNAL_REFERENCES = Off
+EXPORT_EXTERNAL_REFERENCE_FORMAT = STEP
+AUTOMATIC_SURF_SEW = Off
+ASSEMBLY_MAP = Off
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS =
+
+// Default_igesimport.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesimport.def
+RECALL_DEF_FILE = igesimport.def
+LOG_FILE = igesimport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnullnx110_in.prt
+BASE_PART_MM = igesnullnx110_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = On
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+
+// Default_ugstep214.def
+CHOOSE_DIRECTION = UG to STEP
+CNV_MODE = On-Line
+SAVE_DEF_FILE = ugstep214.def
+RECALL_DEF_FILE = ugstep214.def
+LOG_FILE = ugstep214.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+Description =
+Imp_Level = 1
+File_Name =
+Author =
+Organization =
+Pre_Version = STEP214UG NX 11.0
+Authorization =
+UGI_LAYERE_MASK =
+UGI_LAYERD_MASK =
+UGI_LAYER_MASK = 1-256
+MODULES_MASK = Solids,Wireframe,Surfaces,PMI
+PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
+SHORT_LONG_NAMES = Long
+FILE_FILTER =
+PROCESS_PART_LIST =
+INDIVIDUAL_LIST =
+ZERO_LAYER_DEFAULT = 1
+AP214_DIS_OR_CD1 = IS
+EXPORT_VALPROPS = Off
+EXPORT_EXTERNAL_REFERENCES = Off
+AUTOMATIC_SURF_SEW = Off
+ASSEMBLY_MAP = Off
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS =
+APPLICATION_PROTOCOL=AP214
+
+// Default_igesexport.def
+CHOOSE_DIRECTION = UG to IGES
+CNV_MODE = on-line
+SAVE_DEF_FILE = igesexport.def
+RECALL_DEF_FILE = igesexport.def
+LOG_FILE = igesexport.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnullnx110_in.prt
+BASE_PART_MM = igesnullnx110_mm.prt
+FILE_FILTER = *.prt
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 2.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+
+// step214ug.def
+CHOOSE_DIRECTION = STEP to UG
+APPLICATION_PROTOCOL = AP214
+CNV_MODE = On-Line
+SAVE_DEF_FILE = step214ug.def
+RECALL_DEF_FILE = step214ug.def
+LOG_FILE = step214ug.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+Description =
+Imp_Level = 1
+File_Name =
+Author =
+Organization =
+Authorization =
+UGI_LAYERE_MASK =
+UGI_LAYERD_MASK =
+UGI_LAYER_MASK = 1-256
+MODULES_MASK = Solids,Wireframe,Surfaces,PMI
+PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
+SHORT_LONG_NAMES = Long
+FILE_FILTER =
+PROCESS_PART_LIST =
+INDIVIDUAL_LIST =
+ZERO_LAYER_DEFAULT = 1
+AP214_DIS_OR_CD1 = IS
+EXPORT_VALPROPS = Off
+EXPORT_EXTERNAL_REFERENCES = Off
+EXPORT_EXTERNAL_REFERENCE_FORMAT = STEP
+AUTOMATIC_SURF_SEW = Off
+ASSEMBLY_MAP = Off
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS =
+BASE_PART_MM = step214ugnull_mm.prt
+BASE_PART_IN = step214ugnull_in.prt
+
+// ugstep214.def
+CHOOSE_DIRECTION = UG to STEP
+CNV_MODE = On-Line
+SAVE_DEF_FILE = ugstep214.def
+RECALL_DEF_FILE = ugstep214.def
+LOG_FILE = ugstep214.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+Description =
+Imp_Level = 1
+File_Name =
+Author =
+Organization =
+Authorization =
+UGI_LAYERE_MASK =
+UGI_LAYERD_MASK =
+UGI_LAYER_MASK = 1-256
+MODULES_MASK = Solids
+PA_EDGE_FACE_BSPLINE_APPROX_TOL = 0.0254
+SHORT_LONG_NAMES = Long
+FILE_FILTER =
+PROCESS_PART_LIST =
+INDIVIDUAL_LIST =
+ZERO_LAYER_DEFAULT = 1
+AP214_DIS_OR_CD1 = IS
+EXPORT_VALPROPS = Off
+EXPORT_EXTERNAL_REFERENCES = Off
+AUTOMATIC_SURF_SEW = Off
+ASSEMBLY_MAP = Off
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS =
+APPLICATION_PROTOCOL=AP214
+
+// Add fasteners
+[RevisionLog("AddFasteners1")]
+    [RevisionEntry("1.0", "2017", "06", "05")]
+    [Revision("1.0.1", "Revision Log Created for NX 11.")]
+    [RevisionEntry("1.1", "2015", "07", "07")]
+    [Revision("1.1.1", "Fixed issue with plan view not getting created.")]
+    [RevisionEntry("1.2", "2015", "07", "13")]
+    [Revision("1.2.1", "Fixed issue with fasteners returning correct reference set upon clicking Ok Button.")]
+    [RevisionEntry("1.3", "2015", "07", "17")]
+    [Revision("1,3,1", "Fixed issued where getting the instance of added fasteners caused(null reference) therefore stopping the subtraction process and leaving some fasteners un-subtracted.")]
+    [RevisionEntry("1.4", "2015", "08", "21")]
+    [Revision("1.4.1", "SHCS added for handling holes are being included in the body ref set and wire taps.")]
+    [Revision("1.4.2", "Handling holes are getting added on layer 97 for some reason.")]
+    [Revision("1.4.3", "If we pick anything other than a screw first I would like the program to turn off cycle add.  I run with it on, and every time I go to add an extra jj to a block it runs me through cancelling the screw and dowel placements.")]
+    [Revision("1.4.4",
+        "We need a way to change the ref set that will be subtracted for multiple fasteners at once.  The Wave Single button is too slow.  It also hard to tell what sub tool has been selected once you progress to adding the next set of fasteners.")]
+    [Revision("1.4.5",
+        "Why is it so slow for the program to add the attributes for the new screw program to work with blocks that had them added manually or with the old program? Copy attributes is almost instant, so if it is just assigning them what is the hold up?")]
+    [Revision("1.4.6", "Last I knew you couldn't substitute a jack screw for a jig jack with the program.")]
+    [Revision("1.4.7", "Issues with the ref set not always being set to body at the end.")]
+    [Revision("1.4.8", "Are plan views being created yet? I didn't make the prints on my last job, so I don’t know if this is working yet?  Think I have had this issue since the one that was supposed to fix it.")]
+    [Revision("1.4.9",
+        "In a detail that already had screws added in using the old add fastener program I used the new program to add dowels and jj.I had to substitute the dowels because the 2” were too long, and it threw an exception I think on each of the old fasteners.")]
+    [Revision("1.4.10", "Handling hole screws when added in the component comes to BODY reference set in the main assembly.")]
+    [Revision("1.4.11", "When working with the program the screws, dowels and JJ will not appear on the screen and it will still allow you to add but good luck trying to guess where they will go.")]
+    [Revision("1.4.12", "Replacing screws is now a headache because right now you are not able to replace on the fly.Unless the program is fixed on timing, this would take too long to replace them with the program.")]
+    [Revision("1.4.13", "Pressing Esc after putting in JJ would turn off the 1” circle grid before going to Dowels (switch from Grid ref to CBore ref ).")]
+    [Revision("1.4.15", "Upon Pressing Esc and moving to Dowels, the Personally Chosen grid spacing should reapply itself(instead of staying locked on the 1” JJ grid setting { even though it shows Your setting}).")]
+    [Revision("1.4.16", "Separate from Rev Add, but maybe have a “Wave Multiple” instead of just a “Wave Single”? In case you want to change(3) JJ from Cbore to Blind(do at once instead of one at a time).")]
+    [Revision("1.4.17",
+        "Another issue with the Fasteners is that it apparently sets every fastener to the Body Ref set.After going through multiple punches in the Cycle Comp and adding in Fasteners and Wire Taps, going back out to the assembly level showed the Wire Tap Screws.Every punch had the WTS in the Body Ref.I either had to go into each block and take them off from the Body Ref set or at least make each punch the work part and use the Category Ref Sets(CTS Yellow Cat icon) to get the WTS off of the punch’s Body and hidden from assembly view.")]
+    [Revision("1.4.18", "Wire Burn Taps and Handling Hole Taps should not be placed into a component’s Body Reference Set.")]
+    [RevisionEntry("1.5", "2015", "08", "26")]
+    [Revision("1.5.1", "Placing screws is too slow and the point selection is too jumpy.  Old issue, but we need to fix this if we are going to convince everyone to use the program.")]
+    [Revision("1.5.2", "Taking 30 secs to 1 min 15 secs to process one detail for screws, dowels, etc.")]
+    [Revision("1.5.3", "Waiting 5-10 secs between screw to screw while just adding a screw, dowel, etc.")]
+    [RevisionEntry("1.6", "2015", "08", "27")]
+    [Revision("1.6.1", "Fixed issue with fasteners not getting added to the body reference set when run from the displayed part.")]
+    [RevisionEntry("1.7", "2015", "11", "06")]
+    [Revision("1.7.1", "Subtract time cut in half by using Boolean Builder instead of create subtract feature.")]
+    [Revision("1.7.2", "Fixed issue with fasteners subtracting bodies from layer 15.")]
+    [Revision("1.7.3", "Added delete single fastener button.")]
+    [Revision("1.7.4", "Fixed error when component selected that has an un-subtracted fastener without any attributes")]
+    [Revision("1.7.5", "Fixed bug with cycle not finding corresponding dowel and jack sizes.")]
+    [RevisionEntry("1.85", "2016", "02", "19")]
+    [Revision("1.85.1", "Fixed issue with the order of creating plan view.")]
+    [Revision("1.85.2", "Reference sets being left on body edge fixed.")]
+    [Revision("1.85.3", "Plan view button moved back to main dialog window.")]
+    [Revision("1.85.4", "Fixed issue with leaving the selected component the displayed part when run from an assembly.")]
+    [Revision("1.85.5", "Handling holes & wire taps are no longer added to the “BODY” Reference set.")]
+    [Revision("1.85.6", "Reads current translucency setting and sets it to that when completed at both assembly and displayed levels.")]
+    [RevisionEntry("1.85.1", "2016", "03", "18")]
+    [Revision("1.85.1.1", "Wire taps now delete temporary blue csys after creation.")]
+    [Revision("1.85.1.2", "Reset button makes current displayed part the work part.")]
+    [Revision("1.85.1.3", "Fixed issue with plan view leaving you at the current work part.")]
+    [Revision("1.85.1.4", "Fixed issue with wave in and wave out.")]
+    [Revision("1.85.1.5", "Fasteners that do not have attributes will be ignored.")]
+    [RevisionEntry("1.85.2", "2016", "03", "31")]
+    [Revision("1.85.2.1", "Fixed issue with replace refset when reverse cycle adding jig jacks.")]
+    [RevisionEntry("2.0.0", "2016", "08", "16")]
+    [Revision("2.0.0.1", "Added check box to create jack screws that are compatible with a d1 plate.")]
+    [Revision("2.0.0.2", "For cycle add, when short-tap or tap is selected, automatically defaults next reference set to ream_short and ream respectively as well as cbore_blind_opp (CTS-CIT#2015-0032)")]
+    [Revision("2.0.0.3", "Added button to have WCS pop to origin of dynamic block in work part. If no dynamic block is found, error message alerts user.")]
+    [Revision("2.0.0.4", "Got rid of wave in button.Wave In button is functionally equivalent with OK button.")]
+    [Revision("2.0.0.5",
+        "Change refset button updated.Old version would delete linked body and re wave in. This sometimes caused issues with entities not being added or removed from the reference set.Now button just replaces corresponding linked body with different defining body.")]
+    [Revision("2.0.0.6", "Fasteners will only need one attribute going forward. “subtract” If no “subtract” attribute is found then it will create the attribute and set it to “CBORE”")]
+    [Revision("2.0.0.7", "New method to locate which fastener goes to which linked body. ")]
+    [Revision("2.0.0.8", "Wave out will not be able to wave out a fastener that is using the “SLOT_CBORE” refset.")]
+    [Revision("2.0.0.9", "New method to move WCS to block origin.Much quicker however it does leave a temporary csys at the WCS location.Future version will be made to delete that csys.")]
+    [Revision("2.0.0.10",
+        "Changed ref set button, now filters out different fasteners based on initial selection. Now you select the first fastener. Program determines which type of fastener it is. Then it goes through all fasteners in the current work part and moves all fasteners of a different type and moves them to a layer that is visible but not selectable. This prevents the user from selecting a screw and a dowel and running into the issue of trying to change a reference set that doesn't exist. Following this the user is allowed to select more fasteners as long as they are of the same type as the original. At the conclusion of the action, all fasteners in work part are returned to their proper layer based on the subtraction attribute.")]
+    [Revision("2.0.0.11", "Known bug about translucency not resetting upon ok/reset click while working at the assembly level.")]
+    [Revision("2.0.0.12", "Known issue with D1 plate allowing you to move jig jacks wherever at random times.")]
+    [RevisionEntry("2.0.1", "2016", "08", "16")]
+    [Revision("2.0.1.1", "Fixed issue with the listbox not graying out during fastener placement session.")]
+    [RevisionEntry("2.0.2", "2016", "09", "29")]
+    [Revision("2.0.2.2", "Certain buttons will be grayed out or unavailable according to current WorkPart.")]
+    [Revision("2.0.2.2.1", "For example you won’t be able click Ok or Wave Out if your current WorkPart is an Assembly holder.")]
+    [Revision("2.0.3", "You will now be able to substitute a fastener even if it is not subtracted.")]
+    [Revision("2.0.4", "Minor bug fixes with errors.")]
+    [RevisionEntry("2.0.21", "2016", "10", "04")]
+    [Revision("2.0.22", "Fixed issue with substitute remaining checked on.")]
+    [Revision("2.0.22.1", "Will now automatically turn off every time you switch WorkParts.")]
+    [Revision("2.0.22.2", "This will also take care of issue with block and fasteners being removed from the body refset of the owning component.")]
+    [Revision("2.0.23", "Altered the process in which fasteners are determined if they are substitutable or not.")]
+    [Revision("2.0.24", "Made it so that if a dowel is found on layer 97 or a screw is found on layer 98 that it will be treated as a TOOLING or HANDLING hole respectively regardless of the attribute that is applied to it.")]
+    [Revision("2.0.25", "Corrected bug where you can’t substitute a fasteners that have been placed on layer 1.")]
+    [RevisionEntry("2.022", "2016", "10", "07")]
+    [Revision("2.022.1", "Fixed issue with, after running CycleAdd, the combo box with reference sets would still show Jig Jack reference sets even though the listbox would show screws.")]
+    [RevisionEntry("2.023", "2016", "10", "11")]
+    [Revision("2.023.1", "Fixed issue with unloaded fasteners causing exceptions when changing the workPart.")]
+    [Revision("2.023.1.1", "It will now search for Fasteners by displayName. (Which you can access without the component being loaded). If fastener is unloaded, it will load it.No other child parts other than fasteners will be loaded.")]
+    [RevisionEntry("2.024", "2016", "10", "12")]
+    [Revision("2.024.1", "Fixed issue with exception being thrown when both the workPart.RootComponent and the WorkComponent are null. (This only seems to occur during the creation of a Part with Component builder)")]
+    [RevisionEntry("2.025", "2016", "10", "17")]
+    [Revision("2.025.1", "Fixed issue with bodies and fasteners getting removed from the body reference set when you hit Ok.")]
+    [RevisionEntry("3.0.0", "2017", "03", "09")]
+    [Revision("3.0.1", "Updated user preferences so that they work now.")]
+    [Revision("3.0.1.1", "You must click “Save User Settings” for changes to take effect.")]
+    [Revision("3.0.1.2", "And if you do make a change to the user settings the form will not update itself to the new user preferences until the next time a session of Add Fasteners is launched.")]
+    [Revision("3.0.2", "Grid will only work during the Fastener Placement process.")]
+    [Revision("3.0.2.1", "Use tool bar grid if you need the grid some other time.")]
+    [Revision("3.0.3", "Fixed bugs and stability issues with previous versions.")]
+    [Revision("3.0.4", "Ability to substitute the fasteners before they are subtracted out.")]
+    [Revision("3.0.4.1", "Moved To NX 11")]
+    [RevisionEntry("3.0.1", "2017", "06", "01")]
+    [Revision("3.0.1.1", "Fixed issue where handling holes used the Tap reference set.They now use Short-Tap")]
+    [Revision("3.0.1.2", "All subtractions are done down at the displayedPart, fixes issue where if designer tapped a block before they added fasteners to that block.")]
+    [RevisionEntry("3.0.2", "2017", "08", "22")]
+    [Revision("3.0.2.1", "Signed so it can run outside of CTS.")]
+    [RevisionEntry("3.0.3", "2017", "12", "13")]
+    [Revision("3.0.3.1", "CIT 2017-0044")]
+    [Revision("3.0.3.2", "Added item in the main menu file strip.Added item called “Close all fasteners”. This will go through your current displayed part assembly and close all parts whose file path starts with \"G:\\0Library\\Fasteners\".")]
+    [RevisionEntry("3.1", "2017", "12", "28")]
+    [Revision("3.1.1", "Users will now be able to subtract out of non-dynamic block detail.")]
+    [Revision("3.1.1.1", "The detail will have to have one and only one solid body on layer 1 in order to be able to subtract fasteners.")]
+    [RevisionEntry("3.2", "2018", "09", "11")]
+    [Revision("3.2.1", "Added the “HARD_TAP_CLR” reference set to the socket head cap screws.")]
+    [Revision("3.2.1.1", "Only metric screws have this reference set.")]
+    [RevisionEntry("3.3", "2018", "11", "27")]
+    [Revision("3.3.1", "Updated the current release to the new version of CTS_Library.")]
+    [Revision("3.3.2", "Removed Minimize and Maximize boxes from form.")]
+    [Revision("3.3.3", "Edited bug where the Dowels were using the “REAM” reference set as the subtraction tool when the user set it to be the “TOOLING” .")]
+    [RevisionEntry("10", "2021", "09", "07")]
+    [Revision("10.1", "Moved to NX1919")]
+    [RevisionEntry("11", "2021", "09", "08")]
+    [Revision("11.1", "Fixed issue where Model, BODY, and BODY_EDGE reference sets were selectable in the cmbReferenceSet. They are now removed.")]
+    [Revision("11.2", "Fixed issue where handling reference set was not selectable for Socket Head Cap Screws.")]
+    [Revision("11.3", "Instead of using a text file the program now populates the listbox by reading the directories directory from 0Library.")]
+    [Revision("11.4", "Fixed issue where an error occurs when the user doesn't select anything at the assembly level.")]
+    [Revision("11.5", "Fixed issue where sometimes the listbox would not repopulate when the menu units are changed on the form.")]
+    [Revision("11.6", "Fixed issue in change reference set where when a user changes the reference of an unsubtracted fastener.")]
+    [Revision("11.7","Removed user settings and related code. User settings now will just remember the last used setting.")]
+    [Revision("11.8","Moved the Grid spacing values to a text file \"U:\\nxFiles\\UfuncFiles\\AddFastenersGridSpacing.txt\".")]
+    [Revision("11.9","Change Reference set can only be used when the display part is equal to the work part.")]
+    [Revision("11.10", "Moved CycleAdd combinations to it's own text file \"U:\\nxFiles\\UfuncFiles\\AddFastenersEnglishCycleAdd.txt\" and \"U:\\nxFiles\\UfuncFiles\\AddFastenersMetricCycleAdd.txt\".")]
+    [Revision("11.11", "Moved preferred diameters to it's file: \"U:\\nxFiles\\UfuncFiles\\AddFastenersPreferredDiameters.txt\".")]
+
+    // Assembly Auto Detail
+    [RevisionEntry("1.1", "2015", "05", "18")]
+    [Revision("1.1.1", "Added filter for Scrap Chutes to have 4 view created.  Description attribute has to be set to \"CHUTE TO SUIT\".")]
+    [RevisionEntry("1.2", "2016", "11", "17")]
+    [Revision("1.2.1", "Changed Line 1142 from \"TSG STANDARD\" to \"STANDARD\" - to work with the GE Border file.")]
+    [RevisionEntry("1.3", "2017", "06", "05")]
+    [Revision("1.3.1", "Fixed issue with hole charting coming in awkwardly.")]
+    [RevisionEntry("1.4", "2017", "06", "15")]
+    [Revision("1.4.1", "Now cuts the display and still able to have hole charts come in at the proper orientation.")]
+    [RevisionEntry("1.45", "2017", "08", "02")]
+    [Revision("1.45.1", "Changed criteria for HOLECHARTS.")]
+    [Revision("1.45.1.1", "It now will accept any input the contains the word HOLECHART instead of equaling HOLECHART.")]
+    [Revision("1.45.1.2", "Performs ToUpper() before check.")]
+    [RevisionEntry("1.50", "2017", "08", "22")]
+    [Revision("1.50.1", "Signed so it can run outside of CTS.")]
+    [RevisionEntry("1.60", "2017", "09", "08")]
+    [Revision("1.60.1", "Added validation check")]
+    [RevisionEntry("1.61", "2017", "12", "07")]
+    [Revision("1.61.1", "Added a message to the portion of code that creates the detail sheets.")]
+    [Revision("1.61.1.1", "If any exception is thrown during this process the user will be informed that some sort of error occurred during that component detail creation. They should then check to see if they can determine what happened the.")]
+    [RevisionEntry("1.62", "2017", "12", "13")]
+    [Revision("1.62.1", "CIT 2017-0049")]
+    [Revision("1.62.2", "Edited the functionality of the “Delete-4-Views” checkbox.")]
+    [Revision("1.62.3", "It now will delete all “Notes” on layer 230 in the selected parts. Effectively deleting the hole charts.")]
+    [RevisionEntry("1.7", "2018", "02", "09")]
+    [Revision("1.7.1", "Set the option to extract edges upon the creation of drawing sheet to none.")]
+    [Revision("1.7.2", "Edited the functionality of updating the drawing sheets. It will now skip drawing sheets in parts that are not out of date.")]
+    [RevisionEntry("1.8", "2018", "11", "26")]
+    [Revision("1.8.1", "Put a try catch surrounding the process that goes out and finds details to actual process.")]
+    [Revision("1.8.2", "Removed, minimize, maximize, and cancel buttons.")]
+    [RevisionEntry("1.81", "2018", "11", "29")]
+    [Revision("1.81.1", "Fixed bug that occurred when the “Select” button was pressed and caused an exception.")]
+    [RevisionEntry("1.82", "2020", "09", "03")]
+    [Revision("1.82.1", "Fixed issue where the maximum shoe op level was 305.")]
+    [RevisionEntry("1.9", "2021", "05", "27")]
+    [Revision("1.9.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+    [RevisionEntry("10", "2021", "06", "22")]
+    [Revision("10.1", "Revision Log Created for NX 1919.")]
+    [RevisionEntry("11","2021", "11", "17")]
+    [Revision("11.1","Added 'Shaded Views' checkbox to form.")]
+    [Revision("11.2", "When checked 'Shaded Views' will now produce a 4-View with the block shaded and colored.")]
+
+    // AssemblyClearanceCheck
+    [UFunc(nameof(AssemblyClearanceCheck))]
+    [RevisionLog("Assembly Clearance Check")]
+    [RevisionEntry("1.0", "2015", "08", "06")]
+    [Revision("1.0.1", "Released as a ufunc.")]
+    [RevisionEntry("1.1", "2016", "05", "20")]
+    [Revision("1.1.1", "Deletes points from only layer 99.  It was deleting all points which would also delete the datum csys point.")]
+    [RevisionEntry("1.2", "2017", "06", "05")]
+    [Revision("1.2.1", "Recompiled for NX.")]
+    [RevisionEntry("1.3", "2017", "08", "22")]
+    [Revision("1.3.1", "Signed so it can run outside of CTS.")]
+    [RevisionEntry("10", "2021", "07", "19")]
+    [Revision("10.1", "Moved to NX 1919.")]
+
+    // AssemblyColorCode
+    [UFunc(nameof(AssemblyColorCode))]
+    [RevisionLog("Assembly Color Code")]
+    [RevisionEntry("1.00", "2017", "06", "05")]
+    [Revision("1.00.1", "Created for NX 11")]
+    [RevisionEntry("1.10", "2017", "08", "22")]
+    [Revision("1.10.1", "Signed so it can run outside of CTS")]
+    [RevisionEntry("1.15", "2017", "11", "09")]
+    [Revision("1.15.1", "Removed exit button from form. ")]
+    [Revision("1.15.1.1", "This only leaves the “X” in the upper right of the form.")]
+    [Revision("1.15.2", "Added two new colors to select from, “DarkRed” and “PaleRed”.")]
+    [Revision("1.15.3", "Restructured form so that it is now “163” pixels across. Fixes issue where the form would show up misshapen on big tv in conference room.")]
+    [Revision("1.15.4", "Added a curves selection filter to the form.")]
+    [RevisionEntry("1.2", "2017", "11", "27")]
+    [Revision("1.2.1", "Created an undo mark every time the user colors an object or inherits a color followed up by a subsequent coloring.")]
+    [RevisionEntry("1.3", "2018", "02", "28")]
+    [Revision("1.3.1", "Added the ability to pick conic curve types. (Ellipse, Hyperbola, and Parabola)")]
+    [Revision("1.3.1.1", "There isn’t a new radio button; they are just under the umbrella of “Curves”.")]
+    [RevisionEntry("1.4", "2018", "09", "13")]
+    [Revision("1.4.1", "Restructured the form. Colors moved to bottom of the form so that it can grow with more colors being added automatically.")]
+    [Revision("1.4.2", "Converted form to use a UCF file. ")]
+    [Revision("1.4.2.1", "Colors are now constructed at the load up and read from the ucf file.")]
+    [Revision("1.4.3", "Added a new color. #80 = Light Weak Magenta.")]
+    [RevisionEntry("1.41", "2018", "09", "13")]
+    [Revision("1.41.1", "Fixed bug where when coloring a feature, the entire body of the feature was colored instead of just the faces of the feature.")]
+    [RevisionEntry("1.5", "2019", "03", "20")]
+    [Revision("1.5.1", "Moved the body of the code to be located in CTS_Library.")]
+    [RevisionEntry("1.6", "2021", "05", "27")]
+    [Revision("1.6.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+    [RevisionEntry("10", "2021","06","22")]
+    [Revision("10.1","Moved to NX 1919.")]
+
+// AssemblyExportDesignData
+ [RevisionEntry("2.4", "2019", "08", "06")]
+ [Revision("2.4.1", "Updated use new GFolder.")]
+ [RevisionEntry("2.5", "2020", "01", "02")]
+ [Revision("2.5.1", "Updated to new GFolder.")]
+ [RevisionEntry("2.6", "2020", "03", "16")]
+ [Revision("2.6.1", "Fixed issue where the wrong outgoing folder would be created.")]
+ [Revision("2.6.2", "Now, when stp files are created, we open it up search for Cyan and change it to lower case. This fixes issue where stp files translated into catia would show up black.")]
+ [Revision("2.6.3", "Fixed issue where Casting parts were not being created properly.")]
+ [Revision("2.6.4", "Moved form layout around for better readability.")]
+ [Revision("2.6.5", "Casting materials are now being read from the Concept Control File in stead of being hard coded.")]
+ [RevisionEntry("2.7", "2020", "09", "03")]
+ [Revision("2.7.1", "Fixed issue where display was turned off after a manual print 4-views was used.")]
+ [Revision("2.7.2", "Output directory will now be grayed out when the current display part is in a valid 6 digit gfolder and the rto or change radio buttons are selected.")]
+ [Revision("2.7.3", "Print 4-Views will now be enabled when the change radio button is selected.")]
+ [Revision("2.7.4", "Execute button will now say select when the change radio button is selected.")]
+ [Revision("2.7.5", "Updated to use the new Printer definition.")]
+ [Revision("2.7.6", "For 6 digit numbers, full design: files will no longer be placed in the out going folder.")]
+ [Revision("2.7.7", "For 6 digit numbers, review: files will be placed into Design Information folder.")]
+ [RevisionEntry("2.8", "2020", "10", "28")]
+ [Revision("2.8.1", "Fixed issue where the form would sometimes not remember it's previous location.")]
+ [Revision("2.8.2", "Regardless of the export operation, the program will now save and update every part that will be exported.")]
+ [Revision("2.8.3", "The top level assembly will now use \"U:\\nxFiles\\Step Translator\\ExternalStep_Assembly.def\" when exporting the step file.")]
+ [Revision("2.8.4", "The step details, 999 blocks, and see 3d data details will use \"U:\\nxFiles\\Step Translator\\ExternalStep_Detail.def\" when exporting the step file.")]
+ [RevisionEntry("2.9", "2021", "02", "11")]
+ [Revision("2.9.1", "Added a size description check to in the export process.")]
+ [Revision("2.9.2", "Like the BOM a size description will be ran prior to exporting.")]
+ [Revision("2.9.3", "If any part fails, the user will be notified and the user will have to give the okay to run via a dialog.")]
+ [RevisionEntry("3.0", "2021", "03", "15")]
+ [Revision("3.0.1", "All step files will now be created using the executable \"C:\\Program Files\\Siemens\\NX 11.0\\STEP214UG\\step214ug.exe\".")]
+ [Revision("3.0.2", "This should provide better performance and reliability.")]
+ [Revision("3.0.3", "All external processes are now created in the same manner.")]
+ [RevisionEntry("3.1", "2021", "06", "10")]
+ [Revision("3.1.1", "Fixed error that can occur when searching for casting parts.")]
+ [Revision("3.1.2", "Only part details will included.")]
+ [Revision("3.1.3", "Fixed issue where the 000 Step Assembly would sometimes not be created.")]
+ [Revision("3.1.4", "When any file is not created, the program will now try to recreate that file one additional time in a single process.")]
+ [RevisionEntry("3.2", "2022", "03", "14")]
+ [Revision("3.2.1", "For Size Validation, the method will now check to see if the AddX, AddY, and AddZ expressions are present and valid.")]
+ [RevisionEntry("3.3", "2022", "09", "06")]
+ [Revision("3.3.1", "Now when the user creates para-solids an additionaly step file will be made.")]
+ [RevisionEntry("3.4", "2022", "12", "14")]
+ [Revision("3.4.1", "Fixed bug where the burnout drawings were not being updated before being exported.")]
+ [Revision("3.4.2", "When RTO'ing a transfer job it will only delete the exported job folders that are actually in the 900 assembly.")]
+ [Revision("3.4.2", "This takes care of the bug that would occur when an op 010 blank die had it's folders deleted even though it not in the overall 900 assembly.")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+ [UFunc(nameof(AssemblyExportDesignData))]
+
+ // BlankDataBuilder
+ [UFunc(nameof(BlankDataBuilder))]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("1.2", "2018", "08", "22")]
+[Revision("1.2.1", "Fixed dxf settings path to point to NX11 instead of NX9.")]
+[RevisionEntry("1.3", "2019", "08", "28")]
+[Revision("1.3.1", "GFolder updated to allow old job number under non cts folder.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// Blank Development
+[UFunc(nameof(BlankDevelopment))]
+[RevisionLog("Blank Development")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// BlankDataBuilder
+ [UFunc(nameof(BlockAttributer))]
+ [RevisionLog("Block Attributor")]
+ [RevisionEntry("1.0", "2017", "06", "05")]
+ [Revision("1.0.1", "Revision Log Created for NX 11.")]
+ [RevisionEntry("1.1", "2017", "08", "22")]
+ [Revision("1.1.1", "Signed so it will run outside of CTS.")]
+ [RevisionEntry("1.2", "2017", "11", "10")]
+ [Revision("1.2.1", "Initialized the selected indices for comboBoxAddx, comboBoxAddy, and comboBoxAddz to ‘0’, which sets them all to be .000.")]
+ [RevisionEntry("1.3", "2018", "06", "06")]
+ [Revision("1.3.1", "Added “Cleanup Top & Bottom” to the ComboBoxTolerance.")]
+ [Revision("1.3.2", "If ComboBoxTolerance is set to “Cleanup Top & Bottom” then the values will only show two decimal places in the description attribute.")]
+ [RevisionEntry("1.4", "2018", "06", "11")]
+ [Revision("1.4.1",
+     "When updating the “BlockDescription” attribute, if the part in question contains an expression named “lwrParallel” or “uprParallel” and its’ value == “yes” then we simply just add the text “PARALLEL” to the end of the “DESCRIPTION” attribute.")]
+ [Revision("1.4.2", "Per Tsg-Cit #2018-0198")]
+ [RevisionEntry("1.5", "2021", "05", "27")]
+ [Revision("1.5.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+ [RevisionEntry("1.6", "2022", "04", "13")]
+ [Revision("1.6.1", "Added O6 material")]
+ [RevisionEntry("1.7", "2022", "10", "05")]
+ [Revision("1.7.1", "Added 'Diemaker To Alter' combo box that works like the 'Weldment' combo box.")]
+ [Revision("1.7.2","Special Retainer (See 3d Data) in comboBoxDescription.")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+
+ // Category Refsets
+  [UFunc(nameof(CategoryRefSets))]
+ [RevisionLog("Category Ref Sets.")]
+ [RevisionEntry("1.0", "2017", "06", "05")]
+ [Revision("1.0.1", "Revision Log Created for NX 11.")]
+ [RevisionEntry("1.1", "2017", "08", "22")]
+ [Revision("1.1.1", "Signed so it will run outside of CTS.")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+
+ // CircleFromSpline
+ [UFunc(nameof(CircleFromSpline))]
+[RevisionLog("Circle From Spline")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// CleanJobDirectory
+[UFunc(nameof(CleanJobDirectory))]
+[RevisionLog("Clean Up job Directory")]
+[RevisionEntry("1.00", "2017", "06", "05")]
+[Revision("1.00.1", "Revision Log Created for NX 11")]
+[RevisionEntry("1.01", "2017", "08", "22")]
+[Revision("1.01.1", "Signed so it can be run outside of CTS")]
+[RevisionEntry("1.02", "2017", "09", "08")]
+[Revision("1.02.1", "Added validation check")]
+[RevisionEntry("2.0", "2018", "03", "22")]
+[Revision("2.0.1", "CIT – 2018 – 0008")]
+[Revision("2.0.2", "Program will now not run unless the assembly is fully loaded.")]
+[Revision("2.0.3", "Program must be ran from a valid “000” detail that is not located in the 900 folder.")]
+[Revision("2.0.3.1", "Therefore assembly holders are not allowed either.")]
+[Revision("2.0.4", "Instead of making a file cleanup folder at the base of the displayed part folder.")]
+[Revision("2.0.4.1", "It will now create a file cleanup folder at the base of the current displayed parts GFolder.")]
+[Revision("2.0.5", "In the folder a zip file will be created with all the parts to be cleaned from the job.")]
+[Revision("2.0.5.1", "YYYY-MM-DD-OP-#-Cleanup")]
+[RevisionEntry("2.1", "2019", "08", "28")]
+[Revision("2.1.1", "GFolder updated to allow old job number under non cts folder.")]
+[RevisionEntry("2.2","2020","02","10")]
+[Revision("2.2.1","Updated output folder. 6 digit jobs will now place FileCleanup folder in the Design Information folder. 4 digit jobs are unchanged.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// ConvertSplineToCircle
+[UFunc(nameof(ConvertSplineToCircle))]
+[RevisionLog("Convert Spline To Circle.")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// CopyAttributes
+[UFunc(nameof(CopyAttributes))]
+[RevisionEntry("1.1", "2015", "07", "07")]
+[Revision("1.1.1", "Fixed issue with quantity counting components with long file names.")]
+[Revision("1.1.2", "It now only counts components with 3 digit component names.")]
+[RevisionEntry("1.2", "2016", "05", "20")]
+[Revision("1.2.1", "Made “SHOP”, “SHOP 1 NAME” & “UNITS” as drop down selections.")]
+[RevisionEntry("1.21", "2016", "06", "02")]
+[Revision("1.21.1", "Fixed issue with DETAIL NUMBER Attribute not working.")]
+[RevisionEntry("1.3", "2017", "06", "26")]
+[Revision("1.3.1", "Added revision number to form.")]
+[Revision("1.3.2", "Completely took out CTS_Methods.")]
+[Revision("1.3.3", "Changed IsNameValid method so that it can include different op numbers.")]
+[Revision("1.3.3.1", "Most notably RTS 500 numbers.")]
+[RevisionEntry("1.4", "2017", "08", "22")]
+[Revision("1.4.1", "Signed so that it will run outside of CTS")]
+[RevisionEntry("1.5", "2017", "09", "08")]
+[Revision("1.5.1", "Added validation check")]
+[RevisionEntry("1.6", "2017", "10", "10")]
+[Revision("1.6.1", "Changed how the quantity is handled.")]
+[Revision("1.6.1.1", "Added a check to make sure that a components.OwningComponent.ReferenceSet != “Empty”.")]
+[RevisionEntry("1.7", "2021", "05", "27")]
+[Revision("1.7.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// CopyRefsets
+[UFunc(nameof(CopyRefsets))]
+[RevisionLog("CopyRefSets")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// CopyToLayer50
+[UFunc(nameof(CopyToLayer50))]
+[RevisionLog("Copy to Layer 50")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// CreateBurnout
+ [UFunc(nameof(CreateBurnout))]
+ [RevisionLog("Create Burnout")]
+ [RevisionEntry("1.0", "2017", "06", "05")]
+ [Revision("1.0.1", "Revision Log Created for NX 11.")]
+ [RevisionEntry("1.1", "2017", "08", "22")]
+ [Revision("1.1.1", "Signed so it will run outside of CTS.")]
+ [RevisionEntry("1.2", "2018", "01", "10")]
+ [Revision("1.2.1", "Added try and catch to a few form methods.")]
+ [Revision("1.2.2", "Now performing a .ToUpper on the attribute value before comparison.")]
+ [RevisionEntry("1.3", "2018", "03", "05")]
+ [Revision("1.3.1", "Fixed bug where a burnout wasn't being made because Part and Component Attributes didn't match up.")]
+ [Revision("1.3.1.1", "This would allow the program to expect a burnout to be made but since the component attribute didn't match, it would fail.")]
+ [Revision("1.3.2", "Added revision number to form.")]
+ [Revision("1.3.3", "Removed Minimize and Maximize buttons.")]
+ [Revision("1.3.4", "Consolidated code.")]
+ [Revision("1.3.4.1", "Now the “Select” and “Select All” click actions go to the same method.")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+
+ // Design Check
+ [UFunc(nameof(DesignCheck))]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11")]
+
+[RevisionEntry("1.01", "2017", "08", "22")]
+[Revision("","Signed so it will run outside of CTS")]
+
+[RevisionEntry("1.02","2017","09","08")]
+[Revision("", "Added validation check")]
+
+[RevisionEntry("1.03","2018","01","11")]
+[Revision("", "Added validation of burnouts.")]
+[Revision("", "Material must also equal(HRS PLT, 4140 PLT, or 4140 PH PLT).")]
+[Revision("", "Added validation of castings.")]
+[Revision("", "A casting cannot have a child loaded from the LiftLug folder in 0Library and have that child set to Entire Part.")]
+
+[RevisionEntry("2.0","2018","01","22")]
+[Revision("2.0.1", "Restructured code into an easy to implement inheritance structure.")]
+[Revision("2.0.2", "Now it will be very easy to add a new Check and quickly add it.")]
+[Revision("2.0.3", "All checks derive from the validator class.")]
+[Revision("2.0.4", "They will have a PreCheck(a check that tests every part in the assembly to see if the part is valid for this kind of test). ")]
+[Revision("2.0.5", "Then there will be an actual CheckPart that checks the actual criteria.")]
+[Revision("2.0.6", "Added validation of the Position Override property.")]
+[Revision("2.0.7", "Added validation of the Fix at Current Time Stamp.")]
+[Revision("2.0.8", "The results not only printed to the InfoWindow, but it will also be written to a file titled the (DisplayPart.Leaf-Desgin-Check.txt) and placed in the current Job Folder stock check off list.")]
+
+[RevisionEntry("2.1", "2018", "01", "30")]
+[Revision("2.1.1", "Fixed issue where ValidateCBoreDepths was throwing an NXException with Error Code 640001. The exception was being thrown because in the PreCheck() method of CBoreDepths, the program iterates through the part and finds all the features that are linked bodies from other parts. Well it would throw an exception if it got to a linked body, whose owning part was not loaded and that linked bodies owning part could not be found. In a normal case it would just load the part. But if the linked bodies defining part was no longer there, because it was deleted or renamed, then the program would throw an exception.")]
+[Revision("2.1.2", "This opened up another issue. What happens when an exception is thrown during the PreCheck phase? Well now if any exception is thrown from any PreCheck() method the, exception will be caught, and the user will see in the results that a Part threw an exception from a pre check test and the user will notified of the Part and the error message.")]
+[Revision("2.1.3", "Added a check for Half Moons on castings.")]
+[Revision("2.1.4", "Checks to make sure that every casting has 4 half-moons. 2 named \"HALFMOON1\" and 2 \"HALFMOON2\". And that those faces are aligned properly.")]
+[Revision("2.1.5", "Added to ValidateComponentNames. Component names will be allowed to now have one capital letter after the name. This will take care of the issue where Nitros are showing up in the results.")]
+
+[RevisionEntry("2.2", "2018", "02", "06")]
+[Revision("2.2.01", "Added the full feature name back into the results for “ValidateFixAtCurrentTimeStamps”.")]
+[Revision("2.2.03", "Therefore the name should be back to “Linked Body (“Feature Number”) “.")]
+[Revision("2.2.04", "Adjusted the results for all validators.If a validator could not find any parts in the current displayed assembly, instead of printing out the meaningless results, it just prints out the validators name, followed by the “Did not find any parts valid for this check in the current displayed assembly”.")]
+[Revision("2.2.05", "If a validator did find valid parts, and all the found parts passed. The result will simply just be the name of the validator, followed by how many parts passed. ")]
+[Revision("2.2.06", "Added the actual Job Folder path to the “Description” message for “ValidateFolderLocations”.")]
+[Revision("2.2.07", "Changed the “PreCheck” in the base “Validator” virtual instead of being abstract.")]
+[Revision("2.2.08", "Now the base “PreCheck” method will return true for any part.Meaning all parts will be tested in the derived type of “Validator”. If there is a PreCheck test that needs to be used, then you must override the method in the derived type.")]
+[Revision("2.2.09", "Added a new functionality….ValidateInterpartExpressions.")]
+[Revision("2.2.10", "This check goes through every part in your current assembly and gets a list of Expressions in the Part that have InterPartData.If the part that the expression is referencing is not located in your current job folder, then the part will fail the test and report it.")]
+[Revision("2.2.11", "For the Burnout Validator, when a Burnout fails(aka...their material attribute is incorrect for a burnout), the results will also contain the actual material attribute of the failed part.")]
+[Revision("2.2.12", "Changed all parameters in the base “Validator” to use Snap.NX.")]
+[Revision("2.2.13", "Now for any validator that derives from “ValidatePartOccurrences” will ignore any part occurrence that is suppressed.")]
+[Revision("2.2.14", "Added an assembly path to “ValidateTimeStamps.")]
+[Revision("2.2.15", "Added a dashed line before and after the result of each check to make it easier for the user to read the results.")]
+[Revision("2.2.16", "Edited the error message on the HalfMoon check.")]
+[Revision("2.2.17", "It now will say: “Could not find any named half moons”.")]
+[Revision("2.2.18", "Edited how the results are displayed for a Validator that is derived from the “ValidatePartOccurrence”.  It will be displayed like this now.")]
+[Revision("2.2.19", "DisplayName/Leaf of the part.")]
+[Revision("2.2.20", "The name of the component that is a part occurrence of the part.")]
+[Revision("2.2.21", "The display names of the parts used to show the assembly path to find the component.")]
+[Revision("2.2.22", "Added a space in the text file to separate the header and the rest of Design Check results.")]
+
+[RevisionEntry("3.0", "2018", "02", "09")]
+[Revision("3.0.1", "Added a form so that the user can individually select which checks to run and on which components to check.")]
+[Revision("3.0.2", "Will only write text file to stockcheckofflists if the “All Checks” textbox is checked on.")]
+[Revision("3.0.3", "All check boxes will be defaulted on.")]
+
+[RevisionEntry("3.1","2018","02","20")]
+[Revision("3.1.1", "Not entirely sure if this fixed it, but so far it seems to be working. ")]
+[Revision("3.1.2", "In the ValidateTimeStamps, we are now filtering out any Linked Body that is suppressed.")]
+[Revision("3.1.3", "We are also checking the source part of the linked body to make sure that it is fully loaded.")]
+[Revision("3.1.4", "If a source part of a linked body is found to be not fully loaded, then the program gives the user a message in the design check results and continues on as normal.")]
+
+[RevisionEntry("3.2","2018","03","08")]
+[Revision("3.2.1", "Fixed bug that would cause the Session of NX to crash if design check was ran a lot on a session.")]
+[Revision("3.2.2", "Basically I was checking the timestamps of linked bodies through an ExtractFaceBuilder, but I was never Destroying the builder after each use.")]
+[Revision("3.2.3", "Thus running out of memory and causing a stack overflow error. ")]
+
+[RevisionEntry("4.0","2018","06","06")]
+[Revision("4.0.01", "Design Check has been completely redesigned.")]
+[Revision("4.0.02", "Instead of printing to the InfoWindow, all the information is pushed out to a form with a TreeView. ")]
+[Revision("4.0.03", "The tree view will allow the user to perform actions on the actual treenodes that will trigger events in the current Displayed Assembly.")]    
+[Revision("4.0.04", "AssemblyRefSetMisMatch")]
+[Revision("4.0.05", "Checks to make sure that won’t be any parts that are translated with the wrong reference set when converting to.stp.")]
+[Revision("4.0.06", "	BrokenLinks")]
+[Revision("4.0.07", "Checks for Linked Bodies in the current assembly that are broken.")]
+[Revision("4.0.08", "Burnout")]
+[Revision("4.0.09", "Checks to make sure that any part that is a burnout has a burnout drawing and a valid value for material attribute.")]
+[Revision("4.0.10", "BushingsAndPins")]
+[Revision("4.0.11", "Makes sure that guide bushings and pins are coming from the same vendor.")]
+[Revision("4.0.12", "CastingChildren")]
+[Revision("4.0.13", "Makes sure that and child of a casting is not set to the ReferenceSet of Entire Part.")]
+[Revision("4.0.14", "CastingHalfMoons")]
+[Revision("4.0.15", "Makes sure that a casting has properly named half moon faces and that the faces are aligned properly.")]
+[Revision("4.0.16", "CBoreDepths")]
+[Revision("4.0.17", "Checks to make sure that all CBore holes are at the proper level.")]
+[Revision("4.0.18", "Also helps to find fasteners that have blown out the side of hole.")]
+[Revision("4.0.19", "ComponentNames")]
+[Revision("4.0.20", "Ensures that all details are named properly.")]
+[Revision("4.0.21", "DescriptionNXAttribute")]
+[Revision("4.0.22", "Makes sure that all part occurrences of a given part have matching Description values.")]
+[Revision("4.0.23", "Dimensions")]
+[Revision("4.0.24", "Checks for non-associative dimensions.")]
+[Revision("4.0.25", "FolderLocations")]
+[Revision("4.0.26", "Makes sure that all parts in the assembly are being loaded from valid locations.")]
+[Revision("4.0.27", "FullyLoadAssembly")]
+[Revision("4.0.28", "Makes sure that all components in the assembly are loaded.")]
+[Revision("4.0.29", "InterpartExpressions")]
+[Revision("4.0.30", "Makes sure that all expressions come from parts that are within in the current job folder.")]
+[Revision("4.0.31", "JigJacks")]
+[Revision("4.0.32", "Ensures that all parts that have JigJacks have them on a 1-inch grid.")]
+[Revision("4.0.33", "LinkBodyParents")]
+[Revision("4.0.34", "Checks to make sure that the Link Status of every Linked Body is “Up to date”.")]
+[Revision("4.0.35", "PositionOverride")]
+[Revision("4.0.36", "Makes sure that every component in the assembly does not have position override turned on.")]
+[Revision("4.0.37", "SizeDescription")]
+[Revision("4.0.38", "Checks to make sure that all details size description actually matches the measurements of the solid on layer 1.")]
+[Revision("4.0.39", "TimeStamps")]
+[Revision("4.0.40", "Checks to make sure that there aren’t any linked bodies in the assembly that have the time stamp checked on.")]
+[Revision("4.0.41", "WireTapNotes.")]
+[Revision("4.0.42", "Makes sure that anything with the attribute of WTN = YES, that their DETAIL NAME = TRIM.")]
+
+[RevisionEntry("5.0", "2021", "03", "24")]
+[Revision("5.0.1", "Created for NX.")]
+[Revision("5.0.2", "Fixed issue where the re-run checks button didn't work correctly.")]
+[Revision("5.0.3", "LinkedBodyParents will now ignore Linked Bodies that are broken. They will still be flagged by the BrokenLinks check.")]
+[Revision("5.0.4", "Fixed issue where design check would run again when attempting to unload the program.")]
+[Revision("5.0.5", "Fixed issue where the program could not find the stocklist.")]
+[Revision("5.0.6", "When check is being initialized, the program will now check to make sure the assembly is fully loaded.")]
+[Revision("5.0.7", "Any part that is unloaded and not under the simulation file, will be flagged and will require the user to run it before the design check can take place.")]
+[Revision("5.0.8", "Also it will make sure that all parts not under the simulation file are not only partially loaded.")]
+[Revision("5.0.9", "If a partially loaded part is found, it will be fully loaded automatically.")]
+
+[RevisionEntry("5.1", "2021", "05", "27")]
+[Revision("5.1.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+
+[RevisionEntry("5.2", "2021", "06", "14")]
+[Revision("5.2.1", "Added a new check: SmartRevisions")]
+[Revision("5.2.2", "If a detail has library atrribute whose value start with Smart, if must have a REVISION attribute. Else it will fail.")]
+[Revision("5.2.3", "The revision value will be matched to the revison based on the part used to create it in 0Library.")]
+[Revision("5.2.4", "If the values differ then the part will fail.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// DrainHoleCreator
+[UFunc(nameof(DrainHoleCreator))]
+[RevisionLog("Drain Hole Creator")]
+[RevisionEntry("1.0", "2019", "01", "04")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2019", "01", "09")]
+[Revision("1.1.1", "Removed icon from form.")]
+[Revision("1.1.2", "Removed minimum and maximum buttons from form.")]
+[Revision("1.1.3", "Form is now hidden during the selection process.")]
+[Revision("1.1.4", "Form remembers its location now between sessions.")]
+[Revision("1.1.5", "The created curve that is used to define the drain hole is now placed on layer 8.")]
+[Revision("1.1.6", "The resulting extrusion and Boolean features are now placed on layer 1.")]
+[RevisionEntry("1.2", "2019", "01", "10")]
+[Revision("1.2.1", "Added an undo for each drain hole added.")]
+[Revision("1.2.2", "Changed extrusion start and end limits from 2 to -2, to .25 to -2.")]
+[Revision("1.2.3", "Fixed bug that would cause drain holes to sometimes move to the closest corner even though the user has Midpoints checked on and they selected very close to a mid-point of an edge.")]
+[Revision("1.2.4", "The circle that is used to define the extrusion is now named \"DRAIN_HOLE_CIRCLE\".")]
+[Revision("1.2.5", "The extrusion is now named \"DRAIN_HOLE_EXTRUSION\".")]
+[RevisionEntry("1.3", "2019", "01", "15")]
+[Revision("1.3.1", "Added start and end limit text boxes so the user can manually change the length of the limits of the created extrusions in case the ribs are bigger than the default values.")]
+[Revision("1.3.2", "Added tabs so that it will go in order.")]
+[Revision("1.3.2.1", "Diameter text box.")]
+[Revision("1.3.2.2", "Start limit text box.")]
+[Revision("1.3.2.3", "End limit text box.")]
+[Revision("1.3.3", "Creates a feature group and adds both the extrusion and the subtraction (if it is made) to it.")]
+[Revision("1.3.4", "Moved all defaults to a ucf.xml file.")]
+[Revision("1.3.4.1", "Corners = true")]
+[Revision("1.3.4.1.1", "The corner check box will be checked on by default.")]
+[Revision("1.3.4.2", "Midpoints = true")]
+[Revision("1.3.4.2.1", "The midpoint check box will be checked on by default.")]
+[Revision("1.3.4.3", "Curve Color = 10")]
+[Revision("1.3.4.3.1", "The default color of the curves that are used to define the extrusions.")]
+[Revision("1.3.4.4", "Curve Layer = 8")]
+[Revision("1.3.4.4.1", "The layer the curves will be placed on.")]
+[Revision("1.3.4.5", "Curve Name = “DRAIN_HOLE_CURVE”")]
+[Revision("1.3.4.5.1", "The name of the curve when it has been placed in the model.")]
+[Revision("1.3.4.6", "Diameter = 2")]
+[Revision("1.3.4.6.1", "The default diameter of the drain holes in inches.")]
+[Revision("1.3.4.7", "Diameter Units = Inches")]
+[Revision("1.3.4.7.1", "The English radio button will be check on by default.")]
+[Revision("1.3.4.8", "Extrusion End Limit = -2")]
+[Revision("1.3.4.8.1", "The default extrusion end limit in inches.")]
+[Revision("1.3.4.9", "Extrusion Start Limit = .25")]
+[Revision("1.3.4.9.1", "The default extrusion start limit in inches.")]
+[Revision("1.3.4.10", "Extrusion Layer = 1")]
+[Revision("1.3.4.10.1", "The layer the extrusion feature will be placed on.")]
+[Revision("1.3.4.11", "	Extrusion Name = “DRAIN_HOLE_EXTRUSION”")]
+[Revision("1.3.4.11.1", "The name given to the extrusion when it is created.")]
+[Revision("1.3.4.12", "	Subtract Holes = true")]
+[Revision("1.3.4.12.1", "The subtract hole check box will be check on by default.")]
+[Revision("1.3.4.13", "Subtraction Layer = 1")]
+[Revision("1.3.4.13.1", "The layer the subtraction feature will be placed on if one was created.")]
+[Revision("1.3.4.14", "Subtraction Name = “DRAIN_HOLE_SUBTRACTION”")]
+[Revision("1.3.4.14.1", "The name given to the subtraction feature if one is created.")]
+[Revision("1.3.4.15", "	Feature Group Name = “DRAIN_HOLE_FEATURE_GROUP”")]
+[Revision("1.3.4.15.1", "The name given to the feature group that is created.")]
+[RevisionEntry("1.4","2020","02","10")]
+[Revision("1.4.1","Drain hole features will no longer be added to a feature group.")]
+[Revision("1.4.2","Will not affect drain holes created and are already in a feature group.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// ExportSimPackage
+[UFunc(nameof(ExportSimPackage))]
+[RevisionLog("Export Sim Package")]
+[RevisionEntry("1.0", "2017", "09", "08")]
+[Revision("1.0.1", "Created fo NX.")]
+[RevisionEntry("1.1", "2017", "10", "26")]
+[Revision("1.1.1", "Fixed bug where when you pressed the select button on the form, it would prompt you to delete the export sim folder regardless if the folder existed or not at that time.")]
+[RevisionEntry("1.2", "2018", "01", "17")]
+[Revision("1.2.1",
+    "Added a “.dxf” check box. Now if the user selects a component to export that follows the Regex (^CustomerJobNumber-B-) and the dxf checkbox is checked then the program will also export a “.dxf” and place it in the same zip folder.")]
+[RevisionEntry("1.3", "2018", "04", "26")]
+[Revision("1.3.1", "Edited the Regex used to find simulation files and customer numbers in a GFolder. It will allow underscores to be a part of the customer job number.")]
+[Revision("1.3.2", "File created from which the simulation regex is read from. This will allow us to be able to change the regex expression without having to edit the code itself.")]
+[RevisionEntry("1.4", "2019", "07", "15")]
+[Revision("1.4.1", "Updated so that the program works with the updated GFolder.")]
+[Revision("1.4.2", "Program now prints if it successfully creates or does not create the expected files.")]
+[RevisionEntry("1.5","2019","08","28")]
+[Revision("1.5.1","GFolder updated to allow old job number under non cts folder.")]
+[RevisionEntry("1.6", "2021", "03", "04")]
+[Revision("1.6.1", "Changed export location for 6 digit jobs.")]
+[Revision("1.6.2", "The location will now export to {JobFolder\\Layout\\Go}.")]
+[Revision("1.6.3", "The step files will now be created using the same way as AssemblyExportDesignData.")]
+[Revision("1.6.4", "Removed the dxf capability from the form. No longer needed.")]
+[RevisionEntry("1.7","2021","03","08")]
+[Revision("1.7.1","Added copy check box to form.")]
+[Revision("1.7.2","Checking the copy check box will now copy contents of the created sim package to the \"Process and Sim Data for Design\" directory.")]
+[RevisionEntry("1.8","2021","03","10")]
+[Revision("1.8.1","Checking the copy check box will only copy the created zip file created to the \"Process and Sim Data for Design\".")]
+
+// ExportStrip
+[UFunc(nameof(ExportStrip))]
+[RevisionEntry("1.0", "2017", "10", "26")]
+[Revision("1.0.1", "Created for NX.")]
+[RevisionEntry("1.01", "2017", "08", "30")]
+[Revision("1.01.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("1.02", "2017", "08", "30")]
+[Revision("1.02.1", "Fixed bug where PDF could not be exported.")]
+[Revision("1.02.1.1", "Solution: We are now forcing the drawing sheets open before operations are performed on them.")]
+[RevisionEntry("1.03", "2017", "11", "27")]
+[Revision("1.03.1", "Updated the settings files used for DWG and STP creation.")]
+[Revision("1.03.1.1", "They now both use NX11 settings files.")]
+[RevisionEntry("1.04", "2018", "01", "08")]
+[Revision("1.04.1", "Restructured code for better maintainability.")]
+[Revision("1.04.2", "Removed DWG checkbox along with the DWG code.")]
+[Revision("1.04.3", "Added a “Complete” message when the program is finished executing.")]
+[Revision("1.04.4", "Fixed bug where the part was unable to export if the selection came back with instances of NXOpen.Annotations.Hatch.")]
+[RevisionEntry("1.05", "2018", "01", "22")]
+[Revision("1.05.1", "Changed the load constructor.")]
+[Revision("1.05.1.1", "Now if the user launches the Ufunc from a 010-strip or a 900-strip, the text box will default to the (date-strip) or (date-flowchart) respectively.")]
+[Revision("1.05.2", "Added the date to the .stp file create.")]
+[Revision("1.05.3", "Fixed issue where the reference sets were screwing up the step file.")]
+[Revision("1.05.3.1", "If the user runs the ufunc from a 900-strip, the ufunc will use the Session.GetSession().Parts.Work.FullPath as the file path for the step file.")]
+[Revision("1.05.3.2",
+    "If the user runs the ufunc from a 010-strip and checks the step file box, regardless of whether or not the user selects to export a part or not. The ufunc will export the part and use the exported part as the part to use for the step file. And at the end if the user had not check the export part box, the ufunc will delete the newly exported part before the folder gets zipped up.")]
+[RevisionEntry("2.0", "2018", "02", "14")]
+[Revision("2.0.1", "For Revision 1.05, we are no longer using the exported part as a file to use for the step file.")]
+[Revision("2.0.2", "We are no longer exporting an actual .prt file. The ufunc is now zipping up the strip assembly and placing it in the outgoing export folder.")]
+[Revision("2.0.3", "Updated the .def file being used for the step translator to \"U:\\nxFiles\\Step Translator\\ExternalStep_AllLayers.def\"")]
+[Revision("2.0.4", "For the strip we are turning on layers (1, 6, 10, 200, 201, 202, 254), and then turning all other layers off.")]
+[Revision("2.0.5", "For strips only.")]
+[Revision("2.0.5.1",
+    "Every fully loaded and unsuppressed component under the strip must have at least one fully loaded unsuppressed component under itself. This takes care of the bug the step translator is having when step files are converted to catia.")]
+[Revision("2.0.5.2", "If any press found as a child of the strip doesn't have a fully loaded component as well as the dummy file under it the program will not run. \"G:\\0Library\\SeedFiles\\Components\\Dummy.prt\"")]
+[Revision("2.0.5.3", "Foreach layout component under the strip, the ufunc gets the layout number and turns the appropriate layers in the actual layout. The same is done for the blanks.")]
+[RevisionEntry("2.1", "2018", "03", "05")]
+[Revision("2.1.1", "Added version number to form.")]
+[Revision("2.1.2", "Fixed bug where on certain strips layer 6 would be turned off.")]
+[RevisionEntry("2.2", "2018", "04", "03")]
+[Revision("2.2.1", "Fixed bug where the drawing sheet was not being updated before it is being printed.")]
+[RevisionEntry("2.3","2019","07","11")]
+[Revision("2.3.1","Updated to use the updated GFolder.")]
+[RevisionEntry("2.4","2019","08","28")]
+[Revision("2.4.1","GFolder updated to allow old job number under non cts folder.")]
+[RevisionEntry("2.5","2020","01","17")]
+[Revision("2.5.1","Edited output path. 4 digit jobs unchanged.")]
+[Revision("2.5.2","6 digit jobs will now place their output folder in the Layout folder.")]
+[RevisionEntry("2.6","2020","09","01")]
+[Revision("2.6.1", "Updated to use the new Printer definition.")]
+[RevisionEntry("2.7","2020","12","16")]
+[Revision("2.7.1", "When exporting a strip, it will now go through all the children of the part to export a step of. Sets layers to selectable and unblanks objects.")]
+[RevisionEntry("2.8","2021","03","04")]
+[Revision("2.8.1", "Changed export location for 6 digit jobs.")]
+[Revision("2.8.2","The location will now export to {JobFolder\\Layout\\Go}.")]
+[Revision("2.8.3", "The step files will now be created using the same way as AssemblyExportDesignData.")]
+[RevisionEntry("2.9", "2021", "03", "08")]
+[Revision("2.9.1", "Added copy check box to form.")]
+[Revision("2.9.2", "Checking the copy check box will now copy contents of the created export strip directory to the \"Process and Sim Data for Design\" directory.")]
+[RevisionEntry("3.0", "2021", "03", "10")]
+[Revision("3.0.1", "Checking the copy check box will only copy the created zip file created to the \"Process and Sim Data for Design\".")]
+[Revision("3.0.2", "Fixed issue where the a save was called for each component of the blank or layout in the strip.")]
+[Revision("3.0.3", "Moved the update process to the beginning of the program. Instead of being per operation.")]  
+[RevisionEntry("3.1","2021","05","27")]
+[Revision("3.1.1", "When the user checks the checkbox \"Process Sim Data For Design\", the program will now")]
+[Revision("3.1.2", "go through the \"Process Sim Data For Design\" directory and get all the .7z files.")]
+[Revision("3.1.3","The program will then prompt the user to keep or delete the zip files before the newly created zip file is moved to the directory.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// ExtractFreeEdgeCurves
+[UFunc(nameof(ExtractFreeEdgeCurves))]
+
+[RevisionLog("Extract Free Edge Curves")]
+[RevisionEntry("1.0", "2018", "01", "17")]
+[Revision("1.0.1", "Revision log created for NX 11.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// FShapeExporter
+ [UFunc(nameof(F_ShapeExporter))]
+ [RevisionLog("F Shape Exporter")]
+ [RevisionEntry("1.0", "2017", "06", "05")]
+ [Revision("1.0.1", "Revision Log Created for NX 11.")]
+ [RevisionEntry("1.1", "2017", "08", "22")]
+ [Revision("1.1.1", "Signed so it will run outside of CTS.")]
+ [RevisionEntry("2.0", "2017", "11", "20")]
+ [Revision("2.0.1", "Forced it so that is must be run from a Simulation File. ")]
+ [Revision("2.0.2", "If the user doesn't input anything into the Sim# box, then the program will exit.")]
+ [Revision("2.0.3", "Fixed bug where the program would end as soon as it got to a layer that didn't have any curves. ")]
+ [Revision("2.0.3.1", "Therefore a new component will still be made even if layer 219 (example) is the only layer with curves on it.")]
+ [Revision("2.0.4", "Before any component, reference set, or file is created, a list of component names, reference set names, and file path are created. ")]
+ [Revision("2.0.4.1", "If any of the current reference sets in the WorkPart match the name of the “to-be” created reference sets, the user is informed and the program exits without creating anything.")]
+ [Revision("2.0.4.2", "If any of the file paths in the “to-be” created files exists, the user is informed and the program exits without creating anything.")]
+ [Revision("2.0.4.3", "If any of the “to-be” created components display names match a child display name under the simulation, the user is informed and the program exits without creating anything.")]
+ [Revision("2.0.5", "Edited the properties of the newly created file. It will now use the “seed-part-metric” template file for Metric sim files and “seed-part-inch” template file for English sim files.")]
+ [RevisionEntry("2.1", "2018", "03", "08")]
+ [Revision("2.1.1", "Edited the component creation part of the program.")]
+ [Revision("2.1.1.1", "The datum csys will now be placed at the absolute of the new component instead of wherever the WCS happens to be at the time of creation.")]
+ [RevisionEntry("2.2", "2018", "04", "26")]
+ [Revision("2.2.1", "Edited the Regex used to find simulation files and customer numbers in a GFolder. It will allow underscores to be a part of the customer job number.")]
+ [Revision("2.2.2", "File created from which the simulation regex is read from. This will allow us to be able to change the regex expression without having to edit the code itself.")]
+ [RevisionEntry("2.5", "2019", "07", "11")]
+ [Revision("2.5.1", "Updated to use the updated GFolder.")]
+ [RevisionEntry("2.6", "2019", "07", "11")]
+ [Revision("2.6.1", "Updated to use the updated GFolder.")]
+ [RevisionEntry("2.7", "2019", "08", "28")]
+ [Revision("2.7.1", "GFolder updated to allow old job number under non cts folder.")]
+ [RevisionEntry("2.8", "2021", "05", "14")]
+ [Revision("2.8.1", "The maximum layer for FShapes has now been set to 225")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+
+ // LayoutRefsets
+ [UFunc(nameof(LayoutRefSets))]
+[RevisionLog("Layout Refsets")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+[UFunc(nameof(ProposalDataWizard))]
+[RevisionLog("ProposalDataWizard")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("1.2", "2017", "08", "29")]
+[Revision("1.2.1", "Fixed bug where the new component wasn't being created.")]
+[Revision("1.2.1.1", "Something changed between nx9 and nx11.")]
+[Revision("1.2.1.2", "Original code did not need a template specified when created a new component in 9.")]
+[Revision("1.2.1.3", "It appears in 11 that you do in fact need to specify a template.")]
+[Revision("1.2.2", "Also added a revision number to the form.")]
+[RevisionEntry("2.0", "2017", "10", "24")]
+[Revision("2.0.1", "Fixed bug where during the FindMasters() method, Object Null Reference would occur if one of the child components wasn't loaded.")]
+[Revision("2.0.1.1", "Unloaded components will be ignored.")]
+[Revision("2.0.1.2", "Suppressed components will also be ignored.")]
+[Revision("2.0.2", "Changed Step Translator to use NX11.")]
+[Revision("2.0.3", "The last step of the creating the proposal data process is now saving the Master and the simulation file. This only occurs if the process gets all the way to the end without throwing an exception.")]
+[Revision("2.0.4", "Copy of the step file that is created is also copied to the MathData-P Level folder.")]
+[Revision("2.0.5", "Made a change so that if the name of the selected Master is just Master then name the reference set the corresponding RXXPX number, else it functions as normal.")]
+[Revision("2.0.6", "In the case of an error that occurs during any point of CreateProposalData method, the program will call a CleanUp() method, it performs the following.")]
+[Revision("2.0.6.1", "It resets the Master to the state that it was in prior to the previous Proposal Run")]
+[Revision("2.0.6.2", "It deletes the P Level folder in MathData if it exists.")]
+[Revision("2.0.6.3", "It deletes the P Level folder in Outgoing if it exists.")]
+[Revision("2.0.7", "Created a method called CheckPLevels() which performs the following.")]
+[Revision("2.0.7.1", "Takes the selected P-Level and determines if there are any children under the master, and ")]
+[Revision("2.0.7.2",
+    "If there are any children under the Master, any Reference Sets in the Master, any proposal data folders in the outgoing folder, or any proposal data folders in the Mathdata folder with the same P-Level as the selected P-Level. If any of these exist then the user will be prompted to overwrite these occurrences. ")]
+[RevisionEntry("2.1", "2017", "12", "07")]
+[Revision("2.1.1", "Fixed issue where the proposal data part file name was being named incorrectly.")]
+[RevisionEntry("2.2", "2018", "01", "03")]
+[Revision("2.2.1", "Made it so that selected masters that are set to “Entire Part” cannot be processed and a subsequent message is displayed to the user.")]
+[RevisionEntry("2.3", "2018", "11", "29")]
+[Revision("2.3.1", "Re arranged form, so that the user can stretch the box and incorporate longer master file names.")]
+[RevisionEntry("2.4", "2019", "02", "26")]
+[Revision("2.4.1", "Reorganized code so that is will work with the current folder structure but will allow for,")]
+[Revision("2.4.1.1", "Either “mathdata” or “Math Data”")]
+[Revision("2.4.1.2", "And either “outgoingData” or “Outgoing”.")]
+[Revision("2.4.1.3", "Will not work with the new folder structure yet.")]
+[Revision("2.4.2", "When the list box is populated with the masters, it will now show the component name of the master in stead of the actual display of the master.")]
+[Revision("2.4.2.1", "This should make it more difficult for the user to accidentally pick one master and then picking the incorrect corresponding sheet body for proposal.")]
+[Revision("2.4.3", "Also, when the user hovers over the one of the masters in the list box, the corresponding master in the actual model will highlight.")]
+[Revision("2.4.3.1", "This will make it easier to determine which master is actually being selected.")]
+[Revision("2.4.4", "Moved all the code from the proposal data project, to CTS_Library.")]
+[Revision("2.4.5", "Instead of having a Release level text box, it has now been changed to a Release and Study radio buttons.")]
+[Revision("2.4.5.1", "This gives the user the ability to make both release and study data.")]
+[RevisionEntry("2.5", "2019", "07", "11")]
+[Revision("2.5.1", "Updated to use the updated GFolder.")]
+[RevisionEntry("3.0", "2019", "08", "29")]
+[Revision("3.0.1", "Edited back end of code to make easier to make changes in the future.")]
+[RevisionEntry("3.1", "2020", "02", "19")]
+[Revision("3.1.1", "Updated so that that proposal data will now look for data starting with either \"R\" or \"TSG\".")]
+[RevisionEntry("3.2", "2020", "09", "24")]
+[Revision("3.2.1", "Changd \"GetPartNumber\" method in \"Program\".")]
+[Revision("3.2.2", "It now provides a more descriptive error message when an invalid part is found.")]
+[RevisionEntry("3.3","2021","03","15")]
+[Revision("3.3.1", "Removed method that copies the created data to the outgoing folder.")]
+[RevisionEntry("3.3", "2022", "10", "04")]
+[Revision("3.3.1", "Updated the regular expresion of 'PartNumberWithDateRegex' to include \" dash, whitespace, underscore\"")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// Sim Ref Sets
+[UFunc(nameof(SimRefSets))]
+[RevisionLog("Sim Ref Sets")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS")]
+[RevisionEntry("1.2", "2017", "09", "08")]
+[Revision("1.2.1", "Added validation check")]
+[RevisionEntry("1.3", "2017", "10", "26")]
+[Revision("1.3.1", "Fixed bug where the Master-Tip reference sets were being delete from the simulation file.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// SimulationDataBuilder
+[UFunc("SimulationDataBuilder")]
+[RevisionEntry("1.00", "2017", "06", "05")]
+[Revision("", "Revision Log Created for NX 11")]
+[RevisionEntry("1.01", "2017", "08", "22")]
+[Revision("1.01.1", "Signed so it will run outside of CTS")]
+[RevisionEntry("2.0", "2017", "09", "13")]
+[Revision("2.0.1", "Removed a lot of redundant code.")]
+[Revision("2.0.2", "Added three radio buttons  (.prt, .igs, .stp)")]
+[Revision("2.0.3", "This gives the user the ability to override the desired export type.")]
+[RevisionEntry("2.1", "2017", "09", "27")]
+[Revision("2.1.1", "Fixed bug where original part was being exported versus newly created part.")]
+[RevisionEntry("2.2", "2018", "01", "03")]
+[Revision("2.2.1", "Increased the number of versions from 25 to 50.")]
+[RevisionEntry("2.3", "2018", "04", "26")]
+[Revision("2.3.1", "Edited the Regex used to find simulation files and customer numbers in a GFolder. It will allow underscores to be a part of the customer job number.")]
+[Revision("2.3.2", "File created from which the simulation regex is read from. This will allow us to be able to change the regex expression without having to edit the code itself.")]
+[Revision("2.3.3", "Also some of combo box elements are generated using the same file.")]
+[RevisionEntry("2.4", "2018", "05", "23")]
+[Revision("2.4.1", "Moved all hardcoded information that populates the combo boxes to the SimulationUcf file.")]
+[RevisionEntry("2.5", "2019", "06", "28")]
+[Revision("2.5.1", "Moved engineering text box and swapped it with the proposal text box.")]
+[Revision("2.5.2", "Changed the proposal text box to be S/P.")]
+[RevisionEntry("2.6", "2019", "07", "04")]
+[Revision("2.6.1", "Incorporated new GFolder into program.")]
+[Revision("2.6.2", "Program will now allow for job tags after the job number.")]
+[RevisionEntry("2.7", "2019", "07", "23")]
+[Revision("2.7.1", "Increased the number of versions to 999.")]
+[Revision("2.7.2", "Fixed issue that caused nx to lock up when the version number is greater than 99.")]
+[Revision("2.7.3", "Incorporated stock list check off regex.")]
+[RevisionEntry("2.8", "2019", "08", "28")]
+[Revision("2.8.1", "GFolder updated to allow old job number under non cts folder.")]
+[RevisionEntry("2.9", "2020", "08", "26")]
+[Revision("2.9.1", "Added delete button.")]
+[Revision("2.9.2", "Incorporated SimDataDeletion into this button.")]
+[Revision("2.9.3", "SimData deletion will no longer be it's own ufunc.")]
+[Revision("2.9.4", "Select button will now be disabled unless the user selects a data/tsg level.")]
+[Revision("2.9.5", "Added a menu with a top most checked box. Allows the user to select the Top Most form option.")]
+[RevisionEntry("3.0","2020","09","03")]
+[Revision("3.0.1", "Updated to use new Sim path, Now: \"P:\\CTS_SIM\\Active\"")]
+[RevisionEntry("3.1", "2020", "09","24")]
+[Revision("3.1.1","Changed how we find files to overwrite. Chagned from \"Contains\" to \"Equals\" in the \"CheckName\" method in \"Program\".")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+[RevisionEntry("11.2", "2023", "05", "17")]
+[Revision("11.2.1", "Fixed jons issue where it couldn't find the proper sim folder.")]
+
+// Strip Refsetter
+ [UFunc(nameof(StripRefSetter))]
+ [RevisionLog("Strip Ref Setter")]
+ [RevisionEntry("1.0", "2017", "06", "05")]
+ [Revision("1.0.1", "Revision Log Created for NX 11.")]
+ [Revision("1.0.2", "Resets the reference sets used by layout files in a strip.")]
+ [RevisionEntry("11.1", "2023", "01", "09")]
+ [Revision("11.1.1", "Removed validation")]
+
+ // Component Builder
+ [UFunc(nameof(udoComponentBuilder))]
+[RevisionEntry("1.1", "2016", "04", "19")]
+[Revision("1.1.1", "Automatically sets component as “Upper” or “Lower” based on work parts owning assembly.Still have the ability to manually create as upper or lower.")]
+[Revision("1.1.2", "Changed color of button for dark hard blue to be closer to actual color.")]
+[Revision("1.1.3", "Unloading will no longer cause NX to crash after changing the work part.  Note – Need to close component builder dialog and then unload ufunc.")]
+[RevisionEntry("1.2", "2016", "06", "10")]
+[Revision("1.2.1", "Made Grind Spec’s available when HRS material is selected per CTS-CIT#2016-0007.")]
+[Revision("1.2.2", "Recompiled for NX 11.")]
+[RevisionEntry("1.3", "2017", "08", "22")]
+[Revision("1.3.1", "Signed so it will run outside of CTS")]
+[RevisionEntry("1.31", "2017", "09", "22")]
+[Revision("1.31.1", "Edited block form so that if the user hasn't set the “Work Plane” index, it will default to an 1/8”.")]
+[RevisionEntry("1.4","2020","05","20")]
+[Revision("1.4.1","Got rid of X button in the top left of the form. User can only exit application through Exit button located at the bottom.")]
+[Revision("1.4.2","Fixed issue where if you exited from the Edit Block Form, the ufunc would not remember its location the next time the user fired it.")]
+[RevisionEntry("1.5", "2021", "05", "27")]
+[Revision("1.5.1", "The ConceptControlFile now points to \"U:\\nxFiles\\UfuncFiles\\ConceptControlFile.ucf\"")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// [UFunc(nameof(WireStartHole))]
+[RevisionLog("Wire Start Hole")]
+[RevisionEntry("1.0", "2016", "03", "03")]
+[Revision("1.0.1", "Released as a single ufunc that does all 3 sizes and added option to Extrude/Subtract.")]
+[RevisionEntry("1.1", "2016", "05", "18")]
+[Revision("1.1.1", "Updated to add start hole at current wcs instead of absolute of part.")]
+[RevisionEntry("2.00", "2017", "06", "05")]
+[Revision("2.00.1", "Recompiled for NX.")]
+[RevisionEntry("2.01", "2017", "08", "16")]
+[Revision("2.01.1", "Fixed issue with not finding a dynamic block with the Extrude/Subtract check box turned on.")]
+[RevisionEntry("2.02", "2017", "08", "22")]
+[Revision("2.02.1", "Signed so it can run outside of CTS")]
+[RevisionEntry("2.03", "2017", "09", "08")]
+[Revision("2.03.1", "Added validation check")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// WireTaperDevelopment
+[UFunc(nameof(WireTaperDevelopment))]
+[RevisionLog("Tap ream Control")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// SimplifyCurves
+[UFunc(nameof(SimplifyCurves))]
+[RevisionLog("Simplify Curves")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// ProfileTrimAndForm
+[UFunc(nameof(ProfileTrimAndForm))]
+[RevisionLog("Profile Trim and Form")]
+[RevisionEntry("1.0", "2017", "08", "22")]
+[Revision("1.0.1", "New version; got rid of sphere")]
+[Revision("1.0.2", "Signed so it will run outside of CTS")]
+[RevisionEntry("1.1", "2017", "09", "08")]
+[Revision("1.1.1", "Added validation check")]
+[RevisionEntry("2.0", "2017", "09", "10")]
+[Revision("2.0.1", "Got rid of the Spheres and went back to the standard block above the slug.")]
+[RevisionEntry("2.1", "2017", "09", "20")]
+[Revision("2.1.1", "Fixed bug where the program was timing out.")]
+[Revision("2.1.2", "Caution….if you have a slug with more than 10,000 lines, this program will time out again.")]
+[RevisionEntry("2.2", "2018", "01", "08")]
+[Revision("2.2.1", "Fixed bug where pad offsets would be offset in the wrong direction.")]
+[Revision("2.2.2",
+    "Also fixed bug where if you selected just arcs, the resulting unite box might be shaped incorrectly due to the fact that slugs that are circles only have on end point. Now if an arc is detected, 10 points are picked along the length of the arc and are added to the list used to find the extremes of the form.")]
+[RevisionEntry("2.3", "2018", "01", "31")]
+[Revision("2.3.1", "Fixed issue where all the Offset Faces that were being created were set to Tangent Face.")]
+[Revision("2.3.1.1", "It is now set to Body Face.")]
+[RevisionEntry("2.4", "2018", "04", "12")]
+[Revision("2.4.1", "Fixed bug where the Trim Profile Pad Offset would be in the wrong direction sometimes.")]
+[RevisionEntry("2.5", "2018", "07", "10")]
+[Revision("2.5.1", "CIT – 2018 - 0039")]
+[Revision("2.5.2", "Changed the \"trim type\", for the \"CreatePunches\" method to:")]
+[Revision("2.5.2.1", "NXOpen.GeometricUtilities. Extend.ExtendType.UntilExtended")]
+[RevisionEntry("2.6", "2020", "02", "01")]
+[Revision("2.6.1", "Redesigned selection.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+public class Program : UFuncWithForm<MainForm1>
+
+// PlotDetailDrawings
+[UFunc(nameof(PlotDetailDrawings))]
+[RevisionLog("Plot DetailPart Drawings")]
+[RevisionEntry("1.0", "2017", "06", "05")]
+[Revision("1.0.1", "Revision Log Created for NX 11.")]
+[RevisionEntry("1.1", "2017", "08", "22")]
+[Revision("1.1.1", "Signed so it will run outside of CTS.")]
+[RevisionEntry("1.2", "2020", "09", "01")]
+[Revision("1.2.1", "Updated to use the new Printer definition.")]
+[RevisionEntry("11.1", "2023", "01", "09")]
+[Revision("11.1.1", "Removed validation")]
+
+// iges.def
+CHOOSE_DIRECTION = IGES to UG
+CNV_MODE = on-line
+SAVE_DEF_FILE = iges.def
+RECALL_DEF_FILE = iges.def
+LOG_FILE = iges.log
+MSG_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+DSP_MASK = Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+JAMA = off
+IG2UG_CURVE_MASK = Offset Curves,Composite Curves,Arcs,Conics,Copious Points,Copious Lines,Lines,Parametric Splines,Points,Flash Entities,Rational B-Spline Curves
+IG2UG_SURF_MASK = Planes,Parametric Spline Surfaces,Ruled Surfaces,Surfaces of Revolution,Tabulated Cylinders,Rational B-Spline Surfaces,Offset Surfaces
+IG2UG_ANNOT_MASK = General Symbols,Centerlines,Sections,Witness Lines,Flag Notes,General Labels,General Notes,Point Dimensions,Angular Dimensions,Diameter Dimensions,Linear Dimensions,Ordinate Dimensions,Radius Dimensions,Leader Lines
+IG2UG_STRUCT_MASK = Drawings,Views,Subfigures,Groups
+IG2UG_ENABLE_LAYER = 
+IG2UG_DISABLE_LAYER = 
+IG2UG_LAYER_MASK = 0-99999
+ZERO_LAYER_DEFAULT = 1
+BSURFACE_MAP = On
+SURFOFREV_MAP = On
+VIEWMOD_MAP = Off
+SMOOTH_BSURFS = On
+ASSEMBLY_MAP = Off
+IGES_ATTRIBUTE = Off
+SUPPRESS_LABELS = Off
+SCALE_TEXT_AND_ARROWS = Off
+RULED_SURFACE_MAP = B-Surface
+COPIOUS_DATA_MAP = Group of Linear NURB Splines
+SUBTEXT_MAP = Visible in Component Part Only
+TRIM_SURF_TOL = 0.001
+FIXUP_TOL = 0.0005
+BASE_PART_IN = igesnull_in.prt
+BASE_PART_MM = igesnull_mm.prt
+FILE_FILTER = *.igs
+PROCESS_PART_LIST = 
+INDIVIDUAL_LIST = 
+ID_FOR_REC =  
+ENTER_START_SECTION = 
+START_FILE_NAME = 
+SURF_DIST_TOL = 0.002
+AUTHOR = 
+COMPANY = 
+UGI_VIEW_MASK = Top,Front,Right,Back,Bottom,Left,Isometric,Trimetric,User Defined
+UGI_USER_DEFINED_VIEWS = 
+UGI_DRAWING_NAMES = 
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,Rational B-Spline Curves,Solid Edges on Drawings
+UGI_SURF_MASK = Cylinders,Cones,Spheres,Surfaces of Revolution,Tabulated Cylinders,Bounded Planes,Rational B-Spline Surfaces,Planes,Offset Surfaces
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Crosshatching,Centerlines,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets,Patterns
+UGI_SOLID_MASK = Solid Bodies,Sheet Bodies
+VIEWS_VISIBLE_MAP = Views Visible (402/3),Views Visible Color and Line Weight (402/4)
+UGI_LAYERE_MASK = 
+UGI_LAYERD_MASK = 
+UGI_LAYER_MASK = 1-256
+CROSSHATCH_MAP = Sectioned Area
+TRIMMED_SURFACE_MAP = Off
+PERIODIC_SURFACE_MAP = Off
+LINE_FONT_MAP = IGES Line Font Number
+COLOR_FONT_MAP = Color Definition
+OUTPUT_FORMAT = On
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+MAX_LINE_THICK = 0.0000000
+IGES_BLACK = black
+IGES_WHITE = white
+SYSMOD_DIM = On
+MODEL_DIM = 10000.0000000
+SYSPT_RESOLUTION = On
+POINT_RESOLUTION = 0.00100
+AUTOMATIC_SURF_SEW = Off
+IGES_DIM_TO_UG_ASSORT = Yes
+IGES_LINE_NORMAL_THICKNESS_MIN = 0.0 
+IGES_LINE_NORMAL_THICKNESS_MAX = 0.0 
+SURFREV_MAP = B-Surface
+TABCYL_MAP = On
+FORCE_B-SURFACES = No
+REFERENCE_CSYS_FOR_EXPORT = ABS
+USER_DEFINED_CSYS_FOR_EXPORT = 0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0
+
+
+// dxfdwg.def
+!Common Settings keywords
+LOG_FILE =
+MSG_MASK = VOLUMINOUS
+DSP_MASK = VOLUMINOUS
+!dxftoug or dwgtoug keywords
+UNITS = Metric
+MAX_SPLINE_DEGREE = 3
+UGI_DIM_IMPORT_FLAG = GROUP
+!ugtodxf or ugtodwg keywords
+UGI_SOLID_EXPORT = 
+ACAD_VERSION = R2004
+UGI_CURVE_MASK = Points,Lines,Arcs,Conics,B-Curves,Silhouette Curves,Solid Edges on Drawings
+UGI_SURF_MASK = 
+UGI_ANNOT_MASK = Dimensions,Notes,Labels,ID Symbols,Tolerances,Centerlines,Crosshatching,Draft Aid by Parts,Stand Alone Symbols,Symbol Fonts
+UGI_STRUCT_MASK = Groups,Views,Drawings,Components,Reference Sets
+UGI_SOLID_MASK = 
+UGI_DRAWING_NAMES =
+UGI_USER_DEFINED_VIEWS = 
+SURFU = 8
+SURFV = 8
+UGI_PROC_ASSEM = Use load_options.def options
+UGI_COMP_FAIL = Abort if Load Fails
+UGI_LOAD_COMP = Load Components
+UGI_LOAD_VER = Load Exact Version
+UGI_COMP_SUB = Do not Allow Substitution
+UGI_LOAD_OPTION = Load From Assem Dir
+UGI_SEARCH_DIRS = 
+VIEW_MODERASE_MODE = YES
+ASSEMBLY_MAP=ON
+FILL_MODE=OFF
+BASE_PART_MM = dwgnull_mm.prt
+BASE_PART_IN = dwgnull_in.prt
+UGI_GDT_EXPORT_AS_BLOCK = YES
+EXPORT_DRAWING_USING_CGM = NO
+IMPORT_ACAD_MODEL_DATA = YES
+IMPORT_ACAD_MODEL_DATA_TO = MODELING
+IMPORT_ACAD_LAYOUTS = YES
+IMPORT_ALL_ACAD_LAYOUTS = YES
+ACAD_LAYOUTS_TO_IMPORT = 
+IMPORT_ACAD_LAYOUTS_TO = IMPORTED_VIEW 
+IMPORT_ACAD_CURVES_ON_SKETCH = NO 
+AVOID_NX_TEMPLATE_PART_LAYERS = YES 
+SET_NX_LAYER_NUMBER_FROM_PREFIX = NO
+SKIP_UNREFERENCED_ACAD_LAYERS = YES 
+IMPORT_UNSELECTED_ACAD_LAYERS = NO 
+IMPORT_UNSELECTED_ACAD_LAYERS_TO = 256 
+UNSELECTED_ACAD_LAYER_LIST =  
+NON_NUMERIC_LAYER_SORTING_CRITERIA = ALPHABETICAL
+IMPORT_ACAD_BLOCK_AS = GROUP
+ASPECT_RATIO_CALCULATION_ON_IMPORT = AUTOMATIC_CALCULATION
+WIDTHFACTOR_CALCULATION_ON_EXPORT = AUTOMATIC_CALCULATION
+EXPORT_DIMENSIONS_AS = REAL
+SUPPORT_MTEXT_FORMATTING_ON_IMPORT = NO
+SIMPLIFY_GEOMETRY = NO
+OPTIMIZE_GEOMETRY = NO
+HEAL_GEOMETRY_ON_IMPORT = NO
+ALTERNATE_SYMBOL_FONT_FOR_EXPORT = Arial Unicode MS
+EXPORT_CURVE_ATTRIBUTES = NO
+! Tolerance used in BSpline to Polyline conversion
+BSPLINE_TO_PLINE_CONV_TOL = 0.08
+
+//214ug.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Abort if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load As Saved
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCE_FORMAT=STEP
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids,Wireframe,Surfaces
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1-256
+Authorization=
+UGI_PROC_ASSEM=Overwrite load_options.def values
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 9.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=C:\Users\dvanderwerf\*.prt
+
+// 214ug_3d_data.def
+DSP_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+INDIVIDUAL_LIST=
+MSG_MASK=Fatal,Severe,Error,Warning,Information,Status,Summary,Prefix
+UGI_LAYERE_MASK=
+UGI_LOAD_VER=Load Exact Version
+UGI_COMP_FAIL=Abort if Load Fails
+SMOOTH_BSURFS=On
+UGI_LOAD_OPTION=Load From Assem Dir
+RECALL_DEF_FILE=ugstep214.def
+Description=
+PA_EDGE_FACE_BSPLINE_APPROX_TOL=0.0254
+CNV_MODE=On-Line
+EXPORT_EXTERNAL_REFERENCE_FORMAT=STEP
+EXPORT_EXTERNAL_REFERENCES=Off
+SHORT_LONG_NAMES=Long
+Organization=
+EXPORT_VALPROPS=Off
+MODULES_MASK=Solids,Wireframe
+AP214_DIS_OR_CD1=IS
+LOG_FILE=
+CHOOSE_DIRECTION=UG to STEP
+AUTOMATIC_SURF_SEW=Off
+File_Name=
+PROCESS_PART_LIST=
+UGI_LOAD_COMP=Load Components
+UGI_LAYERD_MASK=
+Author=
+UGI_COMP_SUB=Do not Allow Substitution
+UGI_LAYER_MASK=1,94,96,99
+Authorization=
+UGI_PROC_ASSEM=Use load_options.def options
+Imp_Level=1
+ZERO_LAYER_DEFAULT=1
+Pre_Version=STEP214UG NX 9.0
+SAVE_DEF_FILE=ugstep214.def
+UGI_SEARCH_DIRS=
+ASSEMBLY_MAP=Off
+FILE_FILTER=C:\Users\dvanderwerf\*.prt
+
+// 3431

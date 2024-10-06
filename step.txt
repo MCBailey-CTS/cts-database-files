@@ -948,3 +948,135 @@ SAVE_DEF_FILE=ugstep214.def
 UGI_SEARCH_DIRS=
 ASSEMBLY_MAP=Off
 FILE_FILTER=C:\Users\administrator\*.prt
+
+
+
+
+
+// Propsal Data
+  public static void Step(string partPath, string stepPath, bool wait)
+ {
+     try
+     {
+         if (partPath == null)
+             throw new ArgumentNullException(nameof(partPath));
+
+         if (stepPath == null)
+             throw new ArgumentNullException(nameof(stepPath));
+
+         if (!File.Exists(partPath))
+             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
+
+         if (File.Exists(stepPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(stepPath));
+
+
+         Session.UndoMarkId undoMarkId1 = session_.SetUndoMark(0, "Start");
+         StepCreator stepCreator = session_.DexManager.CreateStepCreator();
+         stepCreator.ExportAs = (StepCreator.ExportAsOption)1;
+         stepCreator.ExportFrom = (StepCreator.ExportFromOption)1;
+         stepCreator.ObjectTypes.Solids = true;
+         stepCreator.InputFile = partPath;
+         stepCreator.OutputFile = stepPath;
+         session_.SetUndoMarkName(undoMarkId1, "Export to STEP Options Dialog");
+         stepCreator.SettingsFile = "U:\\nxFiles\\Step Translator\\214ug.def";
+         stepCreator.ObjectTypes.Curves = true;
+         stepCreator.ObjectTypes.Surfaces = true;
+         stepCreator.ObjectTypes.Solids = true;
+         session_.DeleteUndoMark(session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options"),
+             null);
+         Session.UndoMarkId undoMarkId2 =
+             session_.SetUndoMark((Session.MarkVisibility)1, "Export to STEP Options");
+         stepCreator.FileSaveFlag = false;
+         stepCreator.ProcessHoldFlag = wait;
+         stepCreator.LayerMask = "1-256";
+         stepCreator.Commit();
+         session_.DeleteUndoMark(undoMarkId2, null);
+
+         if (wait)
+             print(File.Exists(stepPath)
+                 ? $"Successfully created \"{stepPath}\"."
+                 : $"Unsuccessfully created \"{stepPath}\".");
+     }
+     catch (Exception ex)
+     {
+         ex.__PrintException("Error when creating Step file for " + partPath);
+     }
+ }
+
+
+
+ public static void Step(string partPath, string dwgPath)
+ {
+     try
+     {
+         if (!File.Exists(partPath))
+             throw new ArgumentException(@"Path to part does not exist.", nameof(partPath));
+
+         if (File.Exists(dwgPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
+
+         if (File.Exists(dwgPath))
+             throw new ArgumentException(@"Path for Step file already exists.", nameof(dwgPath));
+
+         StepCreator stepCreator1 = session_.DexManager.CreateStepCreator();
+         stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
+         stepCreator1.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+         stepCreator1.ObjectTypes.Solids = true;
+         stepCreator1.InputFile = partPath;
+         stepCreator1.OutputFile = dwgPath;
+         stepCreator1.ObjectTypes.Curves = true;
+         stepCreator1.ObjectTypes.Surfaces = true;
+         stepCreator1.ObjectTypes.Solids = true;
+         stepCreator1.FileSaveFlag = false;
+         stepCreator1.ProcessHoldFlag = true;
+         stepCreator1.LayerMask = "1-256";
+         stepCreator1.Commit();
+     }
+     catch (Exception ex)
+     {
+         ex.__PrintException("Error when creating Step file for " + partPath);
+     }
+ }
+
+
+ 
+
+public static void Stp(string partPath, string output_path, string settings_file)
+   {
+       if (!output_path.EndsWith(".stp"))
+           throw new InvalidOperationException("File path for STP must end with \".stp\".");
+
+       if (File.Exists(output_path))
+           throw new ArgumentOutOfRangeException("output_path", "STP \"" + output_path + "\" already exists.");
+
+       if (!File.Exists(partPath))
+           throw new FileNotFoundException("Could not find file location \"" + partPath + "\".");
+
+       session_.__FindOrOpen(partPath);
+
+       StepCreator stepCreator = Session.GetSession().DexManager.CreateStepCreator();
+
+       using (session_.__UsingBuilderDestroyer(stepCreator))
+       {
+           stepCreator.ExportAs = StepCreator.ExportAsOption.Ap214;
+           stepCreator.SettingsFile = settings_file;
+           stepCreator.ObjectTypes.Solids = true;
+           stepCreator.OutputFile = output_path;
+           stepCreator.BsplineTol = 0.0254;
+           stepCreator.ObjectTypes.Annotations = true;
+           stepCreator.ExportFrom = StepCreator.ExportFromOption.ExistingPart;
+           stepCreator.InputFile = partPath;
+           stepCreator.FileSaveFlag = false;
+           stepCreator.LayerMask = "1, 96";
+           stepCreator.ProcessHoldFlag = true;
+           stepCreator.Commit();
+       }
+
+       string switchFilePath = output_path.Replace(".stp", ".log");
+
+       if (File.Exists(switchFilePath))
+           File.Delete(switchFilePath);
+   }
+
+   

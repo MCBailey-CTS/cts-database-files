@@ -1,0 +1,76 @@
+
+  public static void Print4Views(IEnumerable<Part> allParts)
+  {
+      try
+      {
+          bool IsNotAssembly(Part part)
+          {
+              string name = Path.GetFileNameWithoutExtension(part.FullPath);
+
+              if (name == null)
+                  return false;
+
+              name = name.ToLower();
+
+              if (name.EndsWith("000") || name.EndsWith("lsh") || name.EndsWith("ush") || name.EndsWith("lwr") ||
+                  name.EndsWith("upr"))
+                  return false;
+
+              return !name.Contains("lsp") && !name.Contains("usp");
+          }
+
+          List<Part> parts = allParts
+              .Where(part => Regex.IsMatch(part.Leaf, RegexDetail, RegexOptions.IgnoreCase))
+              .Where(IsNotAssembly)
+              .Where(part => part.DraftingDrawingSheets.ToArray().Any(__d => __d.Name.ToUpper() == "4-VIEW"))
+              .ToList();
+
+          parts.Sort((part1, part2) => string.Compare(part1.Leaf, part2.Leaf, StringComparison.Ordinal));
+
+          for (int i = 0; i < parts.Count; i++)
+          {
+              Part part = parts[i];
+
+              TheUFSession.Ui.SetPrompt($"{i + 1} of {parts.Count}. Printing 4-VIEW of {part.Leaf}.");
+
+              __display_part_ = part;
+
+              __work_part_ = __display_part_;
+
+              PrintBuilder printBuilder = __work_part_.PlotManager.CreatePrintBuilder();
+
+              using (new Destroyer(printBuilder))
+              {
+                  printBuilder.Copies = 1;
+
+                  printBuilder.ThinWidth = 1.0;
+
+                  printBuilder.NormalWidth = 2.0;
+
+                  printBuilder.ThickWidth = 3.0;
+
+                  printBuilder.Output = PrintBuilder.OutputOption.WireframeBlackWhite;
+
+                  printBuilder.ShadedGeometry = true;
+
+                  DrawingSheet drawingSheet = __work_part_.DraftingDrawingSheets.FindObject("4-VIEW");
+
+                  drawingSheet.Open();
+
+                  printBuilder.SourceBuilder.SetSheets(new NXObject[] { drawingSheet });
+
+                  printBuilder.PrinterText = "\\\\ctsfps1.cts.toolingsystemsgroup.com\\CTS Office MFC";
+
+                  printBuilder.Orientation = PrintBuilder.OrientationOption.Landscape;
+
+                  printBuilder.Paper = PrintBuilder.PaperSize.Letter;
+
+                  printBuilder.Commit();
+              }
+          }
+      }
+      catch (Exception ex)
+      {
+          ex.__PrintException();
+      }
+  }

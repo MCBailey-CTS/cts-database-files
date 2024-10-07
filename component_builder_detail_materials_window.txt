@@ -1,0 +1,8 @@
+component_builder_detail_materials_window
+
+A2
+A2 GS
+CRS
+HRS
+4140
+4140 PH

@@ -1,0 +1,16 @@
+component_builder_detail_materials_pad
+
+CRS
+GM190/S0050A
+GM238/G2500
+GM241/G3500
+GM245/D4512
+GM246/D5506
+GM338/D6510
+GM68M/S0030
+HRS
+HRS PLT
+4140
+4140 PH
+4140 PH PLT
+4140 PLT																													

@@ -1,0 +1,16 @@
+
+component_builder_detail_materials_lifter
+
+CRS
+HRS
+HRS PLT
+O1
+O6
+O1 GS
+P20
+STRUCTURAL
+4140
+4140 PH
+4140 PH PLT
+4140 PLT
+6150

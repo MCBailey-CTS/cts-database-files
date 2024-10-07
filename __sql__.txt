@@ -275,26 +275,11 @@ INSERT INTO CTSAPP.dbo.ConceptControlFile ([key],value) VALUES
 
 
 
-('TSG_Tag_DataTypes', '.catpart'),
-('TSG_Tag_DataTypes', '.catproduct'),
-('TSG_Tag_DataTypes', '.prt'),
-('TSG_Tag_DataTypes', '.stp'),
-('TSG_Tag_DataTypes', '.step'),
-('TSG_Tag_DataTypes', '.igs'),
-('TSG_Tag_DataTypes', '.iges'),
+
 ('DESIGN_CHECK_999_BLOCK_REGEX', '(?<JobNumber>\d+)-(?<OpNumber>\d+)-99(?<Nine99Number>\d)'),
 ('DESIGN_CHECK_CBoreDepth_EnglishShcsRegex', '^(?<Diameter>[0-9]{4,})-shcs-(?<Length>[0-9]{3,})$'),
 ('DESIGN_CHECK_CBoreDepth_MetricShcsRegex', '^(?<Diameter>[0-9]{1,})mm-shcs-(?<Length>[0-9]{3,})$'),
-('TSG_Tag_PartPrintTypes', '.pdf'),
-('TSG_Tag_PartPrintTypes', '.tiff'),
-('TSG_Tag_PartPrintTypes', '.xlsx'),
-('TSG_Tag_PartPrintTypes', '.pptx'),
-('TSG_Tag_PartPrintTypes', '.tif'),
-('TSG_Tag_PartPrintTypes', '.png'),
-('TSG_Tag_PartPrintTypes', '.jpg'),
-('TSG_Tag_PartPrintTypes', '.jpeg'),
-('TSG_Tag_PartPrintTypes', '.jt'),
-('TSG_Tag_PartPrintTypes', '.pvz'),
+
 ('CTS_ATTRIBUTE_UNITS', 'N/A'),
 ('SimulationControlFile_SIM_SPECIAL_REGEX', '^(?<CustomerNumber>[0-9_]+|[0-9_]+-[0-9]+)-simulation$'),
 ('SimulationControlFile_H', 'C:\\Program Files\\Siemens\\NX 11.0\\step214ug\\ugstep214.def'),

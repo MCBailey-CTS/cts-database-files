@@ -148,7 +148,6 @@ Pdf
     sheet.Open();
     pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
     pdfBuilder.Filename = filePath;
-    pdfBuilder.Commit();
 }
 
 ExportStripPdf
@@ -162,8 +161,6 @@ ExportStripPdf
     pdfBuilder.RasterImages = true;
     pdfBuilder.Colors = PrintPDFBuilder.Color.AsDisplayed;
     pdfBuilder.Watermark = "";
-    UFSession.GetUFSession().Draw.IsObjectOutOfDate(sheet.Tag, out bool flag);
-    sheet.Open();
     pdfBuilder.SourceBuilder.SetSheets(new NXObject[] { sheet });
     pdfBuilder.Filename = filePath;
 }
@@ -226,31 +223,16 @@ ExportStripStp
     step.ProcessHoldFlag = true;
 }
 
-StepCreateCasting
-{
-    StepCreator stepCreator1;
-    stepCreator1 = theSession.DexManager.CreateStepCreator();
-    stepCreator1.ExportAs = StepCreator.ExportAsOption.Ap214;
-    stepCreator1.BsplineTol = 0.001;
-    stepCreator1.SettingsFile = "C:\\Program Files\\Siemens\\NX1899\\step214ug\\ugstep214.def";
-    stepCreator1.BsplineTol = 0.001;
-    stepCreator1.InputFile = part.FullPath;
-    theSession.SetUndoMarkName(markId1, "Export STEP File Dialog");
-    Session.UndoMarkId markId2;
-    markId2 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
-    theSession.DeleteUndoMark(markId2, null);
-    Session.UndoMarkId markId3;
-    markId3 = theSession.SetUndoMark(Session.MarkVisibility.Invisible, "Export STEP File");
-    stepCreator1.OutputFile = step_path;
-    stepCreator1.FileSaveFlag = false;
-    stepCreator1.LayerMask = "1,96";
-    stepCreator1.ProcessHoldFlag = true;
-    NXObject nXObject1;
-    nXObject1 = stepCreator1.Commit();
-    theSession.DeleteUndoMark(markId3, null);
-    theSession.SetUndoMarkName(markId1, "Export STEP File");
-    stepCreator1.Destroy();
-}
+
+('StepCreateCasting_stepCreator1_ExportAs = StepCreator.ExportAsOption.Ap214;
+('StepCreateCasting_stepCreator1_BsplineTol = 0.001;
+('StepCreateCasting_stepCreator1_SettingsFile = "C:\\Program Files\\Siemens\\NX1899\\step214ug\\ugstep214.def";
+('StepCreateCasting_stepCreator1_BsplineTol = 0.001;
+('StepCreateCasting_stepCreator1_InputFile = part.FullPath;
+('StepCreateCasting_stepCreator1_OutputFile = step_path;
+('StepCreateCasting_stepCreator1_FileSaveFlag = false;
+('StepCreateCasting_stepCreator1_LayerMask = "1,96";
+('StepCreateCasting_stepCreator1_ProcessHoldFlag = true;
 
 Print4Views
 {
